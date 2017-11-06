@@ -1,0 +1,108 @@
+#include <stdlib.h>
+#include <GL/glut.h>
+#include "Game.h"
+#include "../settings/Application.h"
+
+Game::Game()
+{
+}
+
+void Game::Init()
+{
+	glClearColor(0.8, 0.3, 0.3, 0.0);
+
+	glEnable(GL_POINT_SMOOTH);
+	glEnable(GL_LINE_SMOOTH);
+	glEnable(GL_POLYGON_SMOOTH);
+}
+
+void Game::Reshape(int width, int height)
+{
+	GLint size;
+	GLfloat ratio = (GLfloat)width / height;
+	GLfloat ratio1 = (GLfloat)height / width;
+
+	if (width < height)
+		size = width;
+	else
+		size = height;
+
+	// glViewport(botom, left, width, height)
+	// define the part of the window to be used by OpenGL
+
+	//glViewport(0, 0, (GLint) size, (GLint) size);
+	glViewport(0, 0, width, height);
+
+
+	// The projection matrix
+	// Matriz onde se define como o mundo e apresentado na janela
+	// Matrix where you define how the world is shown in the window
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+
+	// gluOrtho2D(left,right,bottom,top); 
+	// 2D orthogonal projection, with a depth of (Z) between -1 and 1
+	if (width < height)
+		gluOrtho2D(-1, 1, -1 * ratio1, 1 * ratio1);
+	else
+		gluOrtho2D(-1 * ratio, 1 * ratio, -1, 1);
+
+	// Matrix Modelview
+	// Matrix where the designed models transforms are made
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void Game::Draw()
+{
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	glBegin(GL_POLYGON);
+	glVertex3f(-0.5, -0.5, -0.5);
+	glVertex3f(-0.5, 0.5, -0.5);
+	glVertex3f(0.5, 0.5, -0.5);
+	glEnd();
+
+	// Some placeholder text for texting purposes
+	glColor3f(0, 0, 1);
+	char str[] = "Second Scene! Press F1 to switch to first scene!";
+	glRasterPos2f(-1, -0.7);
+	int len = (int)strlen(str);
+	for (int i = 0; i < len; i++)
+	{
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, str[i]);
+	}
+
+	glFlush();
+	if (Application::instance()->getState()->isDoubleBufferActivated())
+		glutSwapBuffers();
+}
+
+void Game::Timer(int value)
+{
+
+}
+
+void Game::Key(unsigned char key, int x, int y)
+{
+
+}
+
+void Game::KeyUp(unsigned char key, int x, int y)
+{
+
+}
+
+void Game::SpecialKey(int key, int x, int y)
+{
+	switch (key)
+	{
+	case GLUT_KEY_F1:
+		Application::instance()->getSceneManager()->changeScene("menu");
+		break;
+	}
+}
+
+void Game::SpecialKeyUp(int key, int x, int y)
+{
+
+}
