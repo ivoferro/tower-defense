@@ -13,14 +13,15 @@ public:
 	class Coordinates
 	{
 	public:
+		Coordinates();
 		GLfloat x;
 		GLfloat y;
 		GLfloat z;
 	};
 
-	Coordinates position;
-	Coordinates rotation;
-	Coordinates scale;
+	Coordinates * position;
+	Coordinates * rotation;
+	Coordinates * scale;
 
 };
 

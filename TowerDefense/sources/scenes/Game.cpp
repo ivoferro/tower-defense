@@ -3,10 +3,16 @@
 #include "../../headers/scenes/Game.h"
 #include "../../headers/framework/Application.h"
 #include "../../headers/gameobjects/Camera.h"
+#include "../../headers/components/Transform.h"
 
 Game::Game()
 {
-	gameObjects["camera"] = new Camera();
+	Camera * cam = new Camera();
+	Transform * trans = (Transform*)cam->getComponentById("transform");
+	trans->position->x = 40;
+	trans->position->y = 40;
+	trans->position->z = 40;
+	gameObjects["camera"] = cam;
 }
 
 void Game::Init()
@@ -72,9 +78,11 @@ void Game::Draw()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glBegin(GL_POLYGON);
-	glVertex3f(-0.5, -0.5, -0.5);
-	glVertex3f(-0.5, 0.5, -0.5);
-	glVertex3f(0.5, 0.5, -0.5);
+	glColor3f(0.3, 0.3, 0);
+	glVertex3f(1, 1, 0);
+	glVertex3f(-1, 1, 0);
+	glVertex3f(-1, -1, 0);
+	glVertex3f(1, -1, 0);
 	glEnd();
 
 	// Some placeholder text for texting purposes

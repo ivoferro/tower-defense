@@ -14,7 +14,7 @@ GameObject::~GameObject()
 
 GLboolean GameObject::addComponent(std::string id, Component * aComponent)
 {
-	if (components.find(id) == components.end()) {
+	if (components.find(id) != components.end()) {
 		return false;
 	}
 
