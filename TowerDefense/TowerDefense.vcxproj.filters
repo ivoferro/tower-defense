@@ -18,39 +18,54 @@
     <ClCompile Include="sources\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sources\settings\Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sources\settings\State.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="sources\settings\SceneManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="sources\scenes\Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sources\scenes\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sources\framework\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\framework\Component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\framework\GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\framework\SceneManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\framework\State.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\framework\Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sources\settings\Application.h">
+    <ClInclude Include="headers\framework\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sources\settings\State.h">
+    <ClInclude Include="headers\framework\Component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sources\settings\SceneManager.h">
+    <ClInclude Include="headers\framework\GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sources\scenes\IScene.h">
+    <ClInclude Include="headers\framework\SceneManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sources\scenes\Menu.h">
+    <ClInclude Include="headers\framework\State.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sources\scenes\Game.h">
+    <ClInclude Include="headers\scenes\Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\scenes\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\framework\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

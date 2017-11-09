@@ -1,12 +1,12 @@
 #pragma once
 
-#include "IScene.h"
+#include "../framework/Scene.h"
 
-class Game : public IScene
+class Menu : public Scene
 {
 
 public:
-	Game();
+	Menu();
 	void Init();
 	void Reshape(int width, int height);
 	void Draw();

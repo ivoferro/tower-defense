@@ -8,6 +8,8 @@ class Application
 
 private:
 	Application();
+	~Application();
+
 	static Application *s_instance;
 
 	State *state;

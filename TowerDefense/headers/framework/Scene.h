@@ -1,9 +1,18 @@
 #pragma once
 
-class IScene
+#include <map>
+#include "GameObject.h"
+
+class Scene
 {
 
+protected:
+	std::map<std::string, GameObject *> gameObjects;
+
 public:
+	Scene();
+	~Scene();
+
 	virtual void Init() = 0;
 	virtual void Reshape(int width, int height) = 0;
 	virtual void Draw() = 0;

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <GL/glut.h>
-#include "Menu.h"
-#include "../settings/Application.h"
+#include "../../headers/scenes/Menu.h"
+#include "../../headers/framework/Application.h"
 
 Menu::Menu()
 {
@@ -14,6 +14,8 @@ void Menu::Init()
 	glEnable(GL_POINT_SMOOTH);
 	glEnable(GL_LINE_SMOOTH);
 	glEnable(GL_POLYGON_SMOOTH);
+
+	glutPostRedisplay();
 }
 
 void Menu::Reshape(int width, int height)

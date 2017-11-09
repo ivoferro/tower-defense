@@ -1,19 +1,20 @@
 #pragma once
 
 #include <map>
-#include "../scenes/IScene.h"
+#include "Scene.h"
 
 class SceneManager
 {
 	
 private:
-	std::map<std::string, IScene*> scenes;
+	std::map<std::string, Scene*> scenes;
 	std::string activeSceneKey;
 
 public:
 	SceneManager();
+	~SceneManager();
 
-	IScene * activeScene();
+	Scene * activeScene();
 	void changeScene(std::string sceneKey);
 
 };

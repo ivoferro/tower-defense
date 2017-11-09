@@ -118,20 +118,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="sources\framework\Component.cpp" />
+    <ClCompile Include="sources\framework\GameObject.cpp" />
+    <ClCompile Include="sources\framework\Scene.cpp" />
     <ClCompile Include="sources\scenes\Game.cpp" />
     <ClCompile Include="sources\scenes\Menu.cpp" />
-    <ClCompile Include="sources\settings\SceneManager.cpp" />
-    <ClCompile Include="sources\settings\Application.cpp" />
+    <ClCompile Include="sources\framework\SceneManager.cpp" />
+    <ClCompile Include="sources\framework\Application.cpp" />
     <ClCompile Include="sources\main.cpp" />
-    <ClCompile Include="sources\settings\State.cpp" />
+    <ClCompile Include="sources\framework\State.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sources\scenes\Game.h" />
-    <ClInclude Include="sources\scenes\Menu.h" />
-    <ClInclude Include="sources\scenes\IScene.h" />
-    <ClInclude Include="sources\settings\SceneManager.h" />
-    <ClInclude Include="sources\settings\Application.h" />
-    <ClInclude Include="sources\settings\State.h" />
+    <ClInclude Include="headers\framework\Component.h" />
+    <ClInclude Include="headers\framework\GameObject.h" />
+    <ClInclude Include="headers\scenes\Game.h" />
+    <ClInclude Include="headers\scenes\Menu.h" />
+    <ClInclude Include="headers\framework\Scene.h" />
+    <ClInclude Include="headers\framework\SceneManager.h" />
+    <ClInclude Include="headers\framework\Application.h" />
+    <ClInclude Include="headers\framework\State.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

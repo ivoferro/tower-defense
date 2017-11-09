@@ -1,6 +1,6 @@
-#include "SceneManager.h"
-#include "../scenes/Menu.h"
-#include "../scenes/Game.h"
+#include "../../headers/framework/SceneManager.h"
+#include "../../headers/scenes/Menu.h"
+#include "../../headers/scenes/Game.h"
 
 SceneManager::SceneManager()
 {
@@ -10,7 +10,15 @@ SceneManager::SceneManager()
 	activeSceneKey = "menu";
 }
 
-IScene * SceneManager::activeScene()
+SceneManager::~SceneManager()
+{
+	for (std::map<std::string, Scene*>::iterator it = scenes.begin(); it != scenes.end(); ++it)
+	{
+		it->second->~Scene();
+	}
+}
+
+Scene * SceneManager::activeScene()
 {
 	return scenes[activeSceneKey];
 }

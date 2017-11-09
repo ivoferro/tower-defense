@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <GL/glut.h>
-#include "Game.h"
-#include "../settings/Application.h"
+#include "../../headers/scenes/Game.h"
+#include "../../headers/framework/Application.h"
 
 Game::Game()
 {
@@ -14,6 +14,8 @@ void Game::Init()
 	glEnable(GL_POINT_SMOOTH);
 	glEnable(GL_LINE_SMOOTH);
 	glEnable(GL_POLYGON_SMOOTH);
+
+	glutPostRedisplay();
 }
 
 void Game::Reshape(int width, int height)

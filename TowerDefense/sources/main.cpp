@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <GL/glut.h>
-#include "settings/Application.h"
-#include "settings/State.h"
+#include "../headers/framework/Application.h"
+#include "../headers/framework/State.h"
 
 // Callback to reshape window
 void Reshape(int width, int height)
