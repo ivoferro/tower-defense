@@ -2,9 +2,11 @@
 #include <GL/glut.h>
 #include "../../headers/scenes/Game.h"
 #include "../../headers/framework/Application.h"
+#include "../../headers/gameobjects/Camera.h"
 
 Game::Game()
 {
+	gameObjects["camera"] = new Camera();
 }
 
 void Game::Init()
@@ -42,12 +44,23 @@ void Game::Reshape(int width, int height)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	// gluOrtho2D(left,right,bottom,top); 
-	// 2D orthogonal projection, with a depth of (Z) between -1 and 1
-	if (width < height)
-		gluOrtho2D(-1, 1, -1 * ratio1, 1 * ratio1);
-	else
-		gluOrtho2D(-1 * ratio, 1 * ratio, -1, 1);
+	switch (Application::instance()->getState()->getCameraType())
+	{
+	case State::CameraType::ORTHO:
+		if (width < height)
+		{
+			glOrtho(-20, 20, -20 * (GLdouble)height / width, 20 * (GLdouble)height / width, -100, 100);
+		}
+		else
+		{
+			glOrtho(-20 * (GLdouble)width / height, 20 * (GLdouble)width / height, -20, 20, -100, 100);
+		}
+		break;
+
+	case State::CameraType::PERSPECTIVE:
+		gluPerspective(((Camera*)gameObjects["camera"])->fieldOfView, (GLfloat)width / height, 1, 100);
+		break;
+	}
 
 	// Matrix Modelview
 	// Matrix where the designed models transforms are made

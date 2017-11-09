@@ -118,6 +118,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="sources\gameobjects\Camera.cpp" />
     <ClCompile Include="sources\framework\Component.cpp" />
     <ClCompile Include="sources\framework\GameObject.cpp" />
     <ClCompile Include="sources\framework\Scene.cpp" />
@@ -127,8 +128,10 @@
     <ClCompile Include="sources\framework\Application.cpp" />
     <ClCompile Include="sources\main.cpp" />
     <ClCompile Include="sources\framework\State.cpp" />
+    <ClCompile Include="sources\components\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="headers\gameobjects\Camera.h" />
     <ClInclude Include="headers\framework\Component.h" />
     <ClInclude Include="headers\framework\GameObject.h" />
     <ClInclude Include="headers\scenes\Game.h" />
@@ -137,6 +140,7 @@
     <ClInclude Include="headers\framework\SceneManager.h" />
     <ClInclude Include="headers\framework\Application.h" />
     <ClInclude Include="headers\framework\State.h" />
+    <ClInclude Include="headers\components\Transform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

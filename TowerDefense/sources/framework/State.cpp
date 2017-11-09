@@ -4,6 +4,7 @@ State::State()
 {
 	doubleBuffer = GL_TRUE;
 	movementDelay = 20;
+	cameraType = CameraType::PERSPECTIVE;
 }
 
 GLboolean State::isDoubleBufferActivated()
@@ -14,4 +15,9 @@ GLboolean State::isDoubleBufferActivated()
 GLint State::getMovementDelay()
 {
 	return movementDelay;
+}
+
+State::CameraType State::getCameraType()
+{
+	return cameraType;
 }
