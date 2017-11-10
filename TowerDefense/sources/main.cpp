@@ -18,7 +18,9 @@ void Draw(void)
 // Callback for timer actions (e.g. animations)
 void Timer(int value)
 {
+	glutTimerFunc(Application::instance()->getState()->getMovementDelay(), Timer, 0);
 	Application::instance()->getSceneManager()->activeScene()->Timer(value);
+	glutPostRedisplay();
 }
 
 // Callback to interact via keyboard (press a key)

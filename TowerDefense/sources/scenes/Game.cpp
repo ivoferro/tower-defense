@@ -3,16 +3,24 @@
 #include "../../headers/scenes/Game.h"
 #include "../../headers/framework/Application.h"
 #include "../../headers/gameobjects/Camera.h"
+#include "../../headers/gameobjects/Player.h"
+#include "../../headers/gameobjects/Ground.h"
 #include "../../headers/components/Transform.h"
 
 Game::Game()
 {
-	Camera * cam = new Camera();
-	Transform * trans = (Transform*)cam->getComponentById("transform");
+	Camera * c = new Camera();
+	Transform * trans = (Transform*)c->getComponentById("transform");
 	trans->position->x = 40;
 	trans->position->y = 40;
 	trans->position->z = 40;
-	gameObjects["camera"] = cam;
+	gameObjects["camera"] = c;
+
+	Player * p = new Player();
+	gameObjects["player"] = p;
+
+	Ground * g = new Ground();
+	gameObjects["ground"] = g;
 }
 
 void Game::Init()
@@ -75,25 +83,15 @@ void Game::Reshape(int width, int height)
 
 void Game::Draw()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+	
+	gluLookAt(0, 5, 0.5, 0, 0, 0, 0, 0, 1);
+	glTranslatef(0, -5, -0.5);
 
-	glBegin(GL_POLYGON);
-	glColor3f(0.3, 0.3, 0);
-	glVertex3f(1, 1, 0);
-	glVertex3f(-1, 1, 0);
-	glVertex3f(-1, -1, 0);
-	glVertex3f(1, -1, 0);
-	glEnd();
+	((Ground*)gameObjects["ground"])->draw();
 
-	// Some placeholder text for texting purposes
-	glColor3f(0, 0, 1);
-	char str[] = "Second Scene! Press F1 to switch to first scene!";
-	glRasterPos2f(-1, -0.7);
-	int len = (int)strlen(str);
-	for (int i = 0; i < len; i++)
-	{
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, str[i]);
-	}
+	((Player*)gameObjects["player"])->draw();
 
 	glFlush();
 	if (Application::instance()->getState()->isDoubleBufferActivated())
@@ -102,7 +100,11 @@ void Game::Draw()
 
 void Game::Timer(int value)
 {
-
+	// FIXME remove this, just for demonstration purposes
+	Transform * playerT = (Transform*) ((Player*)gameObjects["player"])->getComponentById("transform");
+	playerT->position->x += 0.0005;
+	playerT->position->y += 0.0005;
+	playerT->position->z += 0.0005;
 }
 
 void Game::Key(unsigned char key, int x, int y)
