@@ -28,6 +28,7 @@ void SceneManager::changeScene(std::string sceneKey)
 	if (scenes.find(sceneKey) != scenes.end())
 	{
 		scenes[sceneKey]->Init();
+		scenes[sceneKey]->Reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 		activeSceneKey = sceneKey;
 	}
 }
