@@ -15,5 +15,8 @@ public:
 	void KeyUp(unsigned char key, int x, int y);
 	void SpecialKey(int key, int x, int y);
 	void SpecialKeyUp(int key, int x, int y);
+	void Mouse(int button, int mouse_state, int x, int y);
+	void MouseMotion(int x, int y);
+	void MousePassiveMotion(int x, int y);
 
 };

@@ -181,3 +181,18 @@ void Game::SpecialKeyUp(int key, int x, int y)
 {
 
 }
+
+void Game::Mouse(int button, int mouse_state, int x, int y)
+{
+
+}
+
+void Game::MouseMotion(int x, int y)
+{
+
+}
+
+void Game::MousePassiveMotion(int x, int y)
+{
+
+}

@@ -108,3 +108,18 @@ void Menu::SpecialKey(int key, int x, int y)
 void Menu::SpecialKeyUp(int key, int x, int y)
 {
 }
+
+void Menu::Mouse(int button, int mouse_state, int x, int y)
+{
+
+}
+
+void Menu::MouseMotion(int x, int y)
+{
+
+}
+
+void Menu::MousePassiveMotion(int x, int y)
+{
+
+}
