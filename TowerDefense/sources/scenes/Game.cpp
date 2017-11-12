@@ -77,7 +77,7 @@ void Game::Reshape(int width, int height)
 		break;
 
 	case CameraSettings::CameraType::PERSPECTIVE:
-		gluPerspective(camSettings->fieldOfView, (GLfloat)width / height, 1, 100);
+		gluPerspective(camSettings->fieldOfView, (GLfloat)width / height, 0, 100);
 		break;
 	}
 
