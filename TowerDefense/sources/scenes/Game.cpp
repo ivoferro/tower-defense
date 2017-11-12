@@ -27,6 +27,9 @@ Game::Game()
 	gameObjects["outerWalls"] = ows;
 
 	Enemy *e1 = new Enemy();
+	Transform * e1t = (Transform*)e1->getComponentById("transform");
+	e1t->position->x = -5;
+	e1t->position->y = -5;
 	gameObjects["enemy1"] = e1;
 }
 
@@ -37,6 +40,11 @@ void Game::Init()
 	glEnable(GL_POINT_SMOOTH);
 	glEnable(GL_LINE_SMOOTH);
 	glEnable(GL_POLYGON_SMOOTH);
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthMask(GL_TRUE);
+	glDepthFunc(GL_EQUAL);
+	glDepthRange(0.0f, 1.0f);
 
 	glutPostRedisplay();
 }
@@ -60,13 +68,11 @@ void Game::Reshape(int width, int height)
 
 
 	// The projection matrix
-	// Matriz onde se define como o mundo e apresentado na janela
 	// Matrix where you define how the world is shown in the window
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
 	CameraSettings * camSettings = (CameraSettings*)((Camera*)gameObjects["camera"])->getComponentById("settings");
-
 	switch (camSettings->cameraType)
 	{
 	case CameraSettings::CameraType::ORTHO:
@@ -92,6 +98,8 @@ void Game::Reshape(int width, int height)
 
 void Game::Draw()
 {
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearDepth(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
@@ -108,12 +116,8 @@ void Game::Draw()
 
 	((Player*)gameObjects["player"])->draw();
 
-	// draw of enemy1
-	glPushMatrix();
-	glTranslatef(-10, -10, -0.5);
-	glColor3f(0.5f, 0.5f, 0.5f);
+	//draws enemy 1
 	((Enemy*)gameObjects["enemy1"])->draw();
-	glPopMatrix();
 
 	glFlush();
 	if (Application::instance()->getState()->isDoubleBufferActivated())

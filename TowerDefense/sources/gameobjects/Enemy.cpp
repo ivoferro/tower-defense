@@ -26,30 +26,30 @@ void Enemy::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLf
 
 void Enemy::drawEnemy()
 {
-	GLfloat vertices[][3] = { { -0.5,-0.5,-0.5 },
-	{ 0.5,-0.5,-0.5 },
-	{ 0.5,0.5,-0.5 },
-	{ -0.5,0.5,-0.5 },
-		// 2ª face
-	{ -0.5,-0.5, 0.5 },
-	{ 0.5,-0.5, 0.5 },
-	{ 0.5,0.5, 0.5 },
-	{ -0.5,0.5, 0.5 } };
+	GLfloat vertices[][3] = {
+		{ 0.5,  0.5,  0.5 },
+		{ -0.5,  0.5,  0.5 },
+		{ -0.5,  0.5, -0.5 },
+		{ 0.5,  0.5, -0.5 },
+		{ 0.5, -0.5,  0.5 },
+		{ -0.5, -0.5,  0.5 },
+		{ -0.5, -0.5, -0.5 },
+		{ 0.5, -0.5, -0.5 } };
 
-	GLfloat cores[][3] = { { 0.0,1.0,1.0 },
-	{ 1.0,0.0,0.0 },
-	{ 1.0,1.0,0.0 },
-	{ 0.0,1.0,0.0 },
-	{ 1.0,0.0,1.0 },
-	{ 0.0,0.0,1.0 },
-	{ 1.0,1.0,1.0 } };
+	GLfloat colors[][3] = {
+		{ 0.5, 0.0, 0.0 },
+		{ 0.0, 0.5, 0.0 },
+		{ 0.0, 0.0, 0.5 },
+		{ 1.0, 0.0, 0.0 },
+		{ 0.0, 1.0, 0.0 },
+		{ 0.0, 0.0, 1.0 } };
 
-	drawPolygon(vertices[1], vertices[0], vertices[3], vertices[2], cores[5]);
-	drawPolygon(vertices[5], vertices[6], vertices[7], vertices[4], cores[4]);
-	drawPolygon(vertices[1], vertices[2], vertices[6], vertices[5], cores[3]);
-	drawPolygon(vertices[0], vertices[4], vertices[7], vertices[3], cores[2]);
-	drawPolygon(vertices[2], vertices[3], vertices[7], vertices[6], cores[1]);
-	drawPolygon(vertices[5], vertices[4], vertices[0], vertices[1], cores[0]);
+	drawPolygon(vertices[0], vertices[3], vertices[2], vertices[1], colors[0]);
+	drawPolygon(vertices[1], vertices[2], vertices[6], vertices[5], colors[1]);
+	drawPolygon(vertices[5], vertices[6], vertices[7], vertices[4], colors[2]);
+	drawPolygon(vertices[4], vertices[7], vertices[3], vertices[0], colors[3]);
+	drawPolygon(vertices[1], vertices[5], vertices[4], vertices[0], colors[4]);
+	drawPolygon(vertices[2], vertices[3], vertices[7], vertices[6], colors[5]);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
@@ -59,7 +59,7 @@ void Enemy::draw()
 
 	glPushMatrix();
 	glTranslatef(t->position->x, t->position->y, t->position->z);
-	glScalef(3, 2, 1);
+	glScalef(1, 1, 2);
 	drawEnemy();
 	glPopMatrix();
 }
