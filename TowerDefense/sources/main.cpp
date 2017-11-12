@@ -18,7 +18,9 @@ void Draw(void)
 // Callback for timer actions (e.g. animations)
 void Timer(int value)
 {
+	glutTimerFunc(Application::instance()->getState()->getMovementDelay(), Timer, 0);
 	Application::instance()->getSceneManager()->activeScene()->Timer(value);
+	glutPostRedisplay();
 }
 
 // Callback to interact via keyboard (press a key)
@@ -45,6 +47,21 @@ void SpecialKeyUp(int key, int x, int y)
 	Application::instance()->getSceneManager()->activeScene()->SpecialKeyUp(key, x, y);
 }
 
+void Mouse(int button, int mouse_state, int x, int y)
+{
+	Application::instance()->getSceneManager()->activeScene()->Mouse(button, mouse_state, x, y);
+}
+
+void MouseMotion(int x, int y)
+{
+	Application::instance()->getSceneManager()->activeScene()->MouseMotion(x, y);
+}
+
+void MousePassiveMotion(int x, int y)
+{
+	Application::instance()->getSceneManager()->activeScene()->MousePassiveMotion(x, y);
+}
+
 int main(int argc, char **argv)
 {
 	glutInit(&argc, argv);
@@ -69,6 +86,11 @@ int main(int argc, char **argv)
 	glutKeyboardUpFunc(KeyUp);
 	glutSpecialFunc(SpecialKey);
 	glutSpecialUpFunc(SpecialKeyUp);
+
+	// Mouse Callbacks
+	glutMouseFunc(Mouse);
+	glutMotionFunc(MouseMotion);
+	glutPassiveMotionFunc(MousePassiveMotion);
 
 	// timer/idle callbacks
 	glutTimerFunc(Application::instance()->getState()->getMovementDelay(), Timer, 0);

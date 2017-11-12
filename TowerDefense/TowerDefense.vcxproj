@@ -127,6 +127,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="sources\gameobjects\Enemy.cpp" />
+    <ClCompile Include="sources\gameobjects\GameText.cpp" />
+    <ClCompile Include="sources\gameobjects\Ground.cpp" />
+    <ClCompile Include="sources\gameobjects\Player.cpp" />
     <ClCompile Include="sources\gameobjects\Camera.cpp" />
     <ClCompile Include="sources\framework\Component.cpp" />
     <ClCompile Include="sources\framework\GameObject.cpp" />
@@ -141,6 +144,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\gameobjects\Enemy.h" />
+    <ClInclude Include="headers\gameobjects\GameText.h" />
+    <ClInclude Include="headers\gameobjects\Ground.h" />
     <ClInclude Include="headers\gameobjects\Camera.h" />
     <ClInclude Include="headers\framework\Component.h" />
     <ClInclude Include="headers\framework\GameObject.h" />
@@ -151,6 +156,8 @@
     <ClInclude Include="headers\framework\Application.h" />
     <ClInclude Include="headers\framework\State.h" />
     <ClInclude Include="headers\components\Transform.h" />
+    <ClInclude Include="headers\gameobjects\Player.h" />
+    <ClInclude Include="headers\framework\Inputs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
