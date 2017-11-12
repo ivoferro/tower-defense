@@ -1,9 +1,11 @@
 #include "../../headers/gameobjects/Player.h"
 #include "../../headers/components/Transform.h"
+#include "../../headers/components/CharacterPhysics.h"
 
 Player::Player()
 {
 	addComponent("transform", new Transform());
+	addComponent("physics", new CharacterPhysics());
 }
 
 Player::~Player()
@@ -16,6 +18,7 @@ void Player::draw()
 
 	glPushMatrix();
 	glTranslatef(t->position->x, t->position->y, t->position->z);
+	glRotatef(t->rotation->z, 0, 0, 1);
 	glScalef(1, 1, 2);
 	drawCube();
 	glPopMatrix();

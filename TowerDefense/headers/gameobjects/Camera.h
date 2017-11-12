@@ -9,6 +9,8 @@ public:
 	Camera();
 	Camera(GLfloat fieldOfView);
 	~Camera();
+	
+	void draw();
 
 	GLfloat fieldOfView;
 };

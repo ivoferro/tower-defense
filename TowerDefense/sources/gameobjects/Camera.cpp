@@ -16,3 +16,7 @@ Camera::Camera(GLfloat theFieldOfView)
 Camera::~Camera()
 {
 }
+
+void Camera::draw()
+{
+}

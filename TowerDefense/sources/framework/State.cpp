@@ -6,6 +6,8 @@ State::State()
 	movementDelay = 20;
 	cameraType = CameraType::PERSPECTIVE;
 	inputs = new Inputs();
+	mousePositionX = 0;
+	mousePositionY = 0;
 }
 
 GLboolean State::isDoubleBufferActivated()

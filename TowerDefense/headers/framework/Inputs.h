@@ -7,10 +7,15 @@ class Inputs
 {
 
 public:
-	GLboolean move_front = false;
-	GLboolean move_back = false;
-	GLboolean move_left = false;
-	GLboolean move_right = false;
+	GLboolean move_player_front = false;
+	GLboolean move_player_back = false;
+	GLboolean move_player_left = false;
+	GLboolean move_player_right = false;
+
+	GLboolean move_camera_up = false;
+	GLboolean move_camera_down = false;
+	GLboolean move_camera_left = false;
+	GLboolean move_camera_right = false;
 
 };
 

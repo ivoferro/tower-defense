@@ -5,6 +5,9 @@
 class Game : public Scene
 {
 
+private:
+	void MouseMovement(int x, int y);
+
 public:
 	Game();
 	void Init();

@@ -27,4 +27,8 @@ public:
 	GLint getMovementDelay();
 	CameraType getCameraType();
 	Inputs * getInputs();
+
+	int mousePositionX;
+	int mousePositionY;
+
 };

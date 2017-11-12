@@ -2,18 +2,16 @@
 #include <GL/glut.h>
 #include "../../headers/scenes/Game.h"
 #include "../../headers/framework/Application.h"
+#include "../../headers/util/Math.h"
 #include "../../headers/gameobjects/Camera.h"
 #include "../../headers/gameobjects/Player.h"
 #include "../../headers/gameobjects/Ground.h"
 #include "../../headers/components/Transform.h"
+#include "../../headers/components/CharacterPhysics.h"
 
 Game::Game()
 {
 	Camera * c = new Camera();
-	Transform * trans = (Transform*)c->getComponentById("transform");
-	trans->position->x = 40;
-	trans->position->y = 40;
-	trans->position->z = 40;
 	gameObjects["camera"] = c;
 
 	Player * p = new Player();
@@ -85,9 +83,13 @@ void Game::Draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	
-	gluLookAt(0, 5, 0.5, 0, 0, 0, 0, 0, 1);
-	glTranslatef(0, -5, -0.5);
+
+	Transform * cameraT = (Transform*)((Camera*)gameObjects["camera"])->getComponentById("transform");
+	Transform * playerT = (Transform*)((Player*)gameObjects["player"])->getComponentById("transform");
+	gluLookAt(
+		cameraT->position->x, cameraT->position->y, cameraT->position->z,
+		playerT->position->x, playerT->position->y, playerT->position->z, 
+		0, 0, 1);
 
 	((Ground*)gameObjects["ground"])->draw();
 
@@ -100,25 +102,63 @@ void Game::Draw()
 
 void Game::Timer(int value)
 {
-	// FIXME remove this, just for demonstration purposes
+	Transform * cameraT = (Transform*)((Camera*)gameObjects["camera"])->getComponentById("transform");
 	Transform * playerT = (Transform*) ((Player*)gameObjects["player"])->getComponentById("transform");
+	CharacterPhysics * playerPhy = (CharacterPhysics*)((Player*)gameObjects["player"])->getComponentById("physics");
 
-	if (Application::instance()->getState()->getInputs()->move_front)
+	// acelarations
+	if (Application::instance()->getState()->getInputs()->move_player_front)
 	{
-		playerT->position->y -= 0.1;
+		if (playerPhy->velocity < playerPhy->maxFrontVelocity)
+		{
+			playerPhy->velocity += 0.01;
+		}
 	}
-	if (Application::instance()->getState()->getInputs()->move_back)
+	if (Application::instance()->getState()->getInputs()->move_player_back)
 	{
-		playerT->position->y += 0.1;
+		if (playerPhy->velocity > - playerPhy->maxBackVelocity)
+		{
+			playerPhy->velocity -= 0.01;
+		}
 	}
-	if (Application::instance()->getState()->getInputs()->move_left)
+	if (!Application::instance()->getState()->getInputs()->move_player_front &&
+		!Application::instance()->getState()->getInputs()->move_player_back)
 	{
-		playerT->position->x += 0.1;
+		playerPhy->velocity = 0;
 	}
-	if (Application::instance()->getState()->getInputs()->move_right)
+
+	// side movements
+	if (Application::instance()->getState()->getInputs()->move_player_left)
 	{
-		playerT->position->x -= 0.1;
+		if (playerPhy->sideVelocity < playerPhy->maxSideVelocity)
+		{
+			playerPhy->sideVelocity += 0.01;
+		}
 	}
+	if (Application::instance()->getState()->getInputs()->move_player_right)
+	{
+		if (playerPhy->sideVelocity > - playerPhy->maxSideVelocity)
+		{
+			playerPhy->sideVelocity -= 0.01;
+		}
+	}
+	if (!Application::instance()->getState()->getInputs()->move_player_left &&
+		!Application::instance()->getState()->getInputs()->move_player_right)
+	{
+		playerPhy->sideVelocity = 0;
+	}
+	
+	// changes player position according to front/back movements
+	playerT->position->x += playerPhy->velocity * cos(Math::radians(playerT->rotation->z - 90));
+	playerT->position->y += playerPhy->velocity * sin(Math::radians(playerT->rotation->z - 90));
+	// changes player position according to side movements
+	playerT->position->x += playerPhy->sideVelocity * cos(Math::radians(playerT->rotation->z));
+	playerT->position->y += playerPhy->sideVelocity * sin(Math::radians(playerT->rotation->z));
+
+	// changes camera position according to player
+	cameraT->position->x = playerT->position->x + (5 * cos(Math::radians(playerT->rotation->z + 90)) );
+	cameraT->position->y = playerT->position->y + (5 * sin(Math::radians(playerT->rotation->z + 90)) );
+	cameraT->position->z = 0.5 + playerT->position->z;
 }
 
 void Game::Key(unsigned char key, int x, int y)
@@ -127,19 +167,19 @@ void Game::Key(unsigned char key, int x, int y)
 	{
 	case 'w':
 	case 'W':
-		Application::instance()->getState()->getInputs()->move_front = true;
+		Application::instance()->getState()->getInputs()->move_player_front = true;
 		break;
 	case 's':
 	case 'S':
-		Application::instance()->getState()->getInputs()->move_back = true;
+		Application::instance()->getState()->getInputs()->move_player_back = true;
 		break;
 	case 'a':
 	case 'A':
-		Application::instance()->getState()->getInputs()->move_left = true;
+		Application::instance()->getState()->getInputs()->move_player_left = true;
 		break;
 	case 'd':
 	case 'D':
-		Application::instance()->getState()->getInputs()->move_right = true;
+		Application::instance()->getState()->getInputs()->move_player_right = true;
 		break;
 	}
 }
@@ -150,19 +190,19 @@ void Game::KeyUp(unsigned char key, int x, int y)
 	{
 	case 'w':
 	case 'W':
-		Application::instance()->getState()->getInputs()->move_front = false;
+		Application::instance()->getState()->getInputs()->move_player_front = false;
 		break;
 	case 's':
 	case 'S':
-		Application::instance()->getState()->getInputs()->move_back = false;
+		Application::instance()->getState()->getInputs()->move_player_back = false;
 		break;
 	case 'a':
 	case 'A':
-		Application::instance()->getState()->getInputs()->move_left = false;
+		Application::instance()->getState()->getInputs()->move_player_left = false;
 		break;
 	case 'd':
 	case 'D':
-		Application::instance()->getState()->getInputs()->move_right = false;
+		Application::instance()->getState()->getInputs()->move_player_right = false;
 		break;
 	}
 }
@@ -189,10 +229,42 @@ void Game::Mouse(int button, int mouse_state, int x, int y)
 
 void Game::MouseMotion(int x, int y)
 {
-
+	MouseMovement(x, y);
 }
 
 void Game::MousePassiveMotion(int x, int y)
 {
+	MouseMovement(x, y);
+}
 
+void Game::MouseMovement(int x, int y)
+{
+
+	Transform * playerT = (Transform*)((Player*)gameObjects["player"])->getComponentById("transform");
+
+	if (x > Application::instance()->getState()->mousePositionX)
+	{
+		// FIXME this logic should not be here, on the other hand there is not a
+		// callback that triggers when mouse is not moving
+		// Application::instance()->getState()->getInputs()->move_camera_left = true;
+		playerT->rotation->z -= 1;
+	}
+	else if (x < Application::instance()->getState()->mousePositionX)
+	{
+		// FIXME this logic should not be here, on the other hand there is not a
+		// callback that triggers when mouse is not moving
+		// Application::instance()->getState()->getInputs()->move_camera_right = true;
+		playerT->rotation->z += 1;
+	}
+
+	if (y > Application::instance()->getState()->mousePositionY)
+	{
+	}
+	else if (y < Application::instance()->getState()->mousePositionY)
+	{
+	}
+
+	// saves the last (x;y) positions to compare in the next call
+	Application::instance()->getState()->mousePositionX = x;
+	Application::instance()->getState()->mousePositionY = y;
 }
