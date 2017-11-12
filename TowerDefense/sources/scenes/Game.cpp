@@ -102,19 +102,69 @@ void Game::Timer(int value)
 {
 	// FIXME remove this, just for demonstration purposes
 	Transform * playerT = (Transform*) ((Player*)gameObjects["player"])->getComponentById("transform");
-	playerT->position->x += 0.0005;
-	playerT->position->y += 0.0005;
-	playerT->position->z += 0.0005;
+
+	if (Application::instance()->getState()->getInputs()->move_front)
+	{
+		playerT->position->y -= 0.1;
+	}
+	if (Application::instance()->getState()->getInputs()->move_back)
+	{
+		playerT->position->y += 0.1;
+	}
+	if (Application::instance()->getState()->getInputs()->move_left)
+	{
+		playerT->position->x += 0.1;
+	}
+	if (Application::instance()->getState()->getInputs()->move_right)
+	{
+		playerT->position->x -= 0.1;
+	}
 }
 
 void Game::Key(unsigned char key, int x, int y)
 {
-
+	switch (key)
+	{
+	case 'w':
+	case 'W':
+		Application::instance()->getState()->getInputs()->move_front = true;
+		break;
+	case 's':
+	case 'S':
+		Application::instance()->getState()->getInputs()->move_back = true;
+		break;
+	case 'a':
+	case 'A':
+		Application::instance()->getState()->getInputs()->move_left = true;
+		break;
+	case 'd':
+	case 'D':
+		Application::instance()->getState()->getInputs()->move_right = true;
+		break;
+	}
 }
 
 void Game::KeyUp(unsigned char key, int x, int y)
 {
-
+	switch (key)
+	{
+	case 'w':
+	case 'W':
+		Application::instance()->getState()->getInputs()->move_front = false;
+		break;
+	case 's':
+	case 'S':
+		Application::instance()->getState()->getInputs()->move_back = false;
+		break;
+	case 'a':
+	case 'A':
+		Application::instance()->getState()->getInputs()->move_left = false;
+		break;
+	case 'd':
+	case 'D':
+		Application::instance()->getState()->getInputs()->move_right = false;
+		break;
+	}
 }
 
 void Game::SpecialKey(int key, int x, int y)

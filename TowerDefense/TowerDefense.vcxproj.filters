@@ -92,5 +92,8 @@
     <ClInclude Include="headers\gameobjects\Ground.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="headers\framework\Inputs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

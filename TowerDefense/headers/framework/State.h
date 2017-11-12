@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <GL/glut.h>
+#include "Inputs.h"
 
 class State
 {
@@ -17,6 +18,7 @@ private:
 	GLboolean doubleBuffer;
 	GLint movementDelay;
 	CameraType cameraType;
+	Inputs * inputs;
 
 public:
 	State();
@@ -24,4 +26,5 @@ public:
 	GLboolean isDoubleBufferActivated();
 	GLint getMovementDelay();
 	CameraType getCameraType();
+	Inputs * getInputs();
 };

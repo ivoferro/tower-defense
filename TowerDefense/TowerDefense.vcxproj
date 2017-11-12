@@ -153,6 +153,7 @@
     <ClInclude Include="headers\framework\State.h" />
     <ClInclude Include="headers\components\Transform.h" />
     <ClInclude Include="headers\gameobjects\Player.h" />
+    <ClInclude Include="headers\framework\Inputs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
