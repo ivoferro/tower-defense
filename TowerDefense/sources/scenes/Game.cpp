@@ -8,6 +8,7 @@
 #include "../../headers/gameobjects/Player.h"
 #include "../../headers/gameobjects/Ground.h"
 #include "../../headers/gameobjects/OuterWalls.h"
+#include "../../headers/gameobjects/Door.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/CharacterPhysics.h"
 #include "../../headers/components/CameraSettings.h"
@@ -25,6 +26,13 @@ Game::Game()
 
 	Ground * ows = new Ground();
 	gameObjects["outerWalls"] = ows;
+
+	Door * d = new Door();
+	Transform * d1t = (Transform*)d->getComponentById("transform");
+	d1t->position->x = 10;
+	d1t->position->y = 50;
+	d1t->position->z = 1;
+	gameObjects["door1"] = d;
 
 	Enemy *e1 = new Enemy();
 	Transform * e1t = (Transform*)e1->getComponentById("transform");
@@ -114,10 +122,11 @@ void Game::Draw()
 	((Ground*)gameObjects["ground"])->draw();
 	((OuterWalls*)gameObjects["outerWalls"])->draw();
 
-	((Player*)gameObjects["player"])->draw();
+	((Door*)gameObjects["door1"])->draw();
 
-	//draws enemy 1
 	((Enemy*)gameObjects["enemy1"])->draw();
+
+	((Player*)gameObjects["player"])->draw();
 
 	glFlush();
 	if (Application::instance()->getState()->isDoubleBufferActivated())

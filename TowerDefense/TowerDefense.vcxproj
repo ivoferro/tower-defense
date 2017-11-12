@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="sources\gameobjects\Door.cpp" />
     <ClCompile Include="sources\components\CameraSettings.cpp" />
     <ClCompile Include="sources\gameobjects\OuterWalls.cpp" />
     <ClCompile Include="sources\util\Math.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="sources\components\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="headers\gameobjects\Door.h" />
     <ClInclude Include="headers\components\CameraSettings.h" />
     <ClInclude Include="headers\components\CharacterPhysics.h" />
     <ClInclude Include="headers\gameobjects\Enemy.h" />
