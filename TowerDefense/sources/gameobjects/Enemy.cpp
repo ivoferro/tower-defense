@@ -50,7 +50,7 @@ void Enemy::drawEnemy()
 	drawPolygon(vertices[0], vertices[4], vertices[7], vertices[3], cores[2]);
 	drawPolygon(vertices[2], vertices[3], vertices[7], vertices[6], cores[1]);
 	drawPolygon(vertices[5], vertices[4], vertices[0], vertices[1], cores[0]);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 void Enemy::draw()
@@ -59,7 +59,7 @@ void Enemy::draw()
 
 	glPushMatrix();
 	glTranslatef(t->position->x, t->position->y, t->position->z);
-	glScalef(1, 1, 1);
+	glScalef(3, 2, 1);
 	drawEnemy();
 	glPopMatrix();
 }

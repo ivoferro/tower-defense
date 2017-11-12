@@ -3,6 +3,7 @@
 #include "../../headers/scenes/Game.h"
 #include "../../headers/framework/Application.h"
 #include "../../headers/gameobjects/Camera.h"
+#include "../../headers/gameobjects/Enemy.h"
 #include "../../headers/gameobjects/Player.h"
 #include "../../headers/gameobjects/Ground.h"
 #include "../../headers/components/Transform.h"
@@ -21,6 +22,9 @@ Game::Game()
 
 	Ground * g = new Ground();
 	gameObjects["ground"] = g;
+
+	Enemy *e1 = new Enemy();
+	gameObjects["enemy1"] = e1;
 }
 
 void Game::Init()
@@ -92,6 +96,13 @@ void Game::Draw()
 	((Ground*)gameObjects["ground"])->draw();
 
 	((Player*)gameObjects["player"])->draw();
+
+	// draw of enemy1
+	glPushMatrix();
+	glTranslatef(-10, -10, -0.5);
+	glColor3f(0.5f, 0.5f, 0.5f);
+	((Enemy*)gameObjects["enemy1"])->draw();
+	glPopMatrix();
 
 	glFlush();
 	if (Application::instance()->getState()->isDoubleBufferActivated())
