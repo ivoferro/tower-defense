@@ -128,6 +128,8 @@
   <ItemGroup>
     <ClCompile Include="sources\util\Math.cpp" />
     <ClCompile Include="sources\components\CharacterPhysics.cpp" />
+    <ClCompile Include="sources\gameobjects\Enemy.cpp" />
+    <ClCompile Include="sources\gameobjects\GameText.cpp" />
     <ClCompile Include="sources\gameobjects\Ground.cpp" />
     <ClCompile Include="sources\gameobjects\Player.cpp" />
     <ClCompile Include="sources\gameobjects\Camera.cpp" />
@@ -144,6 +146,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\components\CharacterPhysics.h" />
+    <ClInclude Include="headers\gameobjects\Enemy.h" />
+    <ClInclude Include="headers\gameobjects\GameText.h" />
     <ClInclude Include="headers\gameobjects\Ground.h" />
     <ClInclude Include="headers\gameobjects\Camera.h" />
     <ClInclude Include="headers\framework\Component.h" />

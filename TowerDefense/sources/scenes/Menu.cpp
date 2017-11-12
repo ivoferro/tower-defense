@@ -2,6 +2,8 @@
 #include <GL/glut.h>
 #include "../../headers/scenes/Menu.h"
 #include "../../headers/framework/Application.h"
+#include "../../headers/components/Transform.h"
+#include "../../headers/gameobjects/GameText.h"
 
 Menu::Menu()
 {
@@ -66,14 +68,15 @@ void Menu::Draw()
 	glEnd();
 
 	// Some placeholder text for texting purposes
-	glColor3f(0, 1, 0);
-	char str[] = "First Scene! Press F2 to switch to second scene!";
-	glRasterPos2f(-1, -0.7);
-	int len = (int)strlen(str);
-	for (int i = 0; i < len; i++)
-	{
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, str[i]);
-	}
+	GameText * gt1 = new GameText("TESTE");
+	gameObjects["game_text"] = gt1;
+
+	Transform * trans = (Transform*)gt1->getComponentById("transform");
+	trans->position->x = 40;
+	trans->position->y = 40;
+	trans->position->z = 40;
+
+	gt1->DrawText();
 
 	glFlush();
 	if (Application::instance()->getState()->isDoubleBufferActivated())

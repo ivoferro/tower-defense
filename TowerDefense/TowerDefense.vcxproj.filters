@@ -48,6 +48,9 @@
     <ClCompile Include="sources\components\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sources\gameobjects\Enemy.cpp">
+	  <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="sources\gameobjects\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -58,6 +61,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sources\util\Math.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\gameobjects\GameText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,6 +98,9 @@
     <ClInclude Include="headers\components\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="headers\gameobjects\Enemy.h">
+	  <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="headers\gameobjects\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -105,6 +114,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\util\Math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\gameobjects\GameText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
