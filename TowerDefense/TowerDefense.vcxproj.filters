@@ -49,7 +49,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sources\gameobjects\Enemy.cpp">
-	  <Filter>Source Files</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sources\gameobjects\Player.cpp">
       <Filter>Source Files</Filter>
@@ -64,6 +64,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sources\gameobjects\GameText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\components\CameraSettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -99,7 +102,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\gameobjects\Enemy.h">
-	  <Filter>Header Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\gameobjects\Player.h">
       <Filter>Header Files</Filter>
@@ -117,6 +120,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\gameobjects\GameText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\components\CameraSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

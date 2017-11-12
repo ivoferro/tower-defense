@@ -7,17 +7,9 @@
 class State
 {
 
-public:
-	enum CameraType
-	{
-		ORTHO,
-		PERSPECTIVE
-	};
-
 private:
 	GLboolean doubleBuffer;
 	GLint movementDelay;
-	CameraType cameraType;
 	Inputs * inputs;
 
 public:
@@ -25,7 +17,6 @@ public:
 
 	GLboolean isDoubleBufferActivated();
 	GLint getMovementDelay();
-	CameraType getCameraType();
 	Inputs * getInputs();
 
 	int mousePositionX;

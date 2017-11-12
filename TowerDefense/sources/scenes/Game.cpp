@@ -9,6 +9,7 @@
 #include "../../headers/gameobjects/Ground.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/CharacterPhysics.h"
+#include "../../headers/components/CameraSettings.h"
 
 Game::Game()
 {
@@ -60,9 +61,11 @@ void Game::Reshape(int width, int height)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	switch (Application::instance()->getState()->getCameraType())
+	CameraSettings * camSettings = (CameraSettings*)((Camera*)gameObjects["camera"])->getComponentById("settings");
+
+	switch (camSettings->cameraType)
 	{
-	case State::CameraType::ORTHO:
+	case CameraSettings::CameraType::ORTHO:
 		if (width < height)
 		{
 			glOrtho(-20, 20, -20 * (GLdouble)height / width, 20 * (GLdouble)height / width, -100, 100);
@@ -73,8 +76,8 @@ void Game::Reshape(int width, int height)
 		}
 		break;
 
-	case State::CameraType::PERSPECTIVE:
-		gluPerspective(((Camera*)gameObjects["camera"])->fieldOfView, (GLfloat)width / height, 1, 100);
+	case CameraSettings::CameraType::PERSPECTIVE:
+		gluPerspective(camSettings->fieldOfView, (GLfloat)width / height, 1, 100);
 		break;
 	}
 
@@ -90,6 +93,7 @@ void Game::Draw()
 
 	Transform * cameraT = (Transform*)((Camera*)gameObjects["camera"])->getComponentById("transform");
 	Transform * playerT = (Transform*)((Player*)gameObjects["player"])->getComponentById("transform");
+	
 	gluLookAt(
 		cameraT->position->x, cameraT->position->y, cameraT->position->z,
 		playerT->position->x, playerT->position->y, playerT->position->z, 
@@ -116,6 +120,22 @@ void Game::Timer(int value)
 	Transform * cameraT = (Transform*)((Camera*)gameObjects["camera"])->getComponentById("transform");
 	Transform * playerT = (Transform*) ((Player*)gameObjects["player"])->getComponentById("transform");
 	CharacterPhysics * playerPhy = (CharacterPhysics*)((Player*)gameObjects["player"])->getComponentById("physics");
+	CameraSettings * camSettings = (CameraSettings*)((Camera*)gameObjects["camera"])->getComponentById("settings");
+
+	if (Application::instance()->getState()->getInputs()->zoom_in)
+	{
+		if (camSettings->distanceFromTarget > camSettings->minDistanceFromTarget)
+		{
+			camSettings->distanceFromTarget -= 0.5;
+		}
+	}
+	if (Application::instance()->getState()->getInputs()->zoom_out)
+	{
+		if (camSettings->distanceFromTarget < camSettings->maxDistanceFromTarget)
+		{
+			camSettings->distanceFromTarget += 0.5;
+		}
+	}
 
 	// acelarations
 	if (Application::instance()->getState()->getInputs()->move_player_front)
@@ -167,8 +187,8 @@ void Game::Timer(int value)
 	playerT->position->y += playerPhy->sideVelocity * sin(Math::radians(playerT->rotation->z));
 
 	// changes camera position according to player
-	cameraT->position->x = playerT->position->x + (5 * cos(Math::radians(playerT->rotation->z + 90)) );
-	cameraT->position->y = playerT->position->y + (5 * sin(Math::radians(playerT->rotation->z + 90)) );
+	cameraT->position->x = playerT->position->x + (camSettings->distanceFromTarget * cos(Math::radians(playerT->rotation->z + 90)) );
+	cameraT->position->y = playerT->position->y + (camSettings->distanceFromTarget * sin(Math::radians(playerT->rotation->z + 90)) );
 	cameraT->position->z = 0.5 + playerT->position->z;
 }
 
@@ -191,6 +211,12 @@ void Game::Key(unsigned char key, int x, int y)
 	case 'd':
 	case 'D':
 		Application::instance()->getState()->getInputs()->move_player_right = true;
+		break;
+	case '1':
+		Application::instance()->getState()->getInputs()->zoom_in = true;
+		break;
+	case '2':
+		Application::instance()->getState()->getInputs()->zoom_out = true;
 		break;
 	}
 }
@@ -215,6 +241,12 @@ void Game::KeyUp(unsigned char key, int x, int y)
 	case 'D':
 		Application::instance()->getState()->getInputs()->move_player_right = false;
 		break;
+	case '1':
+		Application::instance()->getState()->getInputs()->zoom_in = false;
+		break;
+	case '2':
+		Application::instance()->getState()->getInputs()->zoom_out = false;
+		break;
 	}
 }
 
@@ -235,7 +267,6 @@ void Game::SpecialKeyUp(int key, int x, int y)
 
 void Game::Mouse(int button, int mouse_state, int x, int y)
 {
-
 }
 
 void Game::MouseMotion(int x, int y)

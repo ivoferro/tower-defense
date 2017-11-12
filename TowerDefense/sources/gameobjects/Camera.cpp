@@ -1,22 +1,13 @@
 #include "../../headers/gameobjects/Camera.h"
 #include "../../headers/components/Transform.h"
+#include "../../headers/components/CameraSettings.h"
 
 Camera::Camera()
 {
-	fieldOfView = 60;
 	addComponent("transform", new Transform());
-}
-
-Camera::Camera(GLfloat theFieldOfView)
-{
-	fieldOfView = theFieldOfView;
-	addComponent("transform", new Transform());
+	addComponent("settings", new CameraSettings());
 }
 
 Camera::~Camera()
-{
-}
-
-void Camera::draw()
 {
 }

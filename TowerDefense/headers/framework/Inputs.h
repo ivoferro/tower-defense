@@ -12,10 +12,8 @@ public:
 	GLboolean move_player_left = false;
 	GLboolean move_player_right = false;
 
-	GLboolean move_camera_up = false;
-	GLboolean move_camera_down = false;
-	GLboolean move_camera_left = false;
-	GLboolean move_camera_right = false;
+	GLboolean zoom_in = false;
+	GLboolean zoom_out = false;
 
 };
 
