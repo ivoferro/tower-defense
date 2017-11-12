@@ -7,6 +7,7 @@
 #include "../../headers/gameobjects/Enemy.h"
 #include "../../headers/gameobjects/Player.h"
 #include "../../headers/gameobjects/Ground.h"
+#include "../../headers/gameobjects/OuterWalls.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/CharacterPhysics.h"
 #include "../../headers/components/CameraSettings.h"
@@ -21,6 +22,9 @@ Game::Game()
 
 	Ground * g = new Ground();
 	gameObjects["ground"] = g;
+
+	Ground * ows = new Ground();
+	gameObjects["outerWalls"] = ows;
 
 	Enemy *e1 = new Enemy();
 	gameObjects["enemy1"] = e1;
@@ -100,6 +104,7 @@ void Game::Draw()
 		0, 0, 1);
 
 	((Ground*)gameObjects["ground"])->draw();
+	((OuterWalls*)gameObjects["outerWalls"])->draw();
 
 	((Player*)gameObjects["player"])->draw();
 
