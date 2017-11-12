@@ -61,22 +61,22 @@ void Menu::Draw()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	glBegin(GL_POLYGON);
-		glVertex3f(0.5, -0.5, -0.5);
-		glVertex3f(-0.5, -0.5, -0.5);
-		glVertex3f(-0.5, 0.5, -0.5);
-		glVertex3f(0.5, 0.5, -0.5);
+		glColor3f(0, 0, 1);
+		glVertex3f(1, -0.5, -0.5);
+		glVertex3f(-1, -0.5, -0.5);
+		glVertex3f(-1, 0.5, -0.5);
+		glVertex3f(1, 0.5, -0.5);
 	glEnd();
 
 	// Some placeholder text for texting purposes
-	GameText * gt1 = new GameText("TESTE");
-	gameObjects["game_text"] = gt1;
-
-	Transform * trans = (Transform*)gt1->getComponentById("transform");
-	trans->position->x = 40;
-	trans->position->y = 40;
-	trans->position->z = 40;
-
-	gt1->DrawText();
+	char text[] = "Press F2 to start the game!";
+	glColor3f(0, 1, 0);
+	glRasterPos2f(-0.58, 0);
+	int len = (int)strlen(text);
+	for (int i = 0; i < len; i++)
+	{
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]);
+	}
 
 	glFlush();
 	if (Application::instance()->getState()->isDoubleBufferActivated())
