@@ -128,6 +128,7 @@
   <ItemGroup>
     <ClCompile Include="sources\gameobjects\Door.cpp" />
     <ClCompile Include="sources\components\CameraSettings.cpp" />
+    <ClCompile Include="sources\gameobjects\MenuBar.cpp" />
     <ClCompile Include="sources\gameobjects\OuterWalls.cpp" />
     <ClCompile Include="sources\util\Math.cpp" />
     <ClCompile Include="sources\components\CharacterPhysics.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="headers\gameobjects\Camera.h" />
     <ClInclude Include="headers\framework\Component.h" />
     <ClInclude Include="headers\framework\GameObject.h" />
+    <ClInclude Include="headers\gameobjects\MenuBar.h" />
     <ClInclude Include="headers\gameobjects\OuterWalls.h" />
     <ClInclude Include="headers\scenes\Game.h" />
     <ClInclude Include="headers\scenes\Menu.h" />

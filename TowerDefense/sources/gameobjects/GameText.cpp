@@ -6,20 +6,18 @@ GameText::GameText()
 	addComponent("transform", new Transform());
 }
 
-GameText::GameText(char* theText)
+GameText::~GameText()
 {
-	text = theText;
-	addComponent("transform", new Transform());
 }
 
-void GameText::DrawText()
+void GameText::drawText(char * text)
 {
+	
 	Transform * t = (Transform*)getComponentById("transform");
-
+	glRasterPos2f(t->position->x, t->position->y);
 	// Some placeholder text for texting purposes
 	glColor3f(0, 1, 0);
 
-	glRasterPos2f(-1, -0.7);
 	int len = (int)strlen(text);
 	for (int i = 0; i < len; i++)
 	{

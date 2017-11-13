@@ -8,10 +8,9 @@ class GameText : public GameObject
 
 public:
 	GameText();
-	GameText(char* text);
 	~GameText();
 
 	char* text;
 
-	void DrawText();
+	void drawText(char * text);
 };

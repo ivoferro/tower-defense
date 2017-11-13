@@ -72,3 +72,4 @@ void Tower::drawTower()
 
 	glEnd();
 }
+
