@@ -9,6 +9,7 @@
 #include "../../headers/gameobjects/Ground.h"
 #include "../../headers/gameobjects/OuterWalls.h"
 #include "../../headers/gameobjects/Door.h"
+#include "../../headers/gameobjects/Tower.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/CharacterPhysics.h"
 #include "../../headers/components/CameraSettings.h"
@@ -26,7 +27,7 @@ Game::Game()
 	Ground * g = new Ground();
 	gameObjects["ground"] = g;
 
-	Ground * ows = new Ground();
+	OuterWalls * ows = new OuterWalls();
 	gameObjects["outerWalls"] = ows;
 
 	Door * d = new Door();
@@ -35,6 +36,13 @@ Game::Game()
 	d1t->position->y = 50;
 	d1t->position->z = 1.5;
 	gameObjects["door1"] = d;
+
+	Tower * t = new Tower();
+	Transform * tt = (Transform*)t->getComponentById("transform");
+	tt->position->x = 10;
+	tt->position->y = 10;
+	gameObjects["tower"] = t;
+
 
 	Enemy *e1 = new Enemy();
 	Transform * e1t = (Transform*)e1->getComponentById("transform");
@@ -127,6 +135,8 @@ void Game::Draw()
 
 	((Enemy*)gameObjects["enemy1"])->draw();
 
+	((Tower*)gameObjects["tower"])->draw();
+
 	((Player*)gameObjects["player"])->draw();
 
 	glFlush();
@@ -209,6 +219,11 @@ void Game::Timer(int value)
 	cameraT->position->x = playerT->position->x + (camSettings->distanceFromTarget * cos(Math::radians(playerT->rotation->z + 90)) );
 	cameraT->position->y = playerT->position->y + (camSettings->distanceFromTarget * sin(Math::radians(playerT->rotation->z + 90)) );
 	cameraT->position->z = 0.5 + playerT->position->z;
+
+	//rotate crystall
+	Transform * towerT = (Transform*)((Camera*)gameObjects["tower"])->getComponentById("transform");
+	towerT->rotation->z += 1;
+
 }
 
 void Game::Key(unsigned char key, int x, int y)
@@ -300,7 +315,6 @@ void Game::MousePassiveMotion(int x, int y)
 
 void Game::MouseMovement(int x, int y)
 {
-
 	Transform * playerT = (Transform*)((Player*)gameObjects["player"])->getComponentById("transform");
 
 	if (x > Application::instance()->getState()->mousePositionX)
