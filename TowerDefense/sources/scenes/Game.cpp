@@ -19,6 +19,8 @@ Game::Game()
 	gameObjects["camera"] = c;
 
 	Player * p = new Player();
+	Transform * pt = (Transform*)p->getComponentById("transform");
+	pt->position->z = 1.5;
 	gameObjects["player"] = p;
 
 	Ground * g = new Ground();
@@ -31,27 +33,26 @@ Game::Game()
 	Transform * d1t = (Transform*)d->getComponentById("transform");
 	d1t->position->x = 10;
 	d1t->position->y = 50;
-	d1t->position->z = 1;
+	d1t->position->z = 1.5;
 	gameObjects["door1"] = d;
 
 	Enemy *e1 = new Enemy();
 	Transform * e1t = (Transform*)e1->getComponentById("transform");
 	e1t->position->x = -5;
 	e1t->position->y = -5;
+	e1t->position->z = 1;
 	gameObjects["enemy1"] = e1;
 }
 
 void Game::Init()
 {
-	glClearColor(0.8, 0.3, 0.3, 0.0);
-
 	glEnable(GL_POINT_SMOOTH);
 	glEnable(GL_LINE_SMOOTH);
 	glEnable(GL_POLYGON_SMOOTH);
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthMask(GL_TRUE);
-	glDepthFunc(GL_EQUAL);
+	glDepthFunc(GL_LEQUAL);
 	glDepthRange(0.0f, 1.0f);
 
 	glutPostRedisplay();
@@ -95,7 +96,7 @@ void Game::Reshape(int width, int height)
 		break;
 
 	case CameraSettings::CameraType::PERSPECTIVE:
-		gluPerspective(camSettings->fieldOfView, (GLfloat)width / height, 0, 100);
+		gluPerspective(camSettings->fieldOfView, (GLfloat)width / height, 0.1, 100);
 		break;
 	}
 
@@ -106,7 +107,7 @@ void Game::Reshape(int width, int height)
 
 void Game::Draw()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(.5f, .5f, .8f, 0.0f);
 	glClearDepth(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
