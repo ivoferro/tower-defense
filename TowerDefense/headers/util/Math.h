@@ -12,6 +12,8 @@ class Math
 
 public:
 	static GLfloat radians(GLfloat degrees);
+	static GLfloat min(GLfloat a, GLfloat b);
+	static GLfloat max(GLfloat a, GLfloat b);
 
 };
 
