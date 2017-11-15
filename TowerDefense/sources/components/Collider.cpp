@@ -24,9 +24,16 @@ void Collider::testCollision(GameObject * otherObject)
 {
 	if (doCollide(otherObject))
 	{
-		onCollisionEnterCallback(otherObject);
-		((Collider*)otherObject->getComponentById("collider"))->onCollisionEnterCallback(parent);
+		triggerCollisionCallback(otherObject);
+		
+		Collider * otherCollider = (Collider*)otherObject->getComponentById("collider");
+		otherCollider->triggerCollisionCallback(parent);
 	}
+}
+
+void Collider::triggerCollisionCallback(GameObject * collidingObject)
+{
+	(parent->*onCollisionEnterCallback)(collidingObject);
 }
 
 GLboolean Collider::doCollide(GameObject * otherObject)
@@ -73,7 +80,7 @@ GLboolean Collider::doCollide(GameObject * otherObject)
 	return false;
 }
 
-void Collider::registerOnCollisionEnterCallback(void(*OnCollisionEnterCallback)(GameObject *collidingObject))
+void Collider::registerOnCollisionEnterCallback(void(GameObject::*OnCollisionEnterCallback)(GameObject *collidingObject))
 {
 	this->onCollisionEnterCallback = OnCollisionEnterCallback;
 }
@@ -84,8 +91,8 @@ GLboolean Collider::doCollide(GLfloat * ac1, GLfloat * ac2, GLfloat * bc1, GLflo
 	{
 		GLfloat aMin = Math::min(ac1[i], ac2[i]);
 		GLfloat aMax = Math::max(ac1[i], ac2[i]);
-		GLfloat bMin = Math::min(ac1[i], ac2[i]);
-		GLfloat bMax = Math::max(ac1[i], ac2[i]);
+		GLfloat bMin = Math::min(bc1[i], bc2[i]);
+		GLfloat bMax = Math::max(bc1[i], bc2[i]);
 
 		if (aMin > bMax || aMax < bMax)
 		{

@@ -11,6 +11,7 @@
 #include "../../headers/gameobjects/Door.h"
 #include "../../headers/gameobjects/Tower.h"
 #include "../../headers/components/Transform.h"
+#include "../../headers/components/Collider.h"
 #include "../../headers/components/CharacterPhysics.h"
 #include "../../headers/components/CameraSettings.h"
 
@@ -146,6 +147,8 @@ void Game::Draw()
 
 void Game::Timer(int value)
 {
+	detectCollisions();
+
 	Transform * cameraT = (Transform*)((Camera*)gameObjects["camera"])->getComponentById("transform");
 	Transform * playerT = (Transform*) ((Player*)gameObjects["player"])->getComponentById("transform");
 	CharacterPhysics * playerPhy = (CharacterPhysics*)((Player*)gameObjects["player"])->getComponentById("physics");
@@ -342,4 +345,23 @@ void Game::MouseMovement(int x, int y)
 	// saves the last (x;y) positions to compare in the next call
 	Application::instance()->getState()->mousePositionX = x;
 	Application::instance()->getState()->mousePositionY = y;
+}
+
+void Game::detectCollisions()
+{
+	for (std::map<std::string, GameObject*>::iterator it1 = gameObjects.begin(); it1 != gameObjects.end(); ++it1)
+	{
+		GameObject * obj = it1->second;
+		if (obj->hasComponent("collider"))
+		{
+			for (std::map<std::string, GameObject*>::iterator it2 = gameObjects.begin(); it2 != gameObjects.end(); ++it2)
+			{
+				GameObject * otherObj = it2->second;
+				if (obj != otherObj)
+				{
+					((Collider*)obj->getComponentById("collider"))->testCollision(otherObj);
+				}
+			}
+		}
+	}
 }

@@ -1,9 +1,11 @@
 #include "../../headers/gameobjects/Enemy.h"
 #include "../../headers/components/Transform.h"
+#include "../../headers/components/Collider.h"
 
 Enemy::Enemy()
 {
 	addComponent("transform", new Transform());
+	setUpCollider();
 }
 
 
@@ -22,6 +24,22 @@ void Enemy::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLf
 	glVertex3fv(c);
 	glVertex3fv(d);
 	glEnd();
+}
+
+void Enemy::setUpCollider()
+{
+	Collider * collider = new Collider(this);
+	collider->addBox(
+		new Transform::Coordinates(0.5, 0.5, 1),
+		new Transform::Coordinates(-0.5, -0.5, -1));
+
+	collider->registerOnCollisionEnterCallback(&GameObject::onCollisionEnter);
+	addComponent("collider", collider);
+}
+
+void Enemy::onCollisionEnter(GameObject * collidingObject)
+{
+	printf("Enemy is colliding!!!");
 }
 
 void Enemy::drawEnemy()

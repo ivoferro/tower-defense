@@ -14,6 +14,7 @@ public:
 	{
 	public:
 		Coordinates();
+		Coordinates(GLfloat x, GLfloat y, GLfloat z);
 		GLfloat x;
 		GLfloat y;
 		GLfloat z;

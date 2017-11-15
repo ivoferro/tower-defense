@@ -16,9 +16,11 @@ private:
 	std::list<std::pair<Transform::Coordinates*, Transform::Coordinates*>> boxes;
 
 	// Callback to be called when a collision happens
-	void (*onCollisionEnterCallback) (GameObject * collidingObject);
+	void (GameObject::*onCollisionEnterCallback) (GameObject * collidingObject);
 
 	GLboolean doCollide(GLfloat * ac1, GLfloat * ac2, GLfloat * bc1, GLfloat * bc2);
+
+	void triggerCollisionCallback(GameObject * collidingObject);
 
 public:
 	Collider(GameObject * parent);
@@ -37,6 +39,6 @@ public:
 	// Does NOT call the onCollisionEnter no matter what
 	GLboolean doCollide(GameObject * otherObject);
 
-	void registerOnCollisionEnterCallback(void (*OnCollisionEnterCallback) (GameObject * collidingObject));
+	void registerOnCollisionEnterCallback(void (GameObject::*OnCollisionEnterCallback) (GameObject * collidingObject));
 
 };

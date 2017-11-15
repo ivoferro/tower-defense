@@ -46,3 +46,7 @@ std::list<Component*> GameObject::getComponentsByTag(std::string tag)
 
 	return componentsWithTag;
 }
+
+void GameObject::onCollisionEnter(GameObject * collidingObject)
+{
+}

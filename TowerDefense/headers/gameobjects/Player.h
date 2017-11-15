@@ -10,6 +10,8 @@ class Player : public GameObject
 private:
 	void drawCube();
 	void drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat cor[]);
+	void setUpCollider();
+	void onCollisionEnter(GameObject * collidingObject) override;
 
 public:
 	Player();
