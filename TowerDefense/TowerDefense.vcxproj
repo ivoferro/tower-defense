@@ -126,6 +126,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="sources\components\Life.cpp" />
+    <ClCompile Include="sources\gameobjects\LifeBar.cpp" />
     <ClCompile Include="sources\gameobjects\Door.cpp" />
     <ClCompile Include="sources\components\CameraSettings.cpp" />
     <ClCompile Include="sources\gameobjects\OuterWalls.cpp" />
@@ -170,6 +172,8 @@
     <ClInclude Include="headers\framework\Inputs.h" />
     <ClInclude Include="headers\util\Math.h" />
     <ClInclude Include="headers\gameobjects\Tower.h" />
+    <ClInclude Include="headers\gameobjects\LifeBar.h" />
+    <ClInclude Include="headers\components\Life.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

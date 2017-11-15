@@ -1,5 +1,6 @@
 #include "../../headers/gameobjects/Tower.h"
 #include "../../headers/components/Transform.h"
+#include "../../headers/gameobjects/LifeBar.h"
 
 Tower::Tower()
 {
@@ -19,6 +20,23 @@ void Tower::draw()
 		glRotatef(t->rotation->z, 0, 0, 1);
 		glScalef(3, 3, 3);
 		drawTower();
+	glPopMatrix();
+
+	// ****** LIFEBAR ******
+	LifeBar *lifebar = new LifeBar();
+	Transform * lt = (Transform*)lifebar->getComponentById("transformLifeBar");
+	//Transform * e1t_lifebar = (Transform*)e1->getComponentById("transformLifeBar");
+	lt->position->x = t->position->x;
+	lt->position->y = t->position->y;
+	lt->position->z = (t->position->z + 6.2); // ... + val -> above the object
+
+	// change  between 0 and 1 scale->x when lifebar need to be reduced
+	lt->scale->x = t->scale->x + 1;
+	lt->scale->y = t->scale->y + 0.1;
+	lt->scale->z = t->scale->z + 0.1;
+
+	glPushMatrix();
+	lifebar->draw();
 	glPopMatrix();
 }
 

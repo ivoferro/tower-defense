@@ -1,6 +1,7 @@
 #include "../../headers/gameobjects/Player.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/CharacterPhysics.h"
+#include "../../headers/gameobjects/LifeBar.h"
 
 Player::Player()
 {
@@ -58,6 +59,25 @@ void Player::draw()
 			drawCube();
 		glPopMatrix();
 
+	glPopMatrix();
+
+	// ****** LIFEBAR ******
+	LifeBar *lifebar = new LifeBar();
+	Transform * lt = (Transform*)lifebar->getComponentById("transformLifeBar");
+	//Transform * e1t_lifebar = (Transform*)e1->getComponentById("transformLifeBar");
+	lt->position->x = t->position->x;
+	lt->position->y = t->position->y;
+	lt->position->z = (t->position->z + 1.2); // ... + val -> above the object
+
+											  // change between 0 and 1 scale->x when lifebar need to be reduced
+	lt->scale->x = t->scale->x + 0.5;
+	lt->scale->y = t->scale->y + 0.1;
+	lt->scale->z = t->scale->z + 0.1;
+
+	lt->rotation->z = t->rotation->z;
+
+	glPushMatrix();
+	lifebar->draw();
 	glPopMatrix();
 }
 

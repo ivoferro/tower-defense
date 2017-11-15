@@ -13,6 +13,7 @@
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/CharacterPhysics.h"
 #include "../../headers/components/CameraSettings.h"
+#include "../../headers/gameobjects/LifeBar.h"
 
 Game::Game()
 {
@@ -50,6 +51,20 @@ Game::Game()
 	e1t->position->y = -5;
 	e1t->position->z = 1;
 	gameObjects["enemy1"] = e1;
+
+	/*
+	// FIXME only testing
+	LifeBar * l = new LifeBar();
+	Transform * lt = (Transform*)l->getComponentById("transform");
+	lt->position->x = -2;
+	lt->position->y = -2;
+	lt->position->z = 3;
+	// change scale->x when lifebar need to be reduced between 0 and 1
+	lt->scale->x = 0.3;
+	lt->scale->y = 0.1;
+	lt->scale->z = 0.1;
+	gameObjects["lifebar"] = l;
+	*/
 }
 
 void Game::Init()
@@ -138,6 +153,9 @@ void Game::Draw()
 	((Tower*)gameObjects["tower"])->draw();
 
 	((Player*)gameObjects["player"])->draw();
+
+	// FIXME only testing
+	//((LifeBar*)gameObjects["lifebar"])->draw();
 
 	glFlush();
 	if (Application::instance()->getState()->isDoubleBufferActivated())

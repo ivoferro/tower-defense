@@ -1,17 +1,21 @@
 #pragma once
 
+#include <stdlib.h>
+#include <GL/glut.h>
 #include "../framework/GameObject.h"
 
-class Enemy : public GameObject
+class LifeBar : public GameObject
 {
+
 private:
-	//LifeBar *lifebar;
-	void drawEnemy();
+	void drawLifeBar(GLfloat color[]);
 	void drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat cor[]);
 
+
 public:
-	Enemy();
-	~Enemy();
+	LifeBar();
+	~LifeBar();
 	void draw();
+	
 };
 
