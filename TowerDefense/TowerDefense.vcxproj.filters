@@ -82,6 +82,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sources\components\Life.cpp">
+		<Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\gameobjects\MenuBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\components\Collider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -153,6 +159,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\components\Life.h">
+		<Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\gameobjects\MenuBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\components\Collider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -30,10 +30,10 @@ void Tower::draw()
 	lt->position->y = t->position->y;
 	lt->position->z = (t->position->z + 6.2); // ... + val -> above the object
 
-	// change  between 0 and 1 scale->x when lifebar need to be reduced
-	lt->scale->x = t->scale->x + 1;
-	lt->scale->y = t->scale->y + 0.1;
-	lt->scale->z = t->scale->z + 0.1;
+	// change scale->x between 0 and 1 scale->x when lifebar need to be reduced
+	lt->scale->x = 0.2;
+	lt->scale->y = 0.1;
+	lt->scale->z = 0.1;
 
 	glPushMatrix();
 	lifebar->draw();
@@ -90,3 +90,4 @@ void Tower::drawTower()
 
 	glEnd();
 }
+

@@ -16,8 +16,10 @@ public:
 	GameObject();
 	~GameObject();
 
+	GLboolean hasComponent(std::string id);
 	GLboolean addComponent(std::string id, Component *aComponent);
 	Component * getComponentById(std::string id);
 	std::list<Component*> getComponentsByTag(std::string tag);
+	virtual void onCollisionEnter(GameObject * collidingObject);
 
 };

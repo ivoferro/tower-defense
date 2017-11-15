@@ -7,6 +7,7 @@ class Game : public Scene
 
 private:
 	void MouseMovement(int x, int y);
+	void detectCollisions();
 
 public:
 	Game();

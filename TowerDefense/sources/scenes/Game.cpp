@@ -11,6 +11,7 @@
 #include "../../headers/gameobjects/Door.h"
 #include "../../headers/gameobjects/Tower.h"
 #include "../../headers/components/Transform.h"
+#include "../../headers/components/Collider.h"
 #include "../../headers/components/CharacterPhysics.h"
 #include "../../headers/components/CameraSettings.h"
 #include "../../headers/gameobjects/LifeBar.h"
@@ -52,19 +53,6 @@ Game::Game()
 	e1t->position->z = 1;
 	gameObjects["enemy1"] = e1;
 
-	/*
-	// FIXME only testing
-	LifeBar * l = new LifeBar();
-	Transform * lt = (Transform*)l->getComponentById("transform");
-	lt->position->x = -2;
-	lt->position->y = -2;
-	lt->position->z = 3;
-	// change scale->x when lifebar need to be reduced between 0 and 1
-	lt->scale->x = 0.3;
-	lt->scale->y = 0.1;
-	lt->scale->z = 0.1;
-	gameObjects["lifebar"] = l;
-	*/
 }
 
 void Game::Init()
@@ -154,9 +142,6 @@ void Game::Draw()
 
 	((Player*)gameObjects["player"])->draw();
 
-	// FIXME only testing
-	//((LifeBar*)gameObjects["lifebar"])->draw();
-
 	glFlush();
 	if (Application::instance()->getState()->isDoubleBufferActivated())
 		glutSwapBuffers();
@@ -164,6 +149,8 @@ void Game::Draw()
 
 void Game::Timer(int value)
 {
+	detectCollisions();
+
 	Transform * cameraT = (Transform*)((Camera*)gameObjects["camera"])->getComponentById("transform");
 	Transform * playerT = (Transform*) ((Player*)gameObjects["player"])->getComponentById("transform");
 	CharacterPhysics * playerPhy = (CharacterPhysics*)((Player*)gameObjects["player"])->getComponentById("physics");
@@ -360,4 +347,23 @@ void Game::MouseMovement(int x, int y)
 	// saves the last (x;y) positions to compare in the next call
 	Application::instance()->getState()->mousePositionX = x;
 	Application::instance()->getState()->mousePositionY = y;
+}
+
+void Game::detectCollisions()
+{
+	for (std::map<std::string, GameObject*>::iterator it1 = gameObjects.begin(); it1 != gameObjects.end(); ++it1)
+	{
+		GameObject * obj = it1->second;
+		if (obj->hasComponent("collider"))
+		{
+			for (std::map<std::string, GameObject*>::iterator it2 = gameObjects.begin(); it2 != gameObjects.end(); ++it2)
+			{
+				GameObject * otherObj = it2->second;
+				if (obj != otherObj)
+				{
+					((Collider*)obj->getComponentById("collider"))->testCollision(otherObj);
+				}
+			}
+		}
+	}
 }

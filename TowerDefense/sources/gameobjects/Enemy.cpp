@@ -1,11 +1,14 @@
 #include "../../headers/gameobjects/Enemy.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/gameobjects/LifeBar.h"
+#include "../../headers/components/Collider.h"
 
 Enemy::Enemy()
 {
 	addComponent("transform", new Transform());
 	addComponent("transformLifeBar", new Transform());
+
+	setUpCollider();
 
 }
 
@@ -25,6 +28,22 @@ void Enemy::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLf
 	glVertex3fv(c);
 	glVertex3fv(d);
 	glEnd();
+}
+
+void Enemy::setUpCollider()
+{
+	Collider * collider = new Collider(this);
+	collider->addBox(
+		new Transform::Coordinates(0.5, 0.5, 1),
+		new Transform::Coordinates(-0.5, -0.5, -1));
+
+	collider->registerOnCollisionEnterCallback(&GameObject::onCollisionEnter);
+	addComponent("collider", collider);
+}
+
+void Enemy::onCollisionEnter(GameObject * collidingObject)
+{
+	printf("Enemy is colliding!!!");
 }
 
 void Enemy::drawEnemy()
@@ -78,10 +97,10 @@ void Enemy::draw()
 	lt->position->y = t->position->y;
 	lt->position->z = (t->position->z + 1.2); // ... + val -> above the object
 
-	// change between 0 and 1 scale->x when lifebar need to be reduced
-	lt->scale->x = t->scale->x + 0.5;
-	lt->scale->y = t->scale->y + 0.1;
-	lt->scale->z = t->scale->z + 0.1;
+	// change scale->x between 0 and 1 scale->x when lifebar need to be reduced
+	lt->scale->x = 0.85;
+	lt->scale->y = 0.1;
+	lt->scale->z = 0.1;
 
 	glPushMatrix();
 	lifebar->draw();

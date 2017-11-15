@@ -128,8 +128,10 @@
   <ItemGroup>
     <ClCompile Include="sources\components\Life.cpp" />
     <ClCompile Include="sources\gameobjects\LifeBar.cpp" />
+    <ClCompile Include="sources\components\Collider.cpp" />
     <ClCompile Include="sources\gameobjects\Door.cpp" />
     <ClCompile Include="sources\components\CameraSettings.cpp" />
+    <ClCompile Include="sources\gameobjects\MenuBar.cpp" />
     <ClCompile Include="sources\gameobjects\OuterWalls.cpp" />
     <ClCompile Include="sources\util\Math.cpp" />
     <ClCompile Include="sources\components\CharacterPhysics.cpp" />
@@ -151,6 +153,7 @@
     <ClCompile Include="sources\gameobjects\Tower.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="headers\components\Collider.h" />
     <ClInclude Include="headers\gameobjects\Door.h" />
     <ClInclude Include="headers\components\CameraSettings.h" />
     <ClInclude Include="headers\components\CharacterPhysics.h" />
@@ -160,6 +163,7 @@
     <ClInclude Include="headers\gameobjects\Camera.h" />
     <ClInclude Include="headers\framework\Component.h" />
     <ClInclude Include="headers\framework\GameObject.h" />
+    <ClInclude Include="headers\gameobjects\MenuBar.h" />
     <ClInclude Include="headers\gameobjects\OuterWalls.h" />
     <ClInclude Include="headers\scenes\Game.h" />
     <ClInclude Include="headers\scenes\Menu.h" />

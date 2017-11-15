@@ -12,9 +12,14 @@ GameObject::~GameObject()
 	}
 }
 
+GLboolean GameObject::hasComponent(std::string id)
+{
+	return (components.find(id) != components.end());
+}
+
 GLboolean GameObject::addComponent(std::string id, Component * aComponent)
 {
-	if (components.find(id) != components.end()) {
+	if (hasComponent(id)) {
 		return false;
 	}
 
@@ -40,4 +45,8 @@ std::list<Component*> GameObject::getComponentsByTag(std::string tag)
 	}
 
 	return componentsWithTag;
+}
+
+void GameObject::onCollisionEnter(GameObject * collidingObject)
+{
 }
