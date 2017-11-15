@@ -8,6 +8,7 @@
 #include "../../headers/gameobjects/Player.h"
 #include "../../headers/gameobjects/Ground.h"
 #include "../../headers/gameobjects/OuterWalls.h"
+#include "../../headers/gameobjects/Wall.h"
 #include "../../headers/gameobjects/Door.h"
 #include "../../headers/gameobjects/Tower.h"
 #include "../../headers/components/Transform.h"
@@ -31,6 +32,20 @@ Game::Game()
 
 	OuterWalls * ows = new OuterWalls();
 	gameObjects["outerWalls"] = ows;
+
+	Wall * wall = new Wall();
+	Transform * wallTransform = (Transform*)wall->getComponentById("transform");
+	wallTransform->position->x = -30;
+	wallTransform->position->y = 20;
+	wallTransform->position->z = 2;
+	wallTransform->scale->x = 20;
+	wallTransform->scale->y = 10;
+	wallTransform->scale->z = 4;
+	Collider * wallCollider = (Collider*)wall->getComponentById("collider");
+	wallCollider->addBox(
+		new Transform::Coordinates(10, 5, 2),
+		new Transform::Coordinates(-10, -5, -2));
+	gameObjects["wall1"] = wall;
 
 	Door * d = new Door();
 	Transform * d1t = (Transform*)d->getComponentById("transform");
@@ -140,6 +155,8 @@ void Game::Draw()
 
 	((Tower*)gameObjects["tower"])->draw();
 
+	((Wall*)gameObjects["wall1"])->draw();
+
 	((Player*)gameObjects["player"])->draw();
 
 	glFlush();
@@ -151,84 +168,13 @@ void Game::Timer(int value)
 {
 	detectCollisions();
 
-	Transform * cameraT = (Transform*)((Camera*)gameObjects["camera"])->getComponentById("transform");
-	Transform * playerT = (Transform*) ((Player*)gameObjects["player"])->getComponentById("transform");
-	CharacterPhysics * playerPhy = (CharacterPhysics*)((Player*)gameObjects["player"])->getComponentById("physics");
-	CameraSettings * camSettings = (CameraSettings*)((Camera*)gameObjects["camera"])->getComponentById("settings");
+	((Player*)gameObjects["player"])->timerActions();
 
-	if (Application::instance()->getState()->getInputs()->zoom_in)
-	{
-		if (camSettings->distanceFromTarget > camSettings->minDistanceFromTarget)
-		{
-			camSettings->distanceFromTarget -= 0.5;
-		}
-	}
-	if (Application::instance()->getState()->getInputs()->zoom_out)
-	{
-		if (camSettings->distanceFromTarget < camSettings->maxDistanceFromTarget)
-		{
-			camSettings->distanceFromTarget += 0.5;
-		}
-	}
-
-	// acelarations
-	if (Application::instance()->getState()->getInputs()->move_player_front)
-	{
-		if (playerPhy->velocity < playerPhy->maxFrontVelocity)
-		{
-			playerPhy->velocity += 0.01;
-		}
-	}
-	if (Application::instance()->getState()->getInputs()->move_player_back)
-	{
-		if (playerPhy->velocity > - playerPhy->maxBackVelocity)
-		{
-			playerPhy->velocity -= 0.01;
-		}
-	}
-	if (!Application::instance()->getState()->getInputs()->move_player_front &&
-		!Application::instance()->getState()->getInputs()->move_player_back)
-	{
-		playerPhy->velocity = 0;
-	}
-
-	// side movements
-	if (Application::instance()->getState()->getInputs()->move_player_left)
-	{
-		if (playerPhy->sideVelocity < playerPhy->maxSideVelocity)
-		{
-			playerPhy->sideVelocity += 0.01;
-		}
-	}
-	if (Application::instance()->getState()->getInputs()->move_player_right)
-	{
-		if (playerPhy->sideVelocity > - playerPhy->maxSideVelocity)
-		{
-			playerPhy->sideVelocity -= 0.01;
-		}
-	}
-	if (!Application::instance()->getState()->getInputs()->move_player_left &&
-		!Application::instance()->getState()->getInputs()->move_player_right)
-	{
-		playerPhy->sideVelocity = 0;
-	}
-	
-	// changes player position according to front/back movements
-	playerT->position->x += playerPhy->velocity * cos(Math::radians(playerT->rotation->z - 90));
-	playerT->position->y += playerPhy->velocity * sin(Math::radians(playerT->rotation->z - 90));
-	// changes player position according to side movements
-	playerT->position->x += playerPhy->sideVelocity * cos(Math::radians(playerT->rotation->z));
-	playerT->position->y += playerPhy->sideVelocity * sin(Math::radians(playerT->rotation->z));
-
-	// changes camera position according to player
-	cameraT->position->x = playerT->position->x + (camSettings->distanceFromTarget * cos(Math::radians(playerT->rotation->z + 90)) );
-	cameraT->position->y = playerT->position->y + (camSettings->distanceFromTarget * sin(Math::radians(playerT->rotation->z + 90)) );
-	cameraT->position->z = 0.5 + playerT->position->z;
+	moveCamera();
 
 	//rotate crystall
 	Transform * towerT = (Transform*)((Camera*)gameObjects["tower"])->getComponentById("transform");
 	towerT->rotation->z += 1;
-
 }
 
 void Game::Key(unsigned char key, int x, int y)
@@ -366,4 +312,31 @@ void Game::detectCollisions()
 			}
 		}
 	}
+}
+
+void Game::moveCamera()
+{
+	Transform * cameraT = (Transform*)((Camera*)gameObjects["camera"])->getComponentById("transform");
+	Transform * playerT = (Transform*)((Player*)gameObjects["player"])->getComponentById("transform");
+	CameraSettings * camSettings = (CameraSettings*)((Camera*)gameObjects["camera"])->getComponentById("settings");
+
+	if (Application::instance()->getState()->getInputs()->zoom_in)
+	{
+		if (camSettings->distanceFromTarget > camSettings->minDistanceFromTarget)
+		{
+			camSettings->distanceFromTarget -= 0.5;
+		}
+	}
+	if (Application::instance()->getState()->getInputs()->zoom_out)
+	{
+		if (camSettings->distanceFromTarget < camSettings->maxDistanceFromTarget)
+		{
+			camSettings->distanceFromTarget += 0.5;
+		}
+	}
+
+	// changes camera position according to player
+	cameraT->position->x = playerT->position->x + (camSettings->distanceFromTarget * cos(Math::radians(playerT->rotation->z + 90)));
+	cameraT->position->y = playerT->position->y + (camSettings->distanceFromTarget * sin(Math::radians(playerT->rotation->z + 90)));
+	cameraT->position->z = 0.5 + playerT->position->z;
 }

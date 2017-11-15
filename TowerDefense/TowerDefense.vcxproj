@@ -133,6 +133,7 @@
     <ClCompile Include="sources\components\CameraSettings.cpp" />
     <ClCompile Include="sources\gameobjects\MenuBar.cpp" />
     <ClCompile Include="sources\gameobjects\OuterWalls.cpp" />
+    <ClCompile Include="sources\gameobjects\Wall.cpp" />
     <ClCompile Include="sources\util\Math.cpp" />
     <ClCompile Include="sources\components\CharacterPhysics.cpp" />
     <ClCompile Include="sources\gameobjects\Enemy.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="headers\framework\GameObject.h" />
     <ClInclude Include="headers\gameobjects\MenuBar.h" />
     <ClInclude Include="headers\gameobjects\OuterWalls.h" />
+    <ClInclude Include="headers\gameobjects\Wall.h" />
     <ClInclude Include="headers\scenes\Game.h" />
     <ClInclude Include="headers\scenes\Menu.h" />
     <ClInclude Include="headers\framework\Scene.h" />

@@ -3,6 +3,8 @@
 #include "../../headers/components/Collider.h"
 #include "../../headers/components/CharacterPhysics.h"
 #include "../../headers/gameobjects/LifeBar.h"
+#include "../../headers/framework/Application.h"
+#include "../../headers/util/Math.h"
 
 Player::Player()
 {
@@ -108,8 +110,8 @@ void Player::setUpCollider()
 {
 	Collider * collider = new Collider(this);
 	collider->addBox(
-		new Transform::Coordinates(0.5, 0.5, 1.25), 
-		new Transform::Coordinates(-0.5, -0.5, -1.25));
+		new Transform::Coordinates(0.75, 0.75, 1.25), 
+		new Transform::Coordinates(-0.75, -0.75, -1.25));
 
 	collider->registerOnCollisionEnterCallback(&GameObject::onCollisionEnter);
 	addComponent("collider", collider);
@@ -146,4 +148,59 @@ void Player::drawCube()
 	drawPolygon(vertices[4], vertices[7], vertices[3], vertices[0], colors[3]);
 	drawPolygon(vertices[1], vertices[5], vertices[4], vertices[0], colors[4]);
 	drawPolygon(vertices[2], vertices[3], vertices[7], vertices[6], colors[5]);
+}
+
+void Player::timerActions()
+{
+	Transform * playerT = (Transform*) getComponentById("transform");
+	CharacterPhysics * playerPhy = (CharacterPhysics*) getComponentById("physics");
+
+	// acelarations
+	if (Application::instance()->getState()->getInputs()->move_player_front)
+	{
+		if (playerPhy->velocity < playerPhy->maxFrontVelocity)
+		{
+			playerPhy->velocity += 0.01;
+		}
+	}
+	if (Application::instance()->getState()->getInputs()->move_player_back)
+	{
+		if (playerPhy->velocity > -playerPhy->maxBackVelocity)
+		{
+			playerPhy->velocity -= 0.01;
+		}
+	}
+	if (!Application::instance()->getState()->getInputs()->move_player_front &&
+		!Application::instance()->getState()->getInputs()->move_player_back)
+	{
+		playerPhy->velocity = 0;
+	}
+
+	// side movements
+	if (Application::instance()->getState()->getInputs()->move_player_left)
+	{
+		if (playerPhy->sideVelocity < playerPhy->maxSideVelocity)
+		{
+			playerPhy->sideVelocity += 0.01;
+		}
+	}
+	if (Application::instance()->getState()->getInputs()->move_player_right)
+	{
+		if (playerPhy->sideVelocity > -playerPhy->maxSideVelocity)
+		{
+			playerPhy->sideVelocity -= 0.01;
+		}
+	}
+	if (!Application::instance()->getState()->getInputs()->move_player_left &&
+		!Application::instance()->getState()->getInputs()->move_player_right)
+	{
+		playerPhy->sideVelocity = 0;
+	}
+
+	// changes player position according to front/back movements
+	playerT->position->x += playerPhy->velocity * cos(Math::radians(playerT->rotation->z - 90));
+	playerT->position->y += playerPhy->velocity * sin(Math::radians(playerT->rotation->z - 90));
+	// changes player position according to side movements
+	playerT->position->x += playerPhy->sideVelocity * cos(Math::radians(playerT->rotation->z));
+	playerT->position->y += playerPhy->sideVelocity * sin(Math::radians(playerT->rotation->z));
 }
