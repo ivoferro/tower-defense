@@ -25,6 +25,7 @@ void Collider::testCollision(GameObject * otherObject)
 	if (doCollide(otherObject))
 	{
 		onCollisionEnterCallback(otherObject);
+		((Collider*)otherObject->getComponentById("collider"))->onCollisionEnterCallback(parent);
 	}
 }
 
@@ -38,14 +39,30 @@ GLboolean Collider::doCollide(GameObject * otherObject)
 	std::list<std::pair<Transform::Coordinates*, Transform::Coordinates*>> otherBoxes
 		= ((Collider*)(otherObject->getComponentById("collider")))->getBoxes();
 
+	Transform * parentTrans = (Transform*)parent->getComponentById("transform");
+	Transform * otherTrans = (Transform*)otherObject->getComponentById("transform");
+
 	for (const std::pair<Transform::Coordinates*, Transform::Coordinates*> box : boxes)
 	{
-		GLfloat ac1[] = { std::get<0>(box)->x, std::get<0>(box)->y, std::get<0>(box)->z };
-		GLfloat ac2[] = { std::get<1>(box)->x, std::get<1>(box)->y, std::get<1>(box)->z };
+		GLfloat ac1[] = { 
+			std::get<0>(box)->x + parentTrans->position->x,
+			std::get<0>(box)->y + parentTrans->position->y,
+			std::get<0>(box)->z + parentTrans->position->z };
+		GLfloat ac2[] = { 
+			std::get<1>(box)->x + parentTrans->position->x, 
+			std::get<1>(box)->y + parentTrans->position->y, 
+			std::get<1>(box)->z + parentTrans->position->z };
+
 		for (const std::pair<Transform::Coordinates*, Transform::Coordinates*> otherBox : otherBoxes)
 		{
-			GLfloat bc1[] = { std::get<0>(otherBox)->x, std::get<0>(otherBox)->y, std::get<0>(otherBox)->z };
-			GLfloat bc2[] = { std::get<1>(otherBox)->x, std::get<1>(otherBox)->y, std::get<1>(otherBox)->z };
+			GLfloat bc1[] = { 
+				std::get<0>(otherBox)->x + otherTrans->position->x,
+				std::get<0>(otherBox)->y + otherTrans->position->y, 
+				std::get<0>(otherBox)->z + otherTrans->position->z };
+			GLfloat bc2[] = { 
+				std::get<1>(otherBox)->x + otherTrans->position->x,
+				std::get<1>(otherBox)->y + otherTrans->position->y,
+				std::get<1>(otherBox)->z + otherTrans->position->z };
 
 			if (doCollide(ac1, ac2, bc1, bc2))
 			{
