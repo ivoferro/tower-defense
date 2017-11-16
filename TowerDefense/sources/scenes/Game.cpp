@@ -166,9 +166,13 @@ void Game::Draw()
 
 void Game::Timer(int value)
 {
-	detectCollisions();
-
+	// has to be this order, to prevent player from crossing objects
+	// could be more clean!
+	((Player*)gameObjects["player"])->isColliding = false;
 	((Player*)gameObjects["player"])->timerActions();
+	detectCollisions();
+	((Player*)gameObjects["player"])->move();
+	// order ends here
 
 	moveCamera();
 

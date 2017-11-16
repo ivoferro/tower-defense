@@ -120,6 +120,7 @@ void Player::setUpCollider()
 void Player::onCollisionEnter(GameObject * collidingObject)
 {
 	printf("Player is colliding!!!");
+	isColliding = true;
 }
 
 void Player::drawCube()
@@ -197,10 +198,25 @@ void Player::timerActions()
 		playerPhy->sideVelocity = 0;
 	}
 
+	oldTransform.position->x = playerT->position->x;
+	oldTransform.position->y = playerT->position->y;
+	oldTransform.position->z = playerT->position->z;
+
 	// changes player position according to front/back movements
 	playerT->position->x += playerPhy->velocity * cos(Math::radians(playerT->rotation->z - 90));
 	playerT->position->y += playerPhy->velocity * sin(Math::radians(playerT->rotation->z - 90));
 	// changes player position according to side movements
 	playerT->position->x += playerPhy->sideVelocity * cos(Math::radians(playerT->rotation->z));
 	playerT->position->y += playerPhy->sideVelocity * sin(Math::radians(playerT->rotation->z));
+}
+
+void Player::move()
+{
+	if (isColliding)
+	{
+		Transform * playerT = (Transform*)getComponentById("transform");
+		playerT->position->x = oldTransform.position->x;
+		playerT->position->y = oldTransform.position->y;
+		playerT->position->z = oldTransform.position->z;
+	}
 }
