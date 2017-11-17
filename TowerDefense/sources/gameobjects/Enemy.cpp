@@ -2,6 +2,7 @@
 #include "../../headers/components/Transform.h"
 #include "../../headers/gameobjects/LifeBar.h"
 #include "../../headers/components/Collider.h"
+#include "../../headers/util/Illumination.h"
 
 Enemy::Enemy()
 {
@@ -9,7 +10,6 @@ Enemy::Enemy()
 	addComponent("transformLifeBar", new Transform());
 
 	setUpCollider();
-
 }
 
 
@@ -17,12 +17,17 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat cor[])
+void Enemy::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat normal[], GLfloat color[])
 {
-	/* draw a polygon via list of vertices */
-
 	glBegin(GL_POLYGON);
-	glColor3fv(cor);
+
+	glMaterialfv(GL_FRONT, GL_AMBIENT, color);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, Illumination::NO_MATERIAL);
+	glMaterialfv(GL_FRONT, GL_SHININESS, Illumination::NO_SHININESS);
+	glMaterialfv(GL_FRONT, GL_EMISSION, Illumination::NO_MATERIAL);
+
+	glColor3fv(color);
 	glVertex3fv(a);
 	glVertex3fv(b);
 	glVertex3fv(c);
@@ -57,28 +62,33 @@ void Enemy::drawEnemy()
 		{ -0.5, -0.5, -0.5 },
 		{ 0.5, -0.5, -0.5 } };
 
+	GLfloat normals[][3] = {
+		{ 0,  1,  0 },
+		{ -1,  0,  0 },
+		{ 0,  -1, 0 },
+		{ 1,  0,  0 },
+		{ 0,  0,  1 },
+		{ 0,  0, -1 } };
+
 	GLfloat colors[][3] = {
 		{ 0.5, 0.0, 0.0 },
 		{ 0.0, 0.5, 0.0 },
 		{ 0.0, 0.0, 0.5 },
-		{ 1.0, 0.0, 0.0 },
-		{ 0.0, 1.0, 0.0 },
-		{ 0.0, 0.0, 1.0 } };
+		{ 1.0, 1.0, 0.0 },
+		{ 0.0, 1.0, 1.0 },
+		{ 1.0, 0.0, 1.0 } };
 
-	drawPolygon(vertices[0], vertices[3], vertices[2], vertices[1], colors[0]);
-	drawPolygon(vertices[1], vertices[2], vertices[6], vertices[5], colors[1]);
-	drawPolygon(vertices[5], vertices[6], vertices[7], vertices[4], colors[2]);
-	drawPolygon(vertices[4], vertices[7], vertices[3], vertices[0], colors[3]);
-	drawPolygon(vertices[1], vertices[5], vertices[4], vertices[0], colors[4]);
-	drawPolygon(vertices[2], vertices[3], vertices[7], vertices[6], colors[5]);
+	drawPolygon(vertices[0], vertices[3], vertices[2], vertices[1], normals[0], colors[0]);
+	drawPolygon(vertices[1], vertices[2], vertices[6], vertices[5], normals[1], colors[1]);
+	drawPolygon(vertices[5], vertices[6], vertices[7], vertices[4], normals[2], colors[2]);
+	drawPolygon(vertices[4], vertices[7], vertices[3], vertices[0], normals[3], colors[3]);
+	drawPolygon(vertices[1], vertices[5], vertices[4], vertices[0], normals[4], colors[4]);
+	drawPolygon(vertices[2], vertices[3], vertices[7], vertices[6], normals[5], colors[5]);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 void Enemy::draw()
 {
-	
-	
-
 	// ****** ENEMY ******
 	Transform * t = (Transform*)getComponentById("transform");
 
@@ -103,8 +113,5 @@ void Enemy::draw()
 
 	glPushMatrix();
 	lifebar->draw();
-	glPopMatrix();
-
-	
+	glPopMatrix();	
 }
-

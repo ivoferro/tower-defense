@@ -5,6 +5,7 @@
 #include "../../headers/gameobjects/LifeBar.h"
 #include "../../headers/framework/Application.h"
 #include "../../headers/util/Math.h"
+#include "../../headers/util/Illumination.h"
 
 Player::Player()
 {
@@ -22,8 +23,10 @@ void Player::draw()
 {
 	Transform * t = (Transform*) getComponentById("transform");
 
-	GLfloat color1[3] = { 1.0f, 0.9f, 0.5f };
-	GLfloat color2[3] = { 0.9f, 0.5f, 1.0f };
+	GLfloat color1[3] = { 0.15f, 0.15f, 0.45f };
+	GLfloat color2[3] = { 0.25f, 0.5f, 0.75f };
+
+	GLfloat headColor[3] = { 0.75f, 0.5f, 0.25f };
 
 	glPushMatrix();
 		glTranslatef(t->position->x, t->position->y, t->position->z);
@@ -42,6 +45,11 @@ void Player::draw()
 
 		// head
 		glPushMatrix();
+			glMaterialfv(GL_FRONT, GL_AMBIENT, headColor);
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, headColor);
+			glMaterialfv(GL_FRONT, GL_SPECULAR, Illumination::NO_MATERIAL);
+			glMaterialfv(GL_FRONT, GL_SHININESS, Illumination::NO_SHININESS);
+			glMaterialfv(GL_FRONT, GL_EMISSION, Illumination::NO_MATERIAL);
 			glTranslatef(0, 0, 1.5);
 			glutSolidSphere(0.5, 16, 16);
 		glPopMatrix();
@@ -130,21 +138,11 @@ void Player::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GL
 {
 	glBegin(GL_POLYGON);
 
-	/*GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
-	GLfloat mat_ambient[] = { 0.7, 0.7, 0.7, 1.0 };
-	GLfloat mat_ambient_color[] = { 0.8, 0.8, 0.2, 1.0 };
-	GLfloat mat_diffuse[] = { 0.1, 0.5, 0.8, 1.0 };
-	GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat no_shininess[] = { 0.0 };
-	GLfloat low_shininess[] = { 5.0 };
-	GLfloat high_shininess[] = { 100.0 };
-	GLfloat mat_emission[] = { 0.3, 0.2, 0.2, 0.0 };*/
-
 	glMaterialfv(GL_FRONT, GL_AMBIENT, color);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
-	/*glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, low_shininess);
-	glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);*/
+	glMaterialfv(GL_FRONT, GL_SPECULAR, Illumination::NO_MATERIAL);
+	glMaterialfv(GL_FRONT, GL_SHININESS, Illumination::NO_SHININESS);
+	glMaterialfv(GL_FRONT, GL_EMISSION, Illumination::NO_MATERIAL);
 
 	glColor3fv(color);
 	glVertex3fv(a);

@@ -340,8 +340,8 @@ void Game::moveCamera()
 
 void Game::setLight()
 {
-	GLfloat light_ambient[] = { 0.8f, 0.7f, 0.7f, 1.0f };
-	GLfloat light_diffuse[] = { 0.9f, 0.9f, 0.9f, 1.0f };
+	GLfloat light_ambient[] = { 0.9f, 0.85f, 0.85f, 1.0f };
+	GLfloat light_diffuse[] = { 0.95f, 0.95f, 0.95f, 1.0f };
 	GLfloat light_specular[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	GLfloat light_position[] = { 0.0f, 5.0f, 0.0f, 0.0f };
 

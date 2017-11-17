@@ -1,5 +1,6 @@
 #include "../../headers/gameobjects/OuterWalls.h"
 #include "../../headers/components/Transform.h"
+#include "../../headers/util/Illumination.h"
 
 OuterWalls::OuterWalls()
 {
@@ -35,6 +36,9 @@ void OuterWalls::drawWalls(GLfloat width, GLfloat height)
 			swap = (swap == 0) ? 1 : 0;
 			glMaterialfv(GL_FRONT, GL_AMBIENT, colors1[swap]);
 			glMaterialfv(GL_FRONT, GL_DIFFUSE, colors1[swap]);
+			glMaterialfv(GL_FRONT, GL_SPECULAR, Illumination::NO_MATERIAL);
+			glMaterialfv(GL_FRONT, GL_SHININESS, Illumination::NO_SHININESS);
+			glMaterialfv(GL_FRONT, GL_EMISSION, Illumination::NO_MATERIAL);
 
 			// Wall 1
 			glBegin(GL_POLYGON);

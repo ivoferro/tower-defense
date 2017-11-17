@@ -7,7 +7,7 @@ class Enemy : public GameObject
 private:
 	//LifeBar *lifebar;
 	void drawEnemy();
-	void drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat cor[]);
+	void drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat normal[], GLfloat color[]);
 	void setUpCollider();
 	void onCollisionEnter(GameObject * collidingObject);
 

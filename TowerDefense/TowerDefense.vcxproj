@@ -134,6 +134,7 @@
     <ClCompile Include="sources\gameobjects\MenuBar.cpp" />
     <ClCompile Include="sources\gameobjects\OuterWalls.cpp" />
     <ClCompile Include="sources\gameobjects\Wall.cpp" />
+    <ClCompile Include="sources\util\Illumination.cpp" />
     <ClCompile Include="sources\util\Math.cpp" />
     <ClCompile Include="sources\components\CharacterPhysics.cpp" />
     <ClCompile Include="sources\gameobjects\Enemy.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="headers\components\Transform.h" />
     <ClInclude Include="headers\gameobjects\Player.h" />
     <ClInclude Include="headers\framework\Inputs.h" />
+    <ClInclude Include="headers\util\Illumination.h" />
     <ClInclude Include="headers\util\Math.h" />
     <ClInclude Include="headers\gameobjects\Tower.h" />
     <ClInclude Include="headers\gameobjects\LifeBar.h" />

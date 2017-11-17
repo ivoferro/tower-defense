@@ -1,6 +1,7 @@
 #include "../../headers/gameobjects/Wall.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
+#include "../../headers/util/Illumination.h"
 
 Wall::Wall()
 {
@@ -60,22 +61,14 @@ void Wall::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat d[], GLflo
 {
 	glBegin(GL_POLYGON);
 
-	GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
-	GLfloat mat_ambient_color[] = { 0.8, 0.8, 0.2, 1.0 };
-	GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat no_shininess[] = { 0.0 };
-	GLfloat low_shininess[] = { 5.0 };
-	GLfloat high_shininess[] = { 100.0 };
-	GLfloat mat_emission[] = { 0.3, 0.2, 0.2, 0.0 };
-
 	GLfloat mat_ambient[] = { 0.5, 0.2, 0.2, 1.0 };
 	GLfloat mat_diffuse[] = { 0.5, 0.2, 0.2, 1.0 };
 
 	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-	glMaterialfv(GL_FRONT, GL_SHININESS, low_shininess);
-	//glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, Illumination::MATERIAL_SPECULAR);
+	glMaterialfv(GL_FRONT, GL_SHININESS, Illumination::HIGH_SHININESS);
+	glMaterialfv(GL_FRONT, GL_EMISSION, Illumination::MATERIAL_EMISSION);
 
 	glNormal3fv(normal);
 	glVertex3fv(a);
