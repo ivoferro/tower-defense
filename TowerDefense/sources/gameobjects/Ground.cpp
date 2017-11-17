@@ -26,7 +26,8 @@ void Ground::draw()
 		for (j = -dimension; j <= dimension; j += step)
 		{
 			swap = (swap == 0) ? 1 : 0;
-			glColor3fv(colors[swap]);
+			glMaterialfv(GL_FRONT, GL_AMBIENT, colors[swap]);
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, colors[swap]);
 			glBegin(GL_POLYGON);
 			glNormal3f(0, 0, 1);
 			glVertex3f(i + step, j + step, 0);

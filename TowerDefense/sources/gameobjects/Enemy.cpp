@@ -43,7 +43,6 @@ void Enemy::setUpCollider()
 
 void Enemy::onCollisionEnter(GameObject * collidingObject)
 {
-	printf("Enemy is colliding!!!");
 }
 
 void Enemy::drawEnemy()

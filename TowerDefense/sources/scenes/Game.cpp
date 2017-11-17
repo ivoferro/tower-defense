@@ -47,13 +47,6 @@ Game::Game()
 		new Transform::Coordinates(-10, -5, -2));
 	gameObjects["wall1"] = wall;
 
-	Door * d = new Door();
-	Transform * d1t = (Transform*)d->getComponentById("transform");
-	d1t->position->x = 10;
-	d1t->position->y = 50;
-	d1t->position->z = 1.5;
-	gameObjects["door1"] = d;
-
 	Tower * t = new Tower();
 	Transform * tt = (Transform*)t->getComponentById("transform");
 	tt->position->x = 10;
@@ -80,6 +73,8 @@ void Game::Init()
 	glDepthMask(GL_TRUE);
 	glDepthFunc(GL_LEQUAL);
 	glDepthRange(0.0f, 1.0f);
+
+	setLight();
 
 	glutPostRedisplay();
 }
@@ -149,8 +144,6 @@ void Game::Draw()
 	((Ground*)gameObjects["ground"])->draw();
 	((OuterWalls*)gameObjects["outerWalls"])->draw();
 
-	((Door*)gameObjects["door1"])->draw();
-
 	((Enemy*)gameObjects["enemy1"])->draw();
 
 	((Tower*)gameObjects["tower"])->draw();
@@ -166,7 +159,7 @@ void Game::Draw()
 
 void Game::Timer(int value)
 {
-	// has to be this order, to prevent player from crossing objects
+	// has to be in this order, to prevent player from crossing objects
 	// could be more clean!
 	((Player*)gameObjects["player"])->isColliding = false;
 	((Player*)gameObjects["player"])->timerActions();
@@ -343,4 +336,21 @@ void Game::moveCamera()
 	cameraT->position->x = playerT->position->x + (camSettings->distanceFromTarget * cos(Math::radians(playerT->rotation->z + 90)));
 	cameraT->position->y = playerT->position->y + (camSettings->distanceFromTarget * sin(Math::radians(playerT->rotation->z + 90)));
 	cameraT->position->z = 0.5 + playerT->position->z;
+}
+
+void Game::setLight()
+{
+	GLfloat light_ambient[] = { 0.8f, 0.7f, 0.7f, 1.0f };
+	GLfloat light_diffuse[] = { 0.9f, 0.9f, 0.9f, 1.0f };
+	GLfloat light_specular[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+	GLfloat light_position[] = { 0.0f, 5.0f, 0.0f, 0.0f };
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+
+	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, 0);
 }

@@ -9,6 +9,7 @@ private:
 	void MouseMovement(int x, int y);
 	void detectCollisions();
 	void moveCamera();
+	void setLight();
 
 public:
 	Game();

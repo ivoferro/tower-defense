@@ -40,30 +40,49 @@ void Wall::drawCube()
 		{ -0.5, -0.5, -0.5 },
 		{ 0.5, -0.5, -0.5 } };
 
-	GLfloat colors[][3] = {
-		{ 0.5, 0.0, 0.0 },
-		{ 0.0, 0.5, 0.0 },
-		{ 0.0, 0.0, 0.5 },
-		{ 1.0, 0.0, 0.0 },
-		{ 0.0, 1.0, 0.0 },
-		{ 0.0, 0.0, 1.0 } };
+	GLfloat normals[][3] = { 
+		{  0,  1,  0 },
+		{ -1,  0,  0 },
+		{  0,  -1, 0 },
+		{  1,  0,  0 },
+		{  0,  0,  1 },
+		{  0,  0, -1 } };
 
-	drawPolygon(vertices[0], vertices[3], vertices[2], vertices[1], colors[0]);
-	drawPolygon(vertices[1], vertices[2], vertices[6], vertices[5], colors[1]);
-	drawPolygon(vertices[5], vertices[6], vertices[7], vertices[4], colors[2]);
-	drawPolygon(vertices[4], vertices[7], vertices[3], vertices[0], colors[3]);
-	drawPolygon(vertices[1], vertices[5], vertices[4], vertices[0], colors[4]);
-	drawPolygon(vertices[2], vertices[3], vertices[7], vertices[6], colors[5]);
+	drawPolygon(vertices[0], vertices[3], vertices[2], vertices[1], normals[0]);
+	drawPolygon(vertices[1], vertices[2], vertices[6], vertices[5], normals[1]);
+	drawPolygon(vertices[5], vertices[6], vertices[7], vertices[4], normals[2]);
+	drawPolygon(vertices[4], vertices[7], vertices[3], vertices[0], normals[3]);
+	drawPolygon(vertices[1], vertices[5], vertices[4], vertices[0], normals[4]);
+	drawPolygon(vertices[2], vertices[3], vertices[7], vertices[6], normals[5]);
 }
 
-void Wall::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat d[], GLfloat cor[])
+void Wall::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat d[], GLfloat normal[])
 {
 	glBegin(GL_POLYGON);
-	glColor3fv(cor);
+
+	GLfloat no_mat[] = { 0.0, 0.0, 0.0, 1.0 };
+	GLfloat mat_ambient_color[] = { 0.8, 0.8, 0.2, 1.0 };
+	GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat no_shininess[] = { 0.0 };
+	GLfloat low_shininess[] = { 5.0 };
+	GLfloat high_shininess[] = { 100.0 };
+	GLfloat mat_emission[] = { 0.3, 0.2, 0.2, 0.0 };
+
+	GLfloat mat_ambient[] = { 0.5, 0.2, 0.2, 1.0 };
+	GLfloat mat_diffuse[] = { 0.5, 0.2, 0.2, 1.0 };
+
+	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+	glMaterialfv(GL_FRONT, GL_SHININESS, low_shininess);
+	//glMaterialfv(GL_FRONT, GL_EMISSION, mat_emission);
+
+	glNormal3fv(normal);
 	glVertex3fv(a);
 	glVertex3fv(b);
 	glVertex3fv(c);
 	glVertex3fv(d);
+
 	glEnd();
 }
 

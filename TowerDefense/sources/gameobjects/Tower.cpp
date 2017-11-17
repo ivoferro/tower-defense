@@ -44,46 +44,63 @@ void Tower::drawTower()
 {
 	glBegin(GL_TRIANGLES);
 
-	glColor3f(0.3f, 0.3f, 0.3f);
+	GLfloat color1[3] = { 0.3f, 0.3f, 0.3f };
+	GLfloat color2[3] = { 0.5f, 0.5f, 0.5f };
+	GLfloat color3[3] = { 0.7f, 0.7f, 0.7f };
+	GLfloat color4[3] = { 0.9f, 0.9f, 0.9f };
+
+	glMaterialfv(GL_FRONT, GL_AMBIENT, color1);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, color1);
+	glNormal3f(0.5, 0, 0); // FIXME
 	glVertex3f(0, 0, 2);
 	glVertex3f(0, -0.5, 1);
 	glVertex3f(0.5, 0, 1);
 
-	glColor3f(0.5f, 0.5f, 0.5f);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, color2);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, color2);
+	glNormal3f(0.5, 0, 0); // FIXME
 	glVertex3f(0, 0, 2);
 	glVertex3f(0.5, 0, 1);
 	glVertex3f(0, 0.5, 1);
 
-	glColor3f(0.2f, 0.5f, 0.8f);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, color3);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, color3);
+	glNormal3f(-0.5, 0, 0); // FIXME
 	glVertex3f(0, 0, 2);
 	glVertex3f(0, 0.5, 1);
 	glVertex3f(-0.5, 0, 1);
 
-
-	glColor3f(0.7f, 0.2f, 0.4f);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, color4);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, color4);
+	glNormal3f(-0.5, 0, 0); // FIXME
 	glVertex3f(0, 0, 2);
 	glVertex3f(-0.5, 0, 1);
 	glVertex3f(0, -0.5, 1);
-	glEnd();
 
-	glBegin(GL_TRIANGLES);
-
-	glColor3f(0.5f, 0.5f, 0.5f);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, color1);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, color1);
+	glNormal3f(0.5, 0, 0); // FIXME
 	glVertex3f(0, 0, 0);
 	glVertex3f(0, -0.5, 1);
 	glVertex3f(0.5, 0, 1);
 
-	glColor3f(0.3f, 0.3f, 0.3f);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, color2);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, color2);
+	glNormal3f(0.5, 0, 0); // FIXME
 	glVertex3f(0, 0, 0);
 	glVertex3f(0.5, 0, 1);
 	glVertex3f(0, 0.5, 1);
 
-	glColor3f(0.7f, 0.2f, 0.4f);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, color3);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, color3);
+	glNormal3f(-0.5, 0, 0); // FIXME
 	glVertex3f(0, 0, 0);
 	glVertex3f(0, 0.5, 1);
 	glVertex3f(-0.5, 0, 1);
 
-	glColor3f(0.2f, 0.5f, 0.8f);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, color4);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, color4);
+	glNormal3f(-0.5, 0, 0); // FIXME
 	glVertex3f(0, 0, 0);
 	glVertex3f(-0.5, 0, 1);
 	glVertex3f(0, -0.5, 1);

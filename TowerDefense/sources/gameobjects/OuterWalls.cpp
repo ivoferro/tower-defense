@@ -33,7 +33,8 @@ void OuterWalls::drawWalls(GLfloat width, GLfloat height)
 		for (j = 0; j <= height; j += step)
 		{
 			swap = (swap == 0) ? 1 : 0;
-			glColor3fv(colors1[swap]);
+			glMaterialfv(GL_FRONT, GL_AMBIENT, colors1[swap]);
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, colors1[swap]);
 
 			// Wall 1
 			glBegin(GL_POLYGON);
@@ -53,7 +54,8 @@ void OuterWalls::drawWalls(GLfloat width, GLfloat height)
 			glVertex3f(51, i + step, j);
 			glEnd();
 
-			glColor3fv(colors2[swap]);
+			glMaterialfv(GL_FRONT, GL_AMBIENT, colors2[swap]);
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, colors2[swap]);
 			// Wall 3
 			glBegin(GL_POLYGON);
 			glNormal3f(0, -1, 0);
@@ -77,7 +79,8 @@ void OuterWalls::drawWalls(GLfloat width, GLfloat height)
 void OuterWalls::drawDoor(GLfloat color[3])
 {
 	glBegin(GL_POLYGON);
-	glColor3fv(color);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, color);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
 	glVertex3f(1.0f,0,0);
 	glVertex3f(0, 0, 0);
 	glVertex3f(0, 1.0f, 0);
