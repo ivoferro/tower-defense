@@ -61,8 +61,8 @@ void Wall::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat d[], GLflo
 {
 	glBegin(GL_POLYGON);
 
-	GLfloat mat_ambient[] = { 0.5, 0.2, 0.2, 1.0 };
-	GLfloat mat_diffuse[] = { 0.5, 0.2, 0.2, 1.0 };
+	GLfloat mat_ambient[] = { 0.5f, 0.2f, 0.2f, 1.0f };
+	GLfloat mat_diffuse[] = { 0.5f, 0.2f, 0.2f, 1.0f };
 
 	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
