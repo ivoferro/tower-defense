@@ -145,6 +145,7 @@
     <ClCompile Include="sources\gameobjects\OuterWalls.cpp" />
     <ClCompile Include="sources\gameobjects\Wall.cpp" />
     <ClCompile Include="sources\jpegloader\readjpeg.c" />
+    <ClCompile Include="sources\levels\Level01.cpp" />
     <ClCompile Include="sources\util\Illumination.cpp" />
     <ClCompile Include="sources\util\Math.cpp" />
     <ClCompile Include="sources\components\CharacterPhysics.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="headers\jpegloader\jconfig.h" />
     <ClInclude Include="headers\jpegloader\jmorecfg.h" />
     <ClInclude Include="headers\jpegloader\jpeglib.h" />
+    <ClInclude Include="headers\levels\Level01.h" />
     <ClInclude Include="headers\scenes\Game.h" />
     <ClInclude Include="headers\scenes\Menu.h" />
     <ClInclude Include="headers\framework\Scene.h" />

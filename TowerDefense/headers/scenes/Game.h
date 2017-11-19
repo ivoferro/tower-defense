@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../framework/Scene.h"
+#include "../framework/Level.h"
 
 class Game : public Scene
 {
@@ -10,6 +11,8 @@ private:
 	void detectCollisions();
 	void moveCamera();
 	void setLight();
+	
+	Level level;
 
 public:
 	Game();

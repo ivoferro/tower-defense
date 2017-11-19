@@ -16,9 +16,13 @@
 #include "../../headers/components/CharacterPhysics.h"
 #include "../../headers/components/CameraSettings.h"
 #include "../../headers/gameobjects/LifeBar.h"
+#include "../../headers/levels/Level01.h"
 
 Game::Game()
 {
+	level = Level01();
+	// TODO add enemies to gameobjects
+
 	Camera * c = new Camera();
 	gameObjects["camera"] = c;
 
@@ -52,15 +56,6 @@ Game::Game()
 	tt->position->x = 10;
 	tt->position->y = 10;
 	gameObjects["tower"] = t;
-
-
-	Enemy *e1 = new Enemy();
-	Transform * e1t = (Transform*)e1->getComponentById("transform");
-	e1t->position->x = -5;
-	e1t->position->y = -5;
-	e1t->position->z = 1;
-	gameObjects["enemy1"] = e1;
-
 }
 
 void Game::Init()
@@ -143,14 +138,11 @@ void Game::Draw()
 
 	((Ground*)gameObjects["ground"])->draw();
 	((OuterWalls*)gameObjects["outerWalls"])->draw();
-
-	((Enemy*)gameObjects["enemy1"])->draw();
-
 	((Tower*)gameObjects["tower"])->draw();
-
 	((Wall*)gameObjects["wall1"])->draw();
-
 	((Player*)gameObjects["player"])->draw();
+
+	// TODO draw all alive enemies
 
 	glFlush();
 	if (Application::instance()->getState()->isDoubleBufferActivated())
@@ -169,9 +161,12 @@ void Game::Timer(int value)
 
 	moveCamera();
 
+	// TODO refactor crystall
 	//rotate crystall
 	Transform * towerT = (Transform*)((Camera*)gameObjects["tower"])->getComponentById("transform");
 	towerT->rotation->z += 1;
+
+	// TODO call level timer logic
 }
 
 void Game::Key(unsigned char key, int x, int y)

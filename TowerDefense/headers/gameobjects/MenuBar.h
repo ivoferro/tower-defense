@@ -1,8 +1,9 @@
 #pragma once
 
 #include "../framework/GameObject.h"
+#include "../framework/Drawable.h"
 
-class MenuBar : public GameObject
+class MenuBar : public GameObject, Drawable
 {
 private:
 	void drawBar();

@@ -1,9 +1,11 @@
 #pragma once
 
 #include "../framework/GameObject.h"
+#include "../framework/Drawable.h"
 
-class Enemy : public GameObject
+class Enemy : public GameObject, Drawable
 {
+
 private:
 	//LifeBar *lifebar;
 	void drawEnemy();
@@ -15,5 +17,6 @@ public:
 	Enemy();
 	~Enemy();
 	void draw();
+
 };
 

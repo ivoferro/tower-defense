@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <GL/glut.h>
 #include "../framework/GameObject.h"
+#include "../framework/Drawable.h"
 
-class Tower : public GameObject
+class Tower : public GameObject, Drawable
 {
 
 private:

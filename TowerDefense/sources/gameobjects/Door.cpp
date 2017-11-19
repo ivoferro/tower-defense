@@ -10,7 +10,6 @@ Door::~Door()
 {
 }
 
-
 void Door::draw()
 {
 	Transform * t = (Transform*)getComponentById("transform");

@@ -51,15 +51,13 @@ void Wave::begin()
 	timer = clock();
 }
 
-Wave::Enemy::Enemy(Drawable * obj, Transform * spawnPos, int spawnSeconds)
+Wave::Enemy::Enemy(Drawable * obj, int spawnSeconds)
 {
 	this->obj = obj;
-	this->spawnPos = spawnPos;
 	this->spawnSeconds = spawnSeconds;
 }
 
 Wave::Enemy::~Enemy()
 {
 	obj->~Drawable();
-	spawnPos->~Transform();
 }

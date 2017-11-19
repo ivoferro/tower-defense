@@ -2,6 +2,7 @@
 
 #include <list>
 #include "Wave.h"
+#include "Scene.h"
 
 class Level
 {
@@ -9,7 +10,7 @@ class Level
 public:
 	enum Phase
 	{
-		BEGIN,
+		INITIAL,
 		COMBAT,
 		WAVE_CLEAR,
 		VICTORY,
@@ -19,6 +20,7 @@ public:
 private:
 	std::list<Wave*> waves;
 	Phase phase;
+	Scene * scene;
 
 public:
 	Level();
@@ -26,7 +28,10 @@ public:
 
 	void addWave(Wave * wave);
 
-	virtual void startNextWave() = 0;
-	virtual void clearCurrentWave() = 0;
+	void startNextWave();
+
+	void clearCurrentWave();
+
+	void draw();
 
 };

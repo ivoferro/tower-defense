@@ -13,10 +13,9 @@ public:
 	class Enemy
 	{
 	public:
-		Enemy(Drawable * obj, Transform * spawnPos, int spawnSeconds);
+		Enemy(Drawable * obj, int spawnSeconds);
 		~Enemy();
 		Drawable * obj;
-		Transform * spawnPos;
 		int spawnSeconds;
 	};
 
