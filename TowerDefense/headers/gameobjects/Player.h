@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include <GL/glut.h>
 #include "../framework/GameObject.h"
+#include "../framework/Drawable.h"
 #include "../components/Transform.h"
 
-class Player : public GameObject
+class Player : public GameObject, Drawable
 {
 	
 private:

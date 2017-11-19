@@ -135,6 +135,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="sources\components\Life.cpp" />
+    <ClCompile Include="sources\framework\Level.cpp" />
+    <ClCompile Include="sources\framework\Wave.cpp" />
     <ClCompile Include="sources\gameobjects\LifeBar.cpp" />
     <ClCompile Include="sources\components\Collider.cpp" />
     <ClCompile Include="sources\gameobjects\Door.cpp" />
@@ -166,6 +168,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\components\Collider.h" />
+    <ClInclude Include="headers\framework\Drawable.h" />
+    <ClInclude Include="headers\framework\Level.h" />
+    <ClInclude Include="headers\framework\Wave.h" />
     <ClInclude Include="headers\gameobjects\Door.h" />
     <ClInclude Include="headers\components\CameraSettings.h" />
     <ClInclude Include="headers\components\CharacterPhysics.h" />

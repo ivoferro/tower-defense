@@ -102,6 +102,12 @@
     <ClCompile Include="sources\framework\Textures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sources\framework\Level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\framework\Wave.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\framework\Application.h">
@@ -195,6 +201,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\framework\Textures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\framework\Level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\framework\Wave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\framework\Drawable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
