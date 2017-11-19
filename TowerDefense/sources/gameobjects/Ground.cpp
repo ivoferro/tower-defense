@@ -24,6 +24,7 @@ void Ground::draw()
 	int swap = 1;
 
 	for (i = -dimension; i <= dimension; i += step)
+	{
 		for (j = -dimension; j <= dimension; j += step)
 		{
 			swap = (swap == 0) ? 1 : 0;
@@ -41,6 +42,8 @@ void Ground::draw()
 			glVertex3f(i, j + step, 0);
 			glVertex3f(i, j, 0);
 			glVertex3f(i + step, j, 0);
+
 			glEnd();
 		}
+	}
 }

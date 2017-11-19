@@ -2,6 +2,7 @@
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/util/Illumination.h"
+#include "../../headers/framework/Application.h"
 
 Wall::Wall()
 {
@@ -70,11 +71,19 @@ void Wall::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat d[], GLflo
 	glMaterialfv(GL_FRONT, GL_SHININESS, Illumination::HIGH_SHININESS);
 	glMaterialfv(GL_FRONT, GL_EMISSION, Illumination::MATERIAL_EMISSION);
 
+	glBindTexture(GL_TEXTURE_2D, Application::instance()->getTextures()->getTexture("metal_plate"));
+
 	glNormal3fv(normal);
+	glTexCoord2f(0.0f, 0.0f);
 	glVertex3fv(a);
+	glTexCoord2f(0.0f, 1.0f);
 	glVertex3fv(b);
+	glTexCoord2f(1.0f, 1.0f);
 	glVertex3fv(c);
+	glTexCoord2f(1.0f, 0.0f);
 	glVertex3fv(d);
+
+	glBindTexture(GL_TEXTURE_2D, NULL);
 
 	glEnd();
 }

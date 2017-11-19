@@ -2,6 +2,7 @@
 
 #include "State.h"
 #include "SceneManager.h"
+#include "Textures.h"
 
 class Application
 {
@@ -14,6 +15,7 @@ private:
 
 	State *state;
 	SceneManager *sceneManager;
+	Textures *textures;
 
 public:
 
@@ -21,5 +23,6 @@ public:
 
 	State *getState();
 	SceneManager *getSceneManager();
+	Textures *getTextures();
 };
 

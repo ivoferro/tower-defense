@@ -99,6 +99,9 @@
     <ClCompile Include="sources\jpegloader\readjpeg.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sources\framework\Textures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\framework\Application.h">
@@ -191,5 +194,13 @@
     <ClInclude Include="headers\jpegloader\jpeglib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="headers\framework\Textures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\metal_plate.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

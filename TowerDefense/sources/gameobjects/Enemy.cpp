@@ -27,7 +27,6 @@ void Enemy::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLf
 	glMaterialfv(GL_FRONT, GL_SHININESS, Illumination::NO_SHININESS);
 	glMaterialfv(GL_FRONT, GL_EMISSION, Illumination::NO_MATERIAL);
 
-	glColor3fv(color);
 	glVertex3fv(a);
 	glVertex3fv(b);
 	glVertex3fv(c);

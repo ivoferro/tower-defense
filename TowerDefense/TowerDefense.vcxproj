@@ -162,6 +162,7 @@
     <ClCompile Include="sources\framework\State.cpp" />
     <ClCompile Include="sources\components\Transform.cpp" />
     <ClCompile Include="sources\gameobjects\Tower.cpp" />
+    <ClCompile Include="sources\framework\Textures.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\components\Collider.h" />
@@ -194,6 +195,10 @@
     <ClInclude Include="headers\gameobjects\Tower.h" />
     <ClInclude Include="headers\gameobjects\LifeBar.h" />
     <ClInclude Include="headers\components\Life.h" />
+    <ClInclude Include="headers\framework\Textures.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\metal_plate.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
