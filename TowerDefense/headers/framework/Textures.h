@@ -8,7 +8,7 @@ class Textures
 {
 
 private:
-	std::map<std::string, GLuint*> textures;
+	std::map<std::string, GLuint> textures;
 
 public:
 	Textures();

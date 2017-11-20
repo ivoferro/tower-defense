@@ -111,6 +111,9 @@
     <ClCompile Include="sources\levels\Level01.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sources\gameobjects\Plane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\framework\Application.h">
@@ -218,9 +221,21 @@
     <ClInclude Include="headers\levels\Level01.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="headers\gameobjects\Plane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\metal_plate.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\rock_floor.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\snow.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\snow_ice.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

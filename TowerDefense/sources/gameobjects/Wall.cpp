@@ -60,24 +60,26 @@ void Wall::drawCube()
 
 void Wall::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat d[], GLfloat normal[])
 {
-	glBegin(GL_POLYGON);
 
-	GLfloat mat_ambient[] = { 0.5f, 0.2f, 0.2f, 1.0f };
-	GLfloat mat_diffuse[] = { 0.5f, 0.2f, 0.2f, 1.0f };
+	Transform * t = (Transform*)getComponentById("transform");
 
-	glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, Illumination::MATERIAL_SPECULAR);
-	glMaterialfv(GL_FRONT, GL_SHININESS, Illumination::HIGH_SHININESS);
-	glMaterialfv(GL_FRONT, GL_EMISSION, Illumination::MATERIAL_EMISSION);
+	glBindTexture(GL_TEXTURE_2D, Application::instance()->getTextures()->getTexture("metal_plate"));
+
+	glBegin(GL_QUADS);
 
 	glNormal3fv(normal);
+	glTexCoord2f(0.0f, 0.0f);
 	glVertex3fv(a);
+	glTexCoord2f(1.0f, 0.0f);
 	glVertex3fv(b);
+	glTexCoord2f(1.0f, 1.0f);
 	glVertex3fv(c);
+	glTexCoord2f(0.0f, 1.0f);
 	glVertex3fv(d);
 
 	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, NULL);
 }
 
 void Wall::setUpCollider()

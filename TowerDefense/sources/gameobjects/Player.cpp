@@ -24,7 +24,7 @@ void Player::draw()
 	Transform * t = (Transform*) getComponentById("transform");
 
 	GLfloat color1[3] = { 0.15f, 0.15f, 0.45f };
-	GLfloat color2[3] = { 0.25f, 0.5f, 0.75f };
+	GLfloat color2[3] = { 0.05f, 0.15f, 0.25f };
 
 	GLfloat headColor[3] = { 0.75f, 0.5f, 0.25f };
 

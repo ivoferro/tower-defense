@@ -143,6 +143,7 @@
     <ClCompile Include="sources\components\CameraSettings.cpp" />
     <ClCompile Include="sources\gameobjects\MenuBar.cpp" />
     <ClCompile Include="sources\gameobjects\OuterWalls.cpp" />
+    <ClCompile Include="sources\gameobjects\Plane.cpp" />
     <ClCompile Include="sources\gameobjects\Wall.cpp" />
     <ClCompile Include="sources\jpegloader\readjpeg.c" />
     <ClCompile Include="sources\levels\Level01.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="headers\framework\GameObject.h" />
     <ClInclude Include="headers\gameobjects\MenuBar.h" />
     <ClInclude Include="headers\gameobjects\OuterWalls.h" />
+    <ClInclude Include="headers\gameobjects\Plane.h" />
     <ClInclude Include="headers\gameobjects\Wall.h" />
     <ClInclude Include="headers\jpegloader\jconfig.h" />
     <ClInclude Include="headers\jpegloader\jmorecfg.h" />
@@ -206,6 +208,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\metal_plate.jpg" />
+    <Image Include="resources\rock_floor.jpg" />
+    <Image Include="resources\snow.jpg" />
+    <Image Include="resources\snow_ice.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

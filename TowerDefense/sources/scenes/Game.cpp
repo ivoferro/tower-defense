@@ -11,6 +11,7 @@
 #include "../../headers/gameobjects/Wall.h"
 #include "../../headers/gameobjects/Door.h"
 #include "../../headers/gameobjects/Tower.h"
+#include "../../headers/gameobjects/Plane.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/components/CharacterPhysics.h"
@@ -30,9 +31,6 @@ Game::Game()
 	Transform * pt = (Transform*)p->getComponentById("transform");
 	pt->position->z = 1.5;
 	gameObjects["player"] = p;
-
-	Ground * g = new Ground();
-	gameObjects["ground"] = g;
 
 	OuterWalls * ows = new OuterWalls();
 	gameObjects["outerWalls"] = ows;
@@ -56,6 +54,12 @@ Game::Game()
 	tt->position->x = 10;
 	tt->position->y = 10;
 	gameObjects["tower"] = t;
+
+	Plane * plane = new Plane("snow");
+	Transform * planeT = (Transform*)plane->getComponentById("transform");
+	planeT->scale->x = 105;
+	planeT->scale->y = 105;
+	gameObjects["plane01"] = plane;
 }
 
 void Game::Init()
@@ -70,6 +74,7 @@ void Game::Init()
 	glDepthRange(0.0f, 1.0f);
 
 	setLight();
+	setTextures();
 
 	glutPostRedisplay();
 }
@@ -136,13 +141,14 @@ void Game::Draw()
 		playerT->position->x, playerT->position->y, playerT->position->z, 
 		0, 0, 1);
 
-	((Ground*)gameObjects["ground"])->draw();
 	((OuterWalls*)gameObjects["outerWalls"])->draw();
 	((Tower*)gameObjects["tower"])->draw();
 	((Wall*)gameObjects["wall1"])->draw();
 	((Player*)gameObjects["player"])->draw();
 
 	// TODO draw all alive enemies
+
+	((Plane*)gameObjects["plane01"])->draw();
 
 	glFlush();
 	if (Application::instance()->getState()->isDoubleBufferActivated())
@@ -348,4 +354,13 @@ void Game::setLight()
 	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
 
 	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, 0);
+}
+
+void Game::setTextures()
+{
+	glEnable(GL_TEXTURE_2D);
+	Application::instance()->getTextures()->registerTexture("metal_plate", "resources/metal_plate.jpg");
+	Application::instance()->getTextures()->registerTexture("rock_floor", "resources/rock_floor.jpg");
+	Application::instance()->getTextures()->registerTexture("snow", "resources/snow.jpg");
+	Application::instance()->getTextures()->registerTexture("snow_ice", "resources/snow_ice.jpg");
 }

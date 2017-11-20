@@ -11,6 +11,7 @@ private:
 	void detectCollisions();
 	void moveCamera();
 	void setLight();
+	void setTextures();
 	
 	Level level;
 
