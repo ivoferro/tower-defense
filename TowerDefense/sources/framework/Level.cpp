@@ -1,8 +1,9 @@
 #include "../../headers/framework/Level.h"
 
-Level::Level()
+Level::Level(Scene * scene)
 {
 	phase = INITIAL;
+	this->scene = scene;
 }
 
 Level::~Level()
@@ -23,7 +24,6 @@ void Level::startNextWave()
 	if (waves.size() > 0)
 	{
 		Wave * currentWave = waves.front();
-		// TODO manage game objects from scene
 		currentWave->begin();
 		phase = Phase::COMBAT;
 	}
@@ -34,7 +34,6 @@ void Level::clearCurrentWave()
 	if (phase == Phase::COMBAT)
 	{
 		Wave * currentWave = waves.front();
-		// TODO manage game objects from scene
 		currentWave->~Wave();
 		waves.pop_front();
 
@@ -51,5 +50,18 @@ void Level::clearCurrentWave()
 
 void Level::draw()
 {
-	// TODO tell wave to draw itself
+	if (phase == Phase::COMBAT)
+	{
+		Wave * currentWave = waves.front();
+		currentWave->drawEnemies();
+	}
+}
+
+void Level::timerActions()
+{
+	if (phase == Phase::COMBAT)
+	{
+		Wave * currentWave = waves.front();
+		currentWave->spawnEnemies();
+	}
 }

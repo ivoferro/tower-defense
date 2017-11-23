@@ -238,5 +238,8 @@
     <Image Include="resources\snow_ice.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="resources\snow_ice.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

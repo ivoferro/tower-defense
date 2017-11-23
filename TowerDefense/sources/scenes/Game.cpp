@@ -17,23 +17,17 @@
 #include "../../headers/components/CharacterPhysics.h"
 #include "../../headers/components/CameraSettings.h"
 #include "../../headers/gameobjects/LifeBar.h"
-#include "../../headers/levels/Level01.h"
 
-Game::Game()
+Game::Game() : level(this)
 {
-	level = Level01();
-	// TODO add enemies to gameobjects
-
 	Camera * c = new Camera();
 	gameObjects["camera"] = c;
 
 	Player * p = new Player();
 	Transform * pt = (Transform*)p->getComponentById("transform");
+	pt->position->x = 3;
 	pt->position->z = 1.5;
 	gameObjects["player"] = p;
-
-	OuterWalls * ows = new OuterWalls();
-	gameObjects["outerWalls"] = ows;
 
 	Wall * wall = new Wall();
 	Transform * wallTransform = (Transform*)wall->getComponentById("transform");
@@ -51,8 +45,6 @@ Game::Game()
 
 	Tower * t = new Tower();
 	Transform * tt = (Transform*)t->getComponentById("transform");
-	tt->position->x = 10;
-	tt->position->y = 10;
 	gameObjects["tower"] = t;
 
 	Plane * plane = new Plane("snow");
@@ -141,14 +133,12 @@ void Game::Draw()
 		playerT->position->x, playerT->position->y, playerT->position->z, 
 		0, 0, 1);
 
-	((OuterWalls*)gameObjects["outerWalls"])->draw();
 	((Tower*)gameObjects["tower"])->draw();
 	((Wall*)gameObjects["wall1"])->draw();
 	((Player*)gameObjects["player"])->draw();
-
-	// TODO draw all alive enemies
-
 	((Plane*)gameObjects["plane01"])->draw();
+
+	level.draw();
 
 	glFlush();
 	if (Application::instance()->getState()->isDoubleBufferActivated())
@@ -172,7 +162,15 @@ void Game::Timer(int value)
 	Transform * towerT = (Transform*)((Camera*)gameObjects["tower"])->getComponentById("transform");
 	towerT->rotation->z += 1;
 
-	// TODO call level timer logic
+	if (Application::instance()->getState()->getInputs()->activate_wave)
+	{
+		level.startNextWave();
+	}
+	if (Application::instance()->getState()->getInputs()->kill_all_enemies)
+	{
+		level.clearCurrentWave();
+	}
+	level.timerActions();
 }
 
 void Game::Key(unsigned char key, int x, int y)
@@ -194,6 +192,14 @@ void Game::Key(unsigned char key, int x, int y)
 	case 'd':
 	case 'D':
 		Application::instance()->getState()->getInputs()->move_player_right = true;
+		break;
+	case 'g':
+	case 'G':
+		Application::instance()->getState()->getInputs()->activate_wave = true;
+		break;
+	case 'k':
+	case 'K':
+		Application::instance()->getState()->getInputs()->kill_all_enemies = true;
 		break;
 	case '1':
 		Application::instance()->getState()->getInputs()->zoom_in = true;
@@ -223,6 +229,14 @@ void Game::KeyUp(unsigned char key, int x, int y)
 	case 'd':
 	case 'D':
 		Application::instance()->getState()->getInputs()->move_player_right = false;
+		break;
+	case 'g':
+	case 'G':
+		Application::instance()->getState()->getInputs()->activate_wave = false;
+		break;
+	case 'k':
+	case 'K':
+		Application::instance()->getState()->getInputs()->kill_all_enemies = false;
 		break;
 	case '1':
 		Application::instance()->getState()->getInputs()->zoom_in = false;

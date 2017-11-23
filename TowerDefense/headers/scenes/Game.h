@@ -2,6 +2,7 @@
 
 #include "../framework/Scene.h"
 #include "../framework/Level.h"
+#include "../../headers/levels/Level01.h"
 
 class Game : public Scene
 {
@@ -13,7 +14,7 @@ private:
 	void setLight();
 	void setTextures();
 	
-	Level level;
+	Level01 level;
 
 public:
 	Game();

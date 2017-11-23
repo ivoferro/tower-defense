@@ -24,9 +24,12 @@ private:
 	std::list<Enemy*> enemiesSpawned;
 	clock_t timer;
 	int enemiesLeft;
+	Scene * scene;
+
+	static size_t idGenerator;
 
 public:
-	Wave();
+	Wave(Scene * scene);
 	~Wave();
 	void addEnemy(Enemy * e);
 	void spawnEnemies();

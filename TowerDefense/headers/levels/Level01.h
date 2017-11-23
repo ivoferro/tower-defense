@@ -10,7 +10,7 @@ private:
 	void setWave02();
 
 public:
-	Level01();
+	Level01(Scene * scene);
 	~Level01();
 
 };

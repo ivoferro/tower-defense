@@ -20,10 +20,12 @@ public:
 private:
 	std::list<Wave*> waves;
 	Phase phase;
+
+protected:
 	Scene * scene;
 
 public:
-	Level();
+	Level(Scene * scene);
 	~Level();
 
 	void addWave(Wave * wave);
@@ -33,5 +35,7 @@ public:
 	void clearCurrentWave();
 
 	void draw();
+
+	void timerActions();
 
 };

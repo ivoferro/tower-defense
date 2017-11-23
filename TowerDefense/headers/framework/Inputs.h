@@ -15,5 +15,8 @@ public:
 	GLboolean zoom_in = false;
 	GLboolean zoom_out = false;
 
+	GLboolean activate_wave = false;
+	GLboolean kill_all_enemies = false;
+
 };
 

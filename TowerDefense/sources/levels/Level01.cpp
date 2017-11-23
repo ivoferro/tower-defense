@@ -4,7 +4,7 @@
 #include "../../headers/gameobjects/Enemy.h"
 #include "../../headers/components/Transform.h"
 
-Level01::Level01()
+Level01::Level01(Scene * scene) : Level(scene)
 {
 	setWave01();
 	setWave02();
@@ -16,7 +16,7 @@ Level01::~Level01()
 
 void Level01::setWave01()
 {
-	Wave * wave01 = new Wave();
+	Wave * wave01 = new Wave(scene);
 
 	Enemy * e1 = new Enemy();
 	Transform * e1T = (Transform*)e1->getComponentById("transform");
@@ -39,7 +39,7 @@ void Level01::setWave01()
 
 void Level01::setWave02()
 {
-	Wave * wave02 = new Wave();
+	Wave * wave02 = new Wave(scene);
 
 	Enemy * e1 = new Enemy();
 	Transform * e1T = (Transform*)e1->getComponentById("transform");

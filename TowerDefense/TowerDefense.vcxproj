@@ -210,6 +210,7 @@
     <Image Include="resources\metal_plate.jpg" />
     <Image Include="resources\rock_floor.jpg" />
     <Image Include="resources\snow.jpg" />
+    <Image Include="resources\snow_ice.jpg" />
     <Image Include="resources\snow_ice.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

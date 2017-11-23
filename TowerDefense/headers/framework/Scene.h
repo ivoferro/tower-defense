@@ -6,6 +6,9 @@
 class Scene
 {
 
+private:
+	unsigned int idGenerator;
+
 protected:
 	std::map<std::string, GameObject *> gameObjects;
 
@@ -24,5 +27,14 @@ public:
 	virtual void Mouse(int button, int mouse_state, int x, int y) = 0;
 	virtual void MouseMotion(int x, int y) = 0;
 	virtual void MousePassiveMotion(int x, int y) = 0;
+
+	GLboolean hasGameObject(std::string id);
+	GLboolean hasGameObject(GameObject * gameObject);
+
+	GLboolean addGameObject(std::string id, GameObject * gameObject);
+	GLboolean addGameObject(GameObject * gameObject);
+
+	GLboolean removeGameObject(std::string id);
+	GLboolean removeGameObject(GameObject * gameObject);
 
 };
