@@ -13,86 +13,22 @@
 
 Menu::Menu()
 {
-	int xBase = -1;
-	int yBase = 0;
-
-	Camera * c = new Camera();
-	gameObjects["camera"] = c;
-
-	MenuBar *mb = new MenuBar();
-	Transform *mbT1 = (Transform*)mb->getComponentById("transform");
-	mbT1->position->x = xBase;
-	mbT1->position->y = yBase-0.5;
-	mbT1->position->z =  0.5;
-
-	gameObjects["menubar1"] = mb;
-
-	MenuBar *mb2 = new MenuBar();
-	Transform *mbT2 = (Transform*)mb2->getComponentById("transform");
-	mbT2->position->x = xBase;
-	mbT2->position->y = yBase;
-
-	gameObjects["menubar2"] = mb2;
-
-	MenuBar *mb3 = new MenuBar();
-	Transform *mbT3 = (Transform*)mb3->getComponentById("transform");
-	mbT3->position->x = xBase;
-	mbT3->position->y = yBase+ 0.5;
-	//	mbT->scale->x = -0.5;
-	//mbT->scale->y = 0.5;
-	gameObjects["menubar3"] = mb3;
-	
-	GameText * gtStart = new GameText();
-	Transform *gtStartT = (Transform*)gtStart->getComponentById("transform");
-	gtStartT->position->x = xBase+0.2;
-	gtStartT->position->y = yBase+0.5;
-	gameObjects["gametext"] = gtStart;
-
-	GameText * gtCredits = new GameText();
-	Transform *gtCreditsT = (Transform*)gtCredits->getComponentById("transform");
-	gtCreditsT->position->x = xBase;
-	gtCreditsT->position->y = yBase;
-	gameObjects["gametext1"] = gtCredits;
-
-	GameText * gtExit = new GameText();
-	Transform *gtExitT = (Transform*)gtExit->getComponentById("transform");
-	gtExitT->position->x = xBase;
-	gtExitT->position->y = yBase-0.5;
-	gameObjects["gametext2"] = gtExit;
-
-	GameText * gtTitle = new GameText();
-	Transform *gtTitleT = (Transform*)gtTitle->getComponentById("transform");
-	gtTitleT->position->x = 0.3;
-	gtTitleT->position->y = 0.7;
-	gameObjects["title"] = gtTitle;
-	
-
-	Player * p = new Player();
-	Transform * pt = (Transform*)p->getComponentById("transform");
-	pt->position->x = -0.7;
-	pt->position->y = 0.2;
-	pt->position->z = 0.3;
-	
-	gameObjects["player"] = p;
-	
-	Tower * t = new Tower();
-	Transform * tt = (Transform*)t->getComponentById("transform");
-	tt->position->x= xBase+1.7;
-	tt->position->y = yBase;
-	gameObjects["tower"] = t;
-	
-
+	createGameObjects();
 }
 
 void Menu::Init()
 {
-	glClearColor(0.3, 0.3, 0.3, 0.0);
-
 	glEnable(GL_POINT_SMOOTH);
 	glEnable(GL_LINE_SMOOTH);
 	glEnable(GL_POLYGON_SMOOTH);
 
-	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_DEPTH_TEST);
+	glDepthMask(GL_TRUE);
+	glDepthFunc(GL_LEQUAL);
+	glDepthRange(0.0f, 1.0f);
+
+	setLight();
+	setTextures();
 
 	glutPostRedisplay();
 }
@@ -137,51 +73,11 @@ void Menu::Draw()
 {
 
 	glClearColor(.5f, .5f, .8f, 0.0f);
-
+	glClearDepth(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-
-	glClearDepth(1.0f);
-	//FIXME Transparency
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_DEPTH_BUFFER_BIT);
-	glDepthFunc(GL_LEQUAL);
 	
-	Transform * gametextStart = (Transform*)((GameText*)gameObjects["gametext"])->getComponentById("transform");
-	((GameText*)gameObjects["gametext"])->drawText("START");
-
-	Transform * gametextTCredits = (Transform*)((GameText*)gameObjects["gametext1"])->getComponentById("transform");
-	((GameText*)gameObjects["gametext1"])->drawText("CREDITS");
-
-	Transform * gametextTExit = (Transform*)((GameText*)gameObjects["gametext2"])->getComponentById("transform");
-	((GameText*)gameObjects["gametext2"])->drawText("EXIT");
-
-	Transform * title = (Transform*)((GameText*)gameObjects["title"])->getComponentById("transform");
-	((GameText*)gameObjects["title"])->drawText("TOWER DEFENSE");
-
-	Transform * menuBarT1 = (Transform*)((MenuBar*)gameObjects["menubar1"])->getComponentById("transform");
-	((MenuBar*)gameObjects["menubar1"])->draw();
-
-	Transform * menuBarT2 = (Transform*)((MenuBar*)gameObjects["menubar2"])->getComponentById("transform");
-	((MenuBar*)gameObjects["menubar2"])->draw();
-
-	Transform * menuBarT3 = (Transform*)((MenuBar*)gameObjects["menubar3"])->getComponentById("transform");
-	((MenuBar*)gameObjects["menubar3"])->draw();
-
-
-	Transform * towerT = (Transform*)((Tower*)gameObjects["tower"])->getComponentById("transform");
-	((Tower*)gameObjects["tower"])->draw();
-
-	Transform * cameraT = (Transform*)((Camera*)gameObjects["camera"])->getComponentById("transform");
-	Transform * playerT = (Transform*)((Player*)gameObjects["player"])->getComponentById("transform");
-
-	gluLookAt(
-		cameraT->position->x, cameraT->position->y, cameraT->position->z,
-		playerT->position->x, playerT->position->y, playerT->position->z,
-		1, 0, 1);
-
-
-	((Player*)gameObjects["player"])->draw();
+	drawGameObjects();
 
 	glFlush();
 	if (Application::instance()->getState()->isDoubleBufferActivated())
@@ -235,9 +131,152 @@ void Menu::MouseMotion(int x, int y)
 
 void Menu::MousePassiveMotion(int x, int y)
 {
+
 	if (x > 0 && x < 150) {
-		//if (y > 0.5) {
-			((MenuBar*)gameObjects["menubar1"])->changeColor();
-//		}
+	//	if (y > 0.5) {
+	//FIXME
+		//	((MenuBar*)gameObjects["menubar1"])->changeColor();
+		//	((GameText*)gameObjects["gametext"])->changeColor();
+	//	}
 	}
+	
+}
+
+void Menu::createGameObjects() {
+	int xBase = -1;
+	int xBaseText = xBase;
+	int yBase = 0;
+
+	Camera * c = new Camera();
+	gameObjects["camera"] = c;
+
+	// -------------------------- START BAR ----------------------------//
+	MenuBar *mb = new MenuBar();
+	Transform *mbT1 = (Transform*)mb->getComponentById("transform");
+	mbT1->position->x = xBase;
+	mbT1->position->y = yBase-0.5;
+	mbT1->position->z = yBase - 0.5;
+	gameObjects["menubar1"] = mb;
+	// -------------------------- CREDITS BAR --------------------------//
+	MenuBar *mb2 = new MenuBar();
+	Transform *mbT2 = (Transform*)mb2->getComponentById("transform");
+	mbT2->position->x = xBase;
+	mbT2->position->y = yBase;
+	gameObjects["menubar2"] = mb2;
+
+	// -------------------------- EXIT BAR ------------------------------//
+	MenuBar *mb3 = new MenuBar();
+	Transform *mbT3 = (Transform*)mb3->getComponentById("transform");
+	mbT3->position->x = xBase;
+	mbT3->position->y = yBase + 0.5;
+	gameObjects["menubar3"] = mb3;
+
+	//----------------------- OPTIONS -----------------------------------//
+
+	GameText * gtStart = new GameText("Start");
+	Transform *gtStartT = (Transform*)gtStart->getComponentById("transform");
+	gtStartT->position->x = xBaseText;
+	gtStartT->position->y = yBase + 0.5;
+	gameObjects["gametext"] = gtStart;
+
+	GameText * gtCredits = new GameText("Credits");
+	Transform *gtCreditsT = (Transform*)gtCredits->getComponentById("transform");
+	gtCreditsT->position->x = xBaseText;
+	gtCreditsT->position->y = yBase;
+	gameObjects["gametext1"] = gtCredits;
+
+	GameText * gtExit = new GameText("Exit");
+	Transform *gtExitT = (Transform*)gtExit->getComponentById("transform");
+	gtExitT->position->x = xBaseText;
+	gtExitT->position->y = yBase - 0.5;
+	gameObjects["gametext2"] = gtExit;
+
+	//================================================================
+	GameText * gtTitle = new GameText("Tower Defense");
+	Transform *gtTitleT = (Transform*)gtTitle->getComponentById("transform");
+	gtTitleT->position->x = 0.3;
+	gtTitleT->position->y = 0.7;
+	gameObjects["title"] = gtTitle;
+
+	//-----------------------------------------------------------------------
+
+	Player * p = new Player();
+	Transform * pt = (Transform*)p->getComponentById("transform");
+	pt->position->x = -0.7;
+	pt->position->y = 0.2;
+	pt->position->z = 0.3;
+
+	gameObjects["player"] = p;
+
+	Tower * t = new Tower();
+	Transform * tt = (Transform*)t->getComponentById("transform");
+	tt->position->x = xBase + 1.7;
+	tt->position->y = yBase;
+	gameObjects["tower"] = t;
+	
+}
+
+void Menu::setLight()
+{
+	GLfloat light_ambient[] = { 0.9f, 0.85f, 0.85f, 1.0f };
+	GLfloat light_diffuse[] = { 0.95f, 0.95f, 0.95f, 1.0f };
+	GLfloat light_specular[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+	GLfloat light_position[] = { 0.0f, 5.0f, 0.0f, 0.0f };
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+
+	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, 0);
+}
+
+void Menu::setTextures()
+{
+	glEnable(GL_TEXTURE_2D);
+	Application::instance()->getTextures()->registerTexture("vinil", "resources/vinil.jpg");
+	Application::instance()->getTextures()->registerTexture("vinil2", "resources/vinil2.jpg");
+}
+
+void Menu::drawGameObjects() {
+
+	//----------------------- BARS ------------------------//
+	Transform * menuBarT1 = (Transform*)((MenuBar*)gameObjects["menubar1"])->getComponentById("transform");
+	((MenuBar*)gameObjects["menubar1"])->draw();
+
+	Transform * menuBarT2 = (Transform*)((MenuBar*)gameObjects["menubar2"])->getComponentById("transform");
+	((MenuBar*)gameObjects["menubar2"])->draw();
+
+	Transform * menuBarT3 = (Transform*)((MenuBar*)gameObjects["menubar3"])->getComponentById("transform");
+	((MenuBar*)gameObjects["menubar3"])->draw();
+
+	//----------------------- TEXT OPTIONS ------------------------//
+	Transform * gametextStart = (Transform*)((GameText*)gameObjects["gametext"])->getComponentById("transform");
+	((GameText*)gameObjects["gametext"])->drawText();
+	
+	Transform * gametextTCredits = (Transform*)((GameText*)gameObjects["gametext1"])->getComponentById("transform");
+	((GameText*)gameObjects["gametext1"])->drawText();
+	
+	Transform * gametextTExit = (Transform*)((GameText*)gameObjects["gametext2"])->getComponentById("transform");
+	((GameText*)gameObjects["gametext2"])->drawText();
+
+	//-----------------------TITLE OPTION ------------------------//
+	Transform * title = (Transform*)((GameText*)gameObjects["title"])->getComponentById("transform");
+	((GameText*)gameObjects["title"])->changeColor();
+	//------------------------------------------------------------//
+
+	Transform * towerT = (Transform*)((Tower*)gameObjects["tower"])->getComponentById("transform");
+	((Tower*)gameObjects["tower"])->draw();
+
+	Transform * cameraT = (Transform*)((Camera*)gameObjects["camera"])->getComponentById("transform");
+	Transform * playerT = (Transform*)((Player*)gameObjects["player"])->getComponentById("transform");
+
+	gluLookAt(
+	cameraT->position->x, cameraT->position->y, cameraT->position->z,
+	playerT->position->x, playerT->position->y, playerT->position->z,
+	1, 0, 1);
+
+	((Player*)gameObjects["player"])->draw();
 }

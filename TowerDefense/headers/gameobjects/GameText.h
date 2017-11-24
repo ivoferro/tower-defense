@@ -6,11 +6,15 @@
 class GameText : public GameObject
 {
 
+private:
+	char* text;
+	void writeText();
+
 public:
 	GameText();
+	GameText(char* text);
 	~GameText();
 
-	char* text;
-
-	void drawText(char * text);
+	void drawText();
+	void changeColor();
 };
