@@ -31,8 +31,8 @@ void Wave::spawnEnemies()
 	std::list<Enemy*>::iterator it = enemies.begin();
 	while (it != enemies.end()) {
 		Enemy *e = *(it++);
-		int currentSeconds = (clock() - timer) / CLOCKS_PER_SEC;
-		if (e->spawnSeconds >= currentSeconds)
+		int currentSeconds = difftime(time(0), timer);
+		if (e->spawnSeconds <= currentSeconds)
 		{
 			enemies.remove(e);
 			enemiesSpawned.push_back(e);
@@ -52,7 +52,7 @@ void Wave::drawEnemies()
 
 void Wave::begin()
 {
-	timer = clock();
+	timer = time(0);
 }
 
 Wave::Enemy::Enemy(std::string objectKey, Drawable * obj, int spawnSeconds)
