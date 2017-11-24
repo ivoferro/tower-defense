@@ -24,7 +24,7 @@ public:
 private:
 	std::list<Enemy*> enemies;
 	std::list<Enemy*> enemiesSpawned;
-	clock_t timer;
+	time_t timer;
 	int enemiesLeft;
 	Scene * scene;
 

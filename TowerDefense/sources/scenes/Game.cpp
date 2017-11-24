@@ -165,10 +165,12 @@ void Game::Timer(int value)
 	if (Application::instance()->getState()->getInputs()->activate_wave)
 	{
 		level.startNextWave();
+		Application::instance()->getState()->getInputs()->activate_wave = false;
 	}
 	if (Application::instance()->getState()->getInputs()->kill_all_enemies)
 	{
 		level.clearCurrentWave();
+		Application::instance()->getState()->getInputs()->kill_all_enemies = false;
 	}
 	level.timerActions();
 }
