@@ -10,6 +10,7 @@ private:
 	void setTextures();
 	void createGameObjects();
 	void drawGameObjects();
+	bool isInsideStart(int x, int y, int xMax, int yMax);
 
 
 public:
@@ -25,4 +26,6 @@ public:
 	void Mouse(int button, int mouse_state, int x, int y);
 	void MouseMotion(int x, int y);
 	void MousePassiveMotion(int x, int y);
+	void CloseFunc();
+	void WindowSize();
 };

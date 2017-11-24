@@ -5,6 +5,8 @@
 MenuBar::MenuBar()
 {
 	addComponent("transform", new Transform());
+	this->width = 0.4f;
+	this->height = 0.15f;
 }
 
 
@@ -40,10 +42,10 @@ void MenuBar::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], G
 void MenuBar::drawBar()
 {
 	GLfloat vertices[][2] = {
-		{ 0.4f,  -0.15f },
-		{ -0.4f,  -0.15f },
-		{ 0.4f,  0.15f },
-		{ -0.4f,  0.15f }
+		{ width,  -height },
+		{ -width,  -height },
+		{ width,  height },
+		{ -width,  height }
 	};
 
 	GLfloat colors[][3] ={ 1,  1,  1 };
@@ -87,6 +89,14 @@ void MenuBar::drawBarOver()
 	GLfloat colors[][3] = { 01,  0,  0 };
 
 	drawPolygonOver(vertices[0], vertices[1], vertices[2], vertices[3], colors[0]);
+}
+
+GLfloat MenuBar::getWidth() {
+	return width;
+}
+
+GLfloat MenuBar::getHeight() {
+	return height;
 }
 
 

@@ -14,19 +14,11 @@
 Menu::Menu()
 {
 	createGameObjects();
+	
 }
 
 void Menu::Init()
 {
-	glEnable(GL_POINT_SMOOTH);
-	glEnable(GL_LINE_SMOOTH);
-	glEnable(GL_POLYGON_SMOOTH);
-
-	glEnable(GL_DEPTH_TEST);
-	glDepthMask(GL_TRUE);
-	glDepthFunc(GL_LEQUAL);
-	glDepthRange(0.0f, 1.0f);
-
 	setLight();
 	setTextures();
 
@@ -72,7 +64,7 @@ void Menu::Reshape(int width, int height)
 void Menu::Draw()
 {
 
-	glClearColor(.5f, .5f, .8f, 0.0f);
+	glClearColor(.1f, .1f, .2f, 0.0f);
 	glClearDepth(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
@@ -117,11 +109,25 @@ void Menu::SpecialKeyUp(int key, int x, int y)
 
 void Menu::Mouse(int button, int mouse_state, int x, int y)
 {
-	if (x > 0 && x < 150) {
-		if (y > 0.5) {
-			Application::instance()->getSceneManager()->changeScene("game");
+	if (button == GLUT_LEFT_BUTTON && mouse_state == GLUT_DOWN) {
+	
+		MenuBar* start=(MenuBar*)gameObjects["menubar1"];
+		double width = start->getWidth();
+		double height = start->getHeight();
+	
+		Transform *gtExitT = (Transform*)start->getComponentById("transform");
+		double xBar=abs(gtExitT->position->x);
+		double test = height;
+		double yBar = abs(gtExitT->position->y);
+
+		//FIXME - position relative (window callback)
+
+		if (x < (width+xBar)*125 && y>(yBar-height)*243 && y<(yBar)*310){
+				Application::instance()->getSceneManager()->changeScene("game");
+			}
 		}
-	}
+
+	
 }
 
 void Menu::MouseMotion(int x, int y)
@@ -129,17 +135,31 @@ void Menu::MouseMotion(int x, int y)
 
 }
 
+void Menu::CloseFunc()
+{
+	//TODO
+
+}
+
+
+//TODO
+void Menu::WindowSize() {
+
+}
+//TODO
 void Menu::MousePassiveMotion(int x, int y)
 {
+}
 
-	if (x > 0 && x < 150) {
-	//	if (y > 0.5) {
-	//FIXME
-		//	((MenuBar*)gameObjects["menubar1"])->changeColor();
-		//	((GameText*)gameObjects["gametext"])->changeColor();
-	//	}
-	}
+bool Menu:: isInsideStart(int x, int y, int xMax, int yMax) {
 	
+	if (x < 0.5 + xMax)
+		return true;
+
+	//FIXME consider Y
+	//if (y <-0.5)
+	//	return true;
+	return false;
 }
 
 void Menu::createGameObjects() {
@@ -264,7 +284,7 @@ void Menu::drawGameObjects() {
 
 	//-----------------------TITLE OPTION ------------------------//
 	Transform * title = (Transform*)((GameText*)gameObjects["title"])->getComponentById("transform");
-	((GameText*)gameObjects["title"])->changeColor();
+	((GameText*)gameObjects["title"])->drawText();
 	//------------------------------------------------------------//
 
 	Transform * towerT = (Transform*)((Tower*)gameObjects["tower"])->getComponentById("transform");

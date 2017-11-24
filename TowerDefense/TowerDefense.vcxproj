@@ -212,6 +212,8 @@
     <Image Include="resources\snow.jpg" />
     <Image Include="resources\snow_ice.jpg" />
     <Image Include="resources\snow_ice.png" />
+    <Image Include="resources\vinil.jpg" />
+    <Image Include="resources\vinil2.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

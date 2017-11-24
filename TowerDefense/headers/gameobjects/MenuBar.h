@@ -5,7 +5,11 @@
 
 class MenuBar : public GameObject, Drawable
 {
+
 private:
+	GLfloat width;
+	GLfloat height;
+
 	void drawBar();
 	void drawBarOver();
 	void drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat color[]);
@@ -16,4 +20,6 @@ public:
 	~MenuBar();
 	void draw();
 	void changeColor();
+	GLfloat getWidth();
+	GLfloat getHeight();
 };
