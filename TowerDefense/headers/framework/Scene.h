@@ -8,9 +8,11 @@ class Scene
 
 private:
 	unsigned int idGenerator;
+	std::string generateKey();
 
 protected:
 	std::map<std::string, GameObject *> gameObjects;
+	std::map<std::string, GameObject *> waitingGameObjects;
 
 public:
 	Scene();
@@ -36,5 +38,8 @@ public:
 
 	GLboolean removeGameObject(std::string id);
 	GLboolean removeGameObject(GameObject * gameObject);
+
+	std::string addToWaitingObjects(GameObject * gameObject);
+	GLboolean activateObject(std::string objectKey);
 
 };
