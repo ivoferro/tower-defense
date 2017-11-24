@@ -10,13 +10,13 @@ Wave::~Wave()
 {
 	for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); ++it)
 	{
+		scene->removeGameObject((*it)->objectKey);
 		(*it)->~Enemy();
-		scene->removeGameObject((GameObject*)((*it)->obj));
 	}
 	for (std::list<Enemy*>::iterator it = enemiesSpawned.begin(); it != enemiesSpawned.end(); ++it)
 	{
+		scene->removeGameObject((*it)->objectKey);
 		(*it)->~Enemy();
-		scene->removeGameObject((GameObject*)((*it)->obj));
 	}
 }
 
@@ -36,14 +36,7 @@ void Wave::spawnEnemies()
 		{
 			enemies.remove(e);
 			enemiesSpawned.push_back(e);
-
-			GameObject * enemyGameObject = (GameObject*)(e->obj);
-
-			// Why is it not working? when we add to the main scene
-			// gameobjects map, it works... But when we try to read
-			// from the map, there is a "read access violatione"
-			// exception thrown...
-			//scene->addGameObject(enemyGameObject);
+			scene->activateObject(e->objectKey);
 		}
 	}
 }
@@ -62,8 +55,9 @@ void Wave::begin()
 	timer = clock();
 }
 
-Wave::Enemy::Enemy(Drawable * obj, int spawnSeconds)
+Wave::Enemy::Enemy(std::string objectKey, Drawable * obj, int spawnSeconds)
 {
+	this->objectKey = objectKey;
 	this->obj = obj;
 	this->spawnSeconds = spawnSeconds;
 }

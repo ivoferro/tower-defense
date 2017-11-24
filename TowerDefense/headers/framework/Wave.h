@@ -13,8 +13,10 @@ public:
 	class Enemy
 	{
 	public:
-		Enemy(Drawable * obj, int spawnSeconds);
+		Enemy(std::string objectKey, Drawable * obj, int spawnSeconds);
 		~Enemy();
+
+		std::string objectKey;
 		Drawable * obj;
 		int spawnSeconds;
 	};
