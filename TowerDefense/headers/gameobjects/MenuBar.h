@@ -9,6 +9,7 @@ private:
 	void drawBar();
 	void drawBarOver();
 	void drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat color[]);
+	void drawPolygonOver(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat color[]);
 
 public:
 	MenuBar();

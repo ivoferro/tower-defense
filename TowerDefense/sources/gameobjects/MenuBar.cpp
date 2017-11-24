@@ -1,5 +1,6 @@
 #include "../../headers/gameobjects/MenuBar.h"
 #include "../../headers/components/Transform.h"
+#include "../../headers/framework/Application.h"
 
 MenuBar::MenuBar()
 {
@@ -11,46 +12,43 @@ MenuBar::~MenuBar()
 {
 }
 
-void MenuBar::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat cor[])
+void MenuBar::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat colors[])
 {
 	/* draw a polygon via list of vertices */
 
+	Transform* t = (Transform*)getComponentById("transform");
+
+	glBindTexture(GL_TEXTURE_2D, Application::instance()->getTextures()->getTexture("vinil"));
+
 	glBegin(GL_POLYGON);
-	glColor3fv(cor);
-	glVertex3fv(a);
-	glVertex3fv(b);
-	glVertex3fv(c);
-	glVertex3fv(d);
+
+	glNormal3fv(colors);
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex2fv(b);
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex2fv(a);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex2fv(c);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex2fv(d);
+
 	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, NULL);
 }
 
 void MenuBar::drawBar()
 {
-	GLfloat vertices[][3] = {
-		{ 0.5,  0.5,  0.5 },
-		{ -0.5,  0.5,  0.5 },
-		{ -0.5,  0.5, -0.5 },
-		{ 0.5,  0.5, -0.5 },
-		{ 0.5, -0.5,  0.5 },
-		{ -0.5, -0.5,  0.5 },
-		{ -0.5, -0.5, -0.5 },
-		{ 0.5, -0.5, -0.5 } };
+	GLfloat vertices[][2] = {
+		{ 0.4f,  -0.15f },
+		{ -0.4f,  -0.15f },
+		{ 0.4f,  0.15f },
+		{ -0.4f,  0.15f }
+	};
 
-	GLfloat colors[][3] = {
-		{ 0.5, 0.0, 0.0 },
-		{ 0.0, 0.5, 0.0 },
-		{ 0.0, 0.0, 0.5 },
-		{ 1.0, 0.0, 0.0 },
-		{ 0.0, 1.0, 0.0 },
-		{ 0.0, 0.0, 1.0 } };
+	GLfloat colors[][3] ={ 1,  1,  1 };
 
-	drawPolygon(vertices[0], vertices[3], vertices[2], vertices[1], colors[0]);
-	drawPolygon(vertices[1], vertices[2], vertices[6], vertices[5], colors[1]);
-	drawPolygon(vertices[5], vertices[6], vertices[7], vertices[4], colors[2]);
-	drawPolygon(vertices[4], vertices[7], vertices[3], vertices[0], colors[3]);
-	drawPolygon(vertices[1], vertices[5], vertices[4], vertices[0], colors[4]);
-	drawPolygon(vertices[2], vertices[3], vertices[7], vertices[6], colors[5]);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	drawPolygon(vertices[0], vertices[1], vertices[2], vertices[3], colors[0]);
 }
 
 void MenuBar::draw()
@@ -59,11 +57,7 @@ void MenuBar::draw()
 
 	glPushMatrix();
 	glTranslatef(t->position->x, t->position->y, t->position->z);
-	glScalef(0.7,0.3,0.5);
-
-	//FIXME Transparency
-	//glEnable(GL_BLEND);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glScalef(t->scale->x, t->scale->y, t->scale->z);
 
 	drawBar();
 	glPopMatrix();
@@ -74,11 +68,7 @@ void MenuBar::changeColor() {
 
 	glPushMatrix();
 	glTranslatef(t->position->x, t->position->y, t->position->z);
-	glScalef(0.7, 0.3, 0.5);
-
-	//FIXME Transparency
-	//glEnable(GL_BLEND);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glScalef(t->scale->x, t->scale->y, t->scale->z);
 
 	drawBarOver();
 	glPopMatrix();
@@ -87,29 +77,40 @@ void MenuBar::changeColor() {
 
 void MenuBar::drawBarOver()
 {
-	GLfloat vertices[][3] = {
-		{ 0.5,  0.5,  0.5 },
-		{ -0.5,  0.5,  0.5 },
-		{ -0.5,  0.5, -0.5 },
-		{ 0.5,  0.5, -0.5 },
-		{ 0.5, -0.5,  0.5 },
-		{ -0.5, -0.5,  0.5 },
-		{ -0.5, -0.5, -0.5 },
-		{ 0.5, -0.5, -0.5 } };
+	GLfloat vertices[][2] = {
+		{ 0.4f,  -0.15f },
+		{ -0.4f,  -0.15f },
+		{ 0.4f,  0.15f },
+		{ -0.4f,  0.15f }
+	};
 
-	GLfloat colors[][3] = {
-		{ 1, 0.0, 0.0 },
-		{ 1, 0.5, 0.0 },
-		{ 0.0, 0.0, 0.5 },
-		{ 1.0, 1.0, 0.0 },
-		{ 0.0, 1.0, 1.0 },
-		{ 1.0, 0.0, 1.0 } };
+	GLfloat colors[][3] = { 01,  0,  0 };
 
-	drawPolygon(vertices[0], vertices[3], vertices[2], vertices[1], colors[0]);
-	drawPolygon(vertices[1], vertices[2], vertices[6], vertices[5], colors[1]);
-	drawPolygon(vertices[5], vertices[6], vertices[7], vertices[4], colors[2]);
-	drawPolygon(vertices[4], vertices[7], vertices[3], vertices[0], colors[3]);
-	drawPolygon(vertices[1], vertices[5], vertices[4], vertices[0], colors[4]);
-	drawPolygon(vertices[2], vertices[3], vertices[7], vertices[6], colors[5]);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	drawPolygonOver(vertices[0], vertices[1], vertices[2], vertices[3], colors[0]);
+}
+
+
+void MenuBar::drawPolygonOver(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat colors[])
+{
+	/* draw a polygon via list of vertices */
+
+	Transform* t = (Transform*)getComponentById("transform");
+
+	glBindTexture(GL_TEXTURE_2D, Application::instance()->getTextures()->getTexture("vinil"));
+
+	glBegin(GL_POLYGON);
+
+	glNormal3fv(colors);
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex2fv(b);
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex2fv(a);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex2fv(c);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex2fv(d);
+
+	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, NULL);
 }

@@ -5,6 +5,13 @@
 class Menu : public Scene
 {
 
+private:
+	void setLight();
+	void setTextures();
+	void createGameObjects();
+	void drawGameObjects();
+
+
 public:
 	Menu();
 	void Init();
