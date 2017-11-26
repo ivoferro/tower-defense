@@ -114,6 +114,9 @@
     <ClCompile Include="sources\gameobjects\Plane.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sources\components\TargetPath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\framework\Application.h">
@@ -222,6 +225,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\gameobjects\Plane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\components\TargetPath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
