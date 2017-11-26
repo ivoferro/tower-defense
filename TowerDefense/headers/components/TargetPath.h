@@ -1,9 +1,10 @@
 #pragma once
 
+#include "../framework/Component.h"
 #include "Transform.h"
 #include <list>
 
-class TargetPath
+class TargetPath : public Component
 {
 
 private:
