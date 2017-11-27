@@ -136,6 +136,7 @@
   <ItemGroup>
     <ClCompile Include="sources\objloader\glm.cpp" />
     <ClCompile Include="sources\components\Life.cpp" />
+    <ClCompile Include="sources\components\TargetPath.cpp" />
     <ClCompile Include="sources\framework\Level.cpp" />
     <ClCompile Include="sources\framework\Wave.cpp" />
     <ClCompile Include="sources\gameobjects\LifeBar.cpp" />
@@ -174,6 +175,7 @@
   <ItemGroup>
     <ClInclude Include="headers\objloader\glm.h" />
     <ClInclude Include="headers\components\Collider.h" />
+    <ClInclude Include="headers\components\TargetPath.h" />
     <ClInclude Include="headers\framework\Drawable.h" />
     <ClInclude Include="headers\framework\Level.h" />
     <ClInclude Include="headers\framework\Wave.h" />

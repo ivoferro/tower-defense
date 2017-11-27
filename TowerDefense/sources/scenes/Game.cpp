@@ -173,6 +173,15 @@ void Game::Timer(int value)
 		Application::instance()->getState()->getInputs()->kill_all_enemies = false;
 	}
 	level.timerActions();
+
+	// FIXME not the best place for this logic
+	for (std::map<std::string, GameObject*>::iterator it1 = gameObjects.begin(); it1 != gameObjects.end(); ++it1)
+	{
+		GameObject * obj = it1->second;
+		if (Enemy * e = dynamic_cast<Enemy*>(obj)) {
+			e->timerActions();
+		}
+	}
 }
 
 void Game::Key(unsigned char key, int x, int y)

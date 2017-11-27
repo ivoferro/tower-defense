@@ -18,6 +18,7 @@ public:
 	Enemy();
 	~Enemy();
 	void draw();
+	void timerActions();
 
 	std::vector< GLuint > idleFrames;
 	GLuint dl;
