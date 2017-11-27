@@ -3,6 +3,7 @@
 #include "../../headers/framework/Drawable.h"
 #include "../../headers/gameobjects/Enemy.h"
 #include "../../headers/components/Transform.h"
+#include "../../headers/components/TargetPath.h"
 
 Level01::Level01(Scene * scene) : Level(scene)
 {
@@ -20,10 +21,14 @@ void Level01::setWave01()
 
 	Enemy * e1 = new Enemy();
 	Transform * e1T = (Transform*)e1->getComponentById("transform");
-	e1T->position->x = -20;
-	e1T->position->y = -20;
+	e1T->position->x = -25;
+	e1T->position->y = -25;
 	e1T->position->z = 1;
+	TargetPath * targetPath = (TargetPath*)e1->getComponentById("targetPath");
 	std::string e1Key = scene->addToWaitingObjects(e1);
+	targetPath->addObjective(new Transform::Coordinates(20.0f, -20.0f, 0.0f));
+	targetPath->addObjective(new Transform::Coordinates(15.0f, 10.0f, 0.0f));
+	targetPath->addObjective(new Transform::Coordinates(0.0f, 0.0f, 0.0f));
 	Wave::Enemy * enemy01 = new Wave::Enemy(e1Key, (Drawable*)e1, 0);
 
 	Enemy * e2 = new Enemy();

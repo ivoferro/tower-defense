@@ -17,6 +17,7 @@ public:
 	Enemy();
 	~Enemy();
 	void draw();
+	void timerActions();
 
 };
 

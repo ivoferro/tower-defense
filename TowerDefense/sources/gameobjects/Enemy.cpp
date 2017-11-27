@@ -1,13 +1,16 @@
 #include "../../headers/gameobjects/Enemy.h"
-#include "../../headers/components/Transform.h"
 #include "../../headers/gameobjects/LifeBar.h"
+#include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
+#include "../../headers/components/TargetPath.h"
 #include "../../headers/util/Illumination.h"
+#include "../../headers/util/Math.h"
 
 Enemy::Enemy()
 {
 	addComponent("transform", new Transform());
 	addComponent("transformLifeBar", new Transform());
+	addComponent("targetPath", new TargetPath());
 
 	setUpCollider();
 }
@@ -113,4 +116,35 @@ void Enemy::draw()
 	glPushMatrix();
 	lifebar->draw();
 	glPopMatrix();	
+}
+
+void Enemy::timerActions()
+{
+	// if sensoring targets atack them
+
+	TargetPath * targetPath = (TargetPath*)getComponentById("targetPath");
+	if (targetPath->isObjectivesEmpty())
+	{
+		return;
+	}
+
+	Transform::Coordinates * nextObjective = targetPath->nextObjective();
+	Transform::Coordinates * currentLocation = ((Transform*)getComponentById("transform"))->position;
+
+	GLfloat speed = 0.2f;
+	GLfloat elapsed = 0.01f;
+
+	GLfloat distance = Math::distance2D(currentLocation, nextObjective);
+	Transform::Coordinates * subtractedVecs = Math::subtract(nextObjective, currentLocation);
+	Transform::Coordinates * direction = Math::normalize(subtractedVecs);
+
+	currentLocation->x += direction->x * speed;
+	currentLocation->y += direction->y * speed;
+	if (distance <= 0.01)
+	{
+		targetPath->popCoordinate();
+	}
+
+	delete subtractedVecs;
+	delete direction;
 }

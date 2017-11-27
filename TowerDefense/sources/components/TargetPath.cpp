@@ -12,6 +12,11 @@ TargetPath::~TargetPath()
 	}
 }
 
+GLboolean TargetPath::isObjectivesEmpty()
+{
+	return objectives.empty();
+}
+
 void TargetPath::addObjective(Transform::Coordinates * objective)
 {
 	objectives.push_back(objective);
@@ -19,7 +24,10 @@ void TargetPath::addObjective(Transform::Coordinates * objective)
 
 Transform::Coordinates * TargetPath::nextObjective()
 {
-	Transform::Coordinates * nextObjective = objectives.front();
+	return objectives.front();
+}
+
+void TargetPath::popCoordinate()
+{
 	objectives.pop_front();
-	return nextObjective;
 }
