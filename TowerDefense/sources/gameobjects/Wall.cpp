@@ -63,6 +63,7 @@ void Wall::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat d[], GLflo
 
 	Transform * t = (Transform*)getComponentById("transform");
 
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	glBindTexture(GL_TEXTURE_2D, Application::instance()->getTextures()->getTexture("metal_plate"));
 
 	glBegin(GL_QUADS);

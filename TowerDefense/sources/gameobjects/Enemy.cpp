@@ -3,9 +3,13 @@
 #include "../../headers/gameobjects/LifeBar.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/util/Illumination.h"
+#include "../../headers/objloader/glm.h"
+
+GLMmodel* model = NULL;
 
 Enemy::Enemy()
 {
+	//initModel();
 	addComponent("transform", new Transform());
 	addComponent("transformLifeBar", new Transform());
 
@@ -49,41 +53,38 @@ void Enemy::onCollisionEnter(GameObject * collidingObject)
 {
 }
 
+void Enemy::initModel()
+{
+	// Load the model only if it hasn't been loaded before
+	// If it's been loaded then pmodel1 should be a pointer to the model geometry data...otherwise it's null
+	if (!model)
+	{
+		// this is the call that actualy reads the OBJ and creates the model object
+		model = glmReadOBJ("resources/enemy/idle/StrongZombie_000001.obj", "resources/enemy/StrongZombie.tga");
+		if (!model) exit(0);
+		// This will rescale the object to fit into the unity matrix
+		// Depending on your project you might want to keep the original size and positions you had in 3DS Max or GMAX so you may have to comment this.
+		glmUnitize(model);
+		// These 2 functions calculate triangle and vertex normals from the geometry data.
+		// To be honest I had some problem with very complex models that didn't look to good because of how vertex normals were calculated
+		// So if you can export these directly from you modeling tool do it and comment these line
+		// 3DS Max can calculate these for you and GLM is perfectly capable of loading them
+		glmFacetNormals(model);
+		glmVertexNormals(model, 90.0);
+	}
+
+	// This is the call that will actualy draw the model
+	// Don't forget to tell it if you want textures or not :))
+	//idleFrames.push_back(glmList(model, GLM_SMOOTH | GLM_TEXTURE | GLM_MATERIAL));
+	//dl = glmList(model, GLM_SMOOTH | GLM_TEXTURE | GLM_MATERIAL);
+	glmDraw(model, GLM_SMOOTH | GLM_TEXTURE | GLM_MATERIAL);
+}
+
 void Enemy::drawEnemy()
 {
-	GLfloat vertices[][3] = {
-		{ 0.5,  0.5,  0.5 },
-		{ -0.5,  0.5,  0.5 },
-		{ -0.5,  0.5, -0.5 },
-		{ 0.5,  0.5, -0.5 },
-		{ 0.5, -0.5,  0.5 },
-		{ -0.5, -0.5,  0.5 },
-		{ -0.5, -0.5, -0.5 },
-		{ 0.5, -0.5, -0.5 } };
 
-	GLfloat normals[][3] = {
-		{ 0,  1,  0 },
-		{ -1,  0,  0 },
-		{ 0,  -1, 0 },
-		{ 1,  0,  0 },
-		{ 0,  0,  1 },
-		{ 0,  0, -1 } };
-
-	GLfloat colors[][3] = {
-		{ 0.5, 0.0, 0.0 },
-		{ 0.0, 0.5, 0.0 },
-		{ 0.0, 0.0, 0.5 },
-		{ 1.0, 1.0, 0.0 },
-		{ 0.0, 1.0, 1.0 },
-		{ 1.0, 0.0, 1.0 } };
-
-	drawPolygon(vertices[0], vertices[3], vertices[2], vertices[1], normals[0], colors[0]);
-	drawPolygon(vertices[1], vertices[2], vertices[6], vertices[5], normals[1], colors[1]);
-	drawPolygon(vertices[5], vertices[6], vertices[7], vertices[4], normals[2], colors[2]);
-	drawPolygon(vertices[4], vertices[7], vertices[3], vertices[0], normals[3], colors[3]);
-	drawPolygon(vertices[1], vertices[5], vertices[4], vertices[0], normals[4], colors[4]);
-	drawPolygon(vertices[2], vertices[3], vertices[7], vertices[6], normals[5], colors[5]);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glCallList(dl);
+	initModel();
 }
 
 void Enemy::draw()
@@ -93,7 +94,8 @@ void Enemy::draw()
 
 	glPushMatrix();
 	glTranslatef(t->position->x, t->position->y, t->position->z);
-	glScalef(1, 1, 2);
+	glTranslatef(0, 0, 1);
+	glRotatef(90.0, 1, 0, 0);
 	drawEnemy();
 	glPopMatrix();
 
@@ -103,7 +105,7 @@ void Enemy::draw()
 	//Transform * e1t_lifebar = (Transform*)e1->getComponentById("transformLifeBar");
 	lt->position->x = t->position->x;
 	lt->position->y = t->position->y;
-	lt->position->z = (t->position->z + 1.2); // ... + val -> above the object
+	lt->position->z = (t->position->z + 2.2); // ... + val -> above the object
 
 	// change scale->x between 0 and 1 scale->x when lifebar need to be reduced
 	lt->scale->x = 0.85;

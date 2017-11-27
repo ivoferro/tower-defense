@@ -6,6 +6,9 @@
 #include "../../headers/framework/Application.h"
 #include "../../headers/util/Math.h"
 #include "../../headers/util/Illumination.h"
+#include "../../headers/objloader/glm.h"
+
+GLMmodel* model1 = NULL;
 
 Player::Player()
 {
@@ -18,6 +21,34 @@ Player::Player()
 Player::~Player()
 {
 }
+
+void Player::initModel()
+{
+	// Load the model only if it hasn't been loaded before
+	// If it's been loaded then pmodel1 should be a pointer to the model geometry data...otherwise it's null
+	if (!model1)
+	{
+		// this is the call that actualy reads the OBJ and creates the model object
+		model1 = glmReadOBJ("resources/player/FLASH.obj", NULL);
+		if (!model1) exit(0);
+		// This will rescale the object to fit into the unity matrix
+		// Depending on your project you might want to keep the original size and positions you had in 3DS Max or GMAX so you may have to comment this.
+		glmUnitize(model1);
+		// These 2 functions calculate triangle and vertex normals from the geometry data.
+		// To be honest I had some problem with very complex models that didn't look to good because of how vertex normals were calculated
+		// So if you can export these directly from you modeling tool do it and comment these line
+		// 3DS Max can calculate these for you and GLM is perfectly capable of loading them
+		glmFacetNormals(model1);
+		glmVertexNormals(model1, 90.0);
+	}
+
+	// This is the call that will actualy draw the model
+	// Don't forget to tell it if you want textures or not :))
+	//idleFrames.push_back(glmList(model, GLM_SMOOTH | GLM_TEXTURE | GLM_MATERIAL));
+	//dl = glmList(model, GLM_SMOOTH | GLM_TEXTURE | GLM_MATERIAL);
+	glmDraw(model1, GLM_SMOOTH | GLM_TEXTURE | GLM_MATERIAL);
+}
+
 
 void Player::draw()
 {
@@ -35,55 +66,10 @@ void Player::draw()
 		glRotatef(t->rotation->z, 0, 0, 1);
 		glScalef(t->scale->x, t->scale->y, t->scale->z);
 
-		glScalef(0.5, 0.5, 0.5);
-
-		// torso
-		glPushMatrix();
-			glScalef(1, 1, 2);
-			drawCube(color1);
-		glPopMatrix();
-
-		// head
-		glPushMatrix();
-			glMaterialfv(GL_FRONT, GL_AMBIENT, headColor);
-			glMaterialfv(GL_FRONT, GL_DIFFUSE, headColor);
-			glMaterialfv(GL_FRONT, GL_SPECULAR, Illumination::NO_MATERIAL);
-			glMaterialfv(GL_FRONT, GL_SHININESS, Illumination::NO_SHININESS);
-			glMaterialfv(GL_FRONT, GL_EMISSION, Illumination::NO_MATERIAL);
-			glTranslatef(0, 0, 1.5);
-			glutSolidSphere(0.5, 16, 16);
-		glPopMatrix();
-
-		// left arm
-		glPushMatrix();
-			glTranslatef(0.3, 0, -2);
-			glScalef(0.4, 0.4, 2);
-			drawCube(color2);
-		glPopMatrix();
-
-		// right arm
-		glPushMatrix();
-			glTranslatef(-0.3, 0, -2);
-			glScalef(0.4, 0.4, 2);
-			drawCube(color2);
-		glPopMatrix();
-
-		// left leg
-		glPushMatrix();
-			glTranslatef(1, 0, 0);
-			glRotatef(-20, 0, 1, 0);
-			glScalef(0.4, 0.4, 2);
-			drawCube(color2);
-		glPopMatrix();
-
-		// right leg
-		glPushMatrix();
-			glTranslatef(-1, 0, 0);
-			glRotatef(20, 0, 1, 0);
-			glScalef(0.4, 0.4, 2);
-			drawCube(color2);
-		glPopMatrix();
-
+		glTranslatef(0, 0, 0);
+		glRotatef(90.0, 1, 0, 0);
+		glScalef(1.3, 1.3, 1.3);
+		initModel();
 	glPopMatrix();
 
 	// ****** LIFEBAR ******
@@ -92,7 +78,7 @@ void Player::draw()
 	//Transform * e1t_lifebar = (Transform*)e1->getComponentById("transformLifeBar");
 	lt->position->x = t->position->x;
 	lt->position->y = t->position->y;
-	lt->position->z = (t->position->z + 1.2); // ... + val -> above the object
+	lt->position->z = (t->position->z + 1.8); // ... + val -> above the object
 
 	// change scale->x between 0 and 1 scale->x when lifebar need to be reduced
 	lt->scale->x = 0.5;

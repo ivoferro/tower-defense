@@ -25,6 +25,7 @@ void Plane::draw()
 		glRotatef(t->rotation->z, 0, 0, 1);
 		glScalef(t->scale->x, t->scale->y, t->scale->z);
 
+		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 		glBindTexture(GL_TEXTURE_2D, Application::instance()->getTextures()->getTexture(textureID));
 
 		glBegin(GL_QUADS);

@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="sources\objloader\glm.cpp" />
     <ClCompile Include="sources\components\Life.cpp" />
     <ClCompile Include="sources\framework\Level.cpp" />
     <ClCompile Include="sources\framework\Wave.cpp" />
@@ -147,6 +148,8 @@
     <ClCompile Include="sources\gameobjects\Wall.cpp" />
     <ClCompile Include="sources\jpegloader\readjpeg.c" />
     <ClCompile Include="sources\levels\Level01.cpp" />
+    <ClCompile Include="sources\objloader\glmimg.cpp" />
+    <ClCompile Include="sources\objloader\texture.cpp" />
     <ClCompile Include="sources\util\Illumination.cpp" />
     <ClCompile Include="sources\util\Math.cpp" />
     <ClCompile Include="sources\components\CharacterPhysics.cpp" />
@@ -169,6 +172,7 @@
     <ClCompile Include="sources\framework\Textures.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="headers\objloader\glm.h" />
     <ClInclude Include="headers\components\Collider.h" />
     <ClInclude Include="headers\framework\Drawable.h" />
     <ClInclude Include="headers\framework\Level.h" />
@@ -190,6 +194,7 @@
     <ClInclude Include="headers\jpegloader\jmorecfg.h" />
     <ClInclude Include="headers\jpegloader\jpeglib.h" />
     <ClInclude Include="headers\levels\Level01.h" />
+    <ClInclude Include="headers\objloader\texture.h" />
     <ClInclude Include="headers\scenes\Game.h" />
     <ClInclude Include="headers\scenes\Menu.h" />
     <ClInclude Include="headers\framework\Scene.h" />

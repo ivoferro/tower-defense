@@ -20,6 +20,7 @@ void MenuBar::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], G
 
 	Transform* t = (Transform*)getComponentById("transform");
 
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	glBindTexture(GL_TEXTURE_2D, Application::instance()->getTextures()->getTexture("vinil"));
 
 	glBegin(GL_POLYGON);

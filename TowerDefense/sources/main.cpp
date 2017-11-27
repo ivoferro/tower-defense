@@ -69,7 +69,7 @@ int main(int argc, char **argv)
 	glutInitWindowSize(640, 480);
 	glutInitDisplayMode(
 		((Application::instance()->getState()->isDoubleBufferActivated()) 
-		? GLUT_DOUBLE : GLUT_SINGLE) | GLUT_RGB | GLUT_DEPTH);
+		? GLUT_DOUBLE : GLUT_SINGLE) | GLUT_RGBA | GLUT_DEPTH);
 	if (glutCreateWindow("Tower Defense") == GL_FALSE)
 		exit(1);
 

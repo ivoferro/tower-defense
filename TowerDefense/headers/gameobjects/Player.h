@@ -14,6 +14,7 @@ private:
 	void drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat normal[], GLfloat color[]);
 	void setUpCollider();
 	void onCollisionEnter(GameObject * collidingObject) override;
+	void initModel();
 
 	Transform oldTransform;
 
