@@ -134,6 +134,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="sources\mdlloader\mathlib.cpp" />
+    <ClCompile Include="sources\mdlloader\MdlLoader.cpp" />
+    <ClCompile Include="sources\mdlloader\studio_render.cpp" />
+    <ClCompile Include="sources\mdlloader\studio_utils.cpp" />
     <ClCompile Include="sources\objloader\glm.cpp" />
     <ClCompile Include="sources\components\Life.cpp" />
     <ClCompile Include="sources\components\TargetPath.cpp" />
@@ -173,6 +177,9 @@
     <ClCompile Include="sources\framework\Textures.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="headers\mdlloader\mathlib.h" />
+    <ClInclude Include="headers\mdlloader\MdlLoader.h" />
+    <ClInclude Include="headers\mdlloader\studio.h" />
     <ClInclude Include="headers\objloader\glm.h" />
     <ClInclude Include="headers\components\Collider.h" />
     <ClInclude Include="headers\components\TargetPath.h" />

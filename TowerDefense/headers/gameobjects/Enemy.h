@@ -9,11 +9,10 @@ class Enemy : public GameObject, Drawable
 
 private:
 	//LifeBar *lifebar;
-	void drawEnemy();
+	void initEnemy();
 	void drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat normal[], GLfloat color[]);
 	void setUpCollider();
 	void onCollisionEnter(GameObject * collidingObject);
-	void initModel();
 public:
 	Enemy();
 	~Enemy();

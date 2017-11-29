@@ -230,8 +230,12 @@ void Menu::createGameObjects() {
 
 	Tower * t = new Tower();
 	Transform * tt = (Transform*)t->getComponentById("transform");
+	tt->rotation->x = -90.0;
 	tt->position->x = xBase + 1.7;
-	tt->position->y = yBase;
+	tt->position->y = yBase - 0.75;
+	tt->scale->x = 0.25;
+	tt->scale->y = 0.25;
+	tt->scale->z = 0.25;
 	gameObjects["tower"] = t;
 	
 }

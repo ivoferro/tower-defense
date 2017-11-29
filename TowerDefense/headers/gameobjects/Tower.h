@@ -10,11 +10,11 @@ class Tower : public GameObject, Drawable
 
 private:
 	void drawTower();
-
+	
 public:
 	Tower();
 	~Tower();
 	void draw();
-
+	void initModel();
 };
 

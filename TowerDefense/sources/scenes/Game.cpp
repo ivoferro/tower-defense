@@ -29,19 +29,19 @@ Game::Game() : level(this)
 	pt->position->z = 1.5;
 	gameObjects["player"] = p;
 
-	Wall * wall = new Wall();
-	Transform * wallTransform = (Transform*)wall->getComponentById("transform");
-	wallTransform->position->x = -30;
-	wallTransform->position->y = 20;
-	wallTransform->position->z = 2;
-	wallTransform->scale->x = 20;
-	wallTransform->scale->y = 10;
-	wallTransform->scale->z = 4;
-	Collider * wallCollider = (Collider*)wall->getComponentById("collider");
-	wallCollider->addBox(
-		new Transform::Coordinates(10, 5, 2),
-		new Transform::Coordinates(-10, -5, -2));
-	gameObjects["wall1"] = wall;
+	//Wall * wall = new Wall();
+	//Transform * wallTransform = (Transform*)wall->getComponentById("transform");
+	//wallTransform->position->x = -30;
+	//wallTransform->position->y = 20;
+	//wallTransform->position->z = 2;
+	//wallTransform->scale->x = 20;
+	//wallTransform->scale->y = 10;
+	//wallTransform->scale->z = 4;
+	//Collider * wallCollider = (Collider*)wall->getComponentById("collider");
+	//wallCollider->addBox(
+	//	new Transform::Coordinates(10, 5, 2),
+	//	new Transform::Coordinates(-10, -5, -2));
+	//gameObjects["wall1"] = wall;
 
 	Tower * t = new Tower();
 	Transform * tt = (Transform*)t->getComponentById("transform");
@@ -134,7 +134,7 @@ void Game::Draw()
 		0, 0, 1);
 
 	((Tower*)gameObjects["tower"])->draw();
-	((Wall*)gameObjects["wall1"])->draw();
+	//((Wall*)gameObjects["wall1"])->draw();
 	((Player*)gameObjects["player"])->draw();
 	((Plane*)gameObjects["plane01"])->draw();
 

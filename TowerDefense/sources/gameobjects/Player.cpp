@@ -29,7 +29,7 @@ void Player::initModel()
 	if (!model1)
 	{
 		// this is the call that actualy reads the OBJ and creates the model object
-		model1 = glmReadOBJ("resources/player/FLASH.obj", NULL);
+		model1 = glmReadOBJ("resources/player/FLASH.obj", "resources/player/FL_CW_D.tga");
 		if (!model1) exit(0);
 		// This will rescale the object to fit into the unity matrix
 		// Depending on your project you might want to keep the original size and positions you had in 3DS Max or GMAX so you may have to comment this.
