@@ -2,6 +2,7 @@
 
 #include "../framework/GameObject.h"
 #include "../framework/Drawable.h"
+#include <map>
 
 class MenuBar : public GameObject, Drawable
 {
@@ -9,17 +10,15 @@ class MenuBar : public GameObject, Drawable
 private:
 	GLfloat width;
 	GLfloat height;
+	char* texture;
 
 	void drawBar();
-	void drawBarOver();
 	void drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat color[]);
-	void drawPolygonOver(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat color[]);
-
+	
 public:
 	MenuBar();
+	MenuBar(char* text);
 	~MenuBar();
 	void draw();
-	void changeColor();
-	GLfloat getWidth();
-	GLfloat getHeight();
+	void drawWithText(char* text, GLfloat color[3]);
 };

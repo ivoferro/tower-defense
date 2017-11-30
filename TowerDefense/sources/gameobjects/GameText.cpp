@@ -2,15 +2,19 @@
 #include "../../headers/components/Transform.h"
 #include "../../headers/util/Illumination.h"
 
+
+
 GameText::GameText()
 {
 	addComponent("transform", new Transform());
+	GLfloat color[3] = { 1.0, 1.0, 1.0 };
 }
 
 GameText::GameText(char * text)
 {
 	addComponent("transform", new Transform());
 	this->text = text;
+	GLfloat color[3] = { 1.0, 1.0, 1.0 };
 }
 
 GameText::~GameText()
@@ -28,13 +32,13 @@ void GameText::writeText() {
 
 void GameText::drawText()
 {
-	GLfloat blackcolor[3] = { 1.0, 1.0, 1.0 };
+	
 	Transform * t = (Transform*)getComponentById("transform");
 
 	glPushMatrix();
 
-	glMaterialfv(GL_FRONT, GL_AMBIENT, blackcolor);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, blackcolor);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, color);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, Illumination::NO_MATERIAL);
 	glMaterialfv(GL_FRONT, GL_SHININESS, Illumination::NO_SHININESS);
 	glMaterialfv(GL_FRONT, GL_EMISSION, Illumination::NO_MATERIAL);
@@ -46,23 +50,10 @@ void GameText::drawText()
 	glPopMatrix();
 }
 
-void GameText::changeColor()
+
+void GameText::setColor(GLfloat colorC[3])
 {
-
-	GLfloat whitecolor[3] = { 0.0, 0.0, 0.0 };
-	Transform * t = (Transform*)getComponentById("transform");
-
-	glPushMatrix();
-
-	glMaterialfv(GL_FRONT, GL_AMBIENT, whitecolor);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, whitecolor);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, Illumination::NO_MATERIAL);
-	glMaterialfv(GL_FRONT, GL_SHININESS, Illumination::NO_SHININESS);
-	glMaterialfv(GL_FRONT, GL_EMISSION, Illumination::NO_MATERIAL);
-
-	glRasterPos2f(t->position->x, t->position->y);
-
-	writeText();
-
-	glPopMatrix();
+	color[0] = colorC[0];
+	color[1] = colorC[1];
+	color[2] = colorC[2];
 }

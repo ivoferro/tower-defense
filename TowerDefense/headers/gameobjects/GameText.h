@@ -8,6 +8,7 @@ class GameText : public GameObject
 
 private:
 	char* text;
+	GLfloat color[3];
 	void writeText();
 
 public:
@@ -16,5 +17,5 @@ public:
 	~GameText();
 
 	void drawText();
-	void changeColor();
+	void setColor(GLfloat color[3]);
 };

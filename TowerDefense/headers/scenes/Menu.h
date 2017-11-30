@@ -7,11 +7,14 @@ class Menu : public Scene
 
 private:
 	void setLight();
+	void setSelection(int x, int y);
 	void setTextures();
 	void createGameObjects();
 	void drawGameObjects();
-	bool isInsideStart(int x, int y, int xMax, int yMax);
-
+	void dragOptions(GLfloat pos);
+	void clearText();
+	int width, height, id;
+	GLdouble coordBars[5][3];
 
 public:
 	Menu();
@@ -26,6 +29,4 @@ public:
 	void Mouse(int button, int mouse_state, int x, int y);
 	void MouseMotion(int x, int y);
 	void MousePassiveMotion(int x, int y);
-	void CloseFunc();
-	void WindowSize();
 };
