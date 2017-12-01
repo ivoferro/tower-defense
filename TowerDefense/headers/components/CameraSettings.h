@@ -21,6 +21,10 @@ public:
 
 	GLfloat fieldOfView;
 
+	GLfloat verticalInclination;
+	GLfloat minVerticalInclination;
+	GLfloat maxVerticalInclination;
+
 	GLfloat distanceFromTarget;
 	GLfloat minDistanceFromTarget;
 	GLfloat maxDistanceFromTarget;

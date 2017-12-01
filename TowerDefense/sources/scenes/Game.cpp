@@ -35,19 +35,19 @@ Game::Game() : level(this)
 	ShootingController * shootingController = new ShootingController(this);
 	gameObjects["shootingController"] = shootingController;
 
-	//Wall * wall = new Wall();
-	//Transform * wallTransform = (Transform*)wall->getComponentById("transform");
-	//wallTransform->position->x = -30;
-	//wallTransform->position->y = 20;
-	//wallTransform->position->z = 2;
-	//wallTransform->scale->x = 20;
-	//wallTransform->scale->y = 10;
-	//wallTransform->scale->z = 4;
-	//Collider * wallCollider = (Collider*)wall->getComponentById("collider");
-	//wallCollider->addBox(
-	//	new Transform::Coordinates(10, 5, 2),
-	//	new Transform::Coordinates(-10, -5, -2));
-	//gameObjects["wall1"] = wall;
+	Wall * wall = new Wall();
+	Transform * wallTransform = (Transform*)wall->getComponentById("transform");
+	wallTransform->position->x = 25;
+	wallTransform->position->y = 30;
+	wallTransform->position->z = 3;
+	wallTransform->scale->x = 20;
+	wallTransform->scale->y = 20;
+	wallTransform->scale->z = 6;
+	Collider * wallCollider = (Collider*)wall->getComponentById("collider");
+	wallCollider->addBox(
+		new Transform::Coordinates(10, 10, 3),
+		new Transform::Coordinates(-10, -10, -3));
+	gameObjects["wall1"] = wall;
 
 	Tower * t = new Tower();
 	Transform * tt = (Transform*)t->getComponentById("transform");
@@ -548,27 +548,36 @@ void Game::MousePassiveMotion(int x, int y)
 void Game::MouseMovement(int x, int y)
 {
 	Transform * playerT = (Transform*)((Player*)gameObjects["player"])->getComponentById("transform");
+	CameraSettings * camSettings = (CameraSettings*)((Camera*)gameObjects["camera"])->getComponentById("settings");
 
 	if (x > Application::instance()->getState()->mousePositionX)
 	{
 		// FIXME this logic should not be here, on the other hand there is not a
 		// callback that triggers when mouse is not moving
 		// Application::instance()->getState()->getInputs()->move_camera_left = true;
-		playerT->rotation->z -= 1;
+		playerT->rotation->z -= 2;
 	}
 	else if (x < Application::instance()->getState()->mousePositionX)
 	{
 		// FIXME this logic should not be here, on the other hand there is not a
 		// callback that triggers when mouse is not moving
 		// Application::instance()->getState()->getInputs()->move_camera_right = true;
-		playerT->rotation->z += 1;
+		playerT->rotation->z += 2;
 	}
 
 	if (y > Application::instance()->getState()->mousePositionY)
 	{
+		if (camSettings->verticalInclination < camSettings->maxVerticalInclination)
+		{
+			camSettings->verticalInclination += 0.05;
+		}
 	}
 	else if (y < Application::instance()->getState()->mousePositionY)
 	{
+		if (camSettings->verticalInclination > camSettings->minVerticalInclination)
+		{
+			camSettings->verticalInclination -= 0.05;
+		}
 	}
 
 	// saves the last (x;y) positions to compare in the next call
@@ -619,7 +628,7 @@ void Game::moveCamera()
 	// changes camera position according to player
 	cameraT->position->x = playerT->position->x + (camSettings->distanceFromTarget * cos(Math::radians(playerT->rotation->z + 90)));
 	cameraT->position->y = playerT->position->y + (camSettings->distanceFromTarget * sin(Math::radians(playerT->rotation->z + 90)));
-	cameraT->position->z = 0.5 + playerT->position->z;
+	cameraT->position->z = camSettings->verticalInclination + playerT->position->z;
 }
 
 void Game::setLight()

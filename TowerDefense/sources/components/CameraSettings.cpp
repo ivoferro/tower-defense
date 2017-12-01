@@ -6,6 +6,10 @@ CameraSettings::CameraSettings()
 
 	fieldOfView = 60;
 
+	verticalInclination = 1;
+	minVerticalInclination = 0.5;
+	maxVerticalInclination = 6;
+
 	distanceFromTarget = 10;
 	minDistanceFromTarget = 5.0;
 	maxDistanceFromTarget = 15.0;
