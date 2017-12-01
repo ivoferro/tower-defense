@@ -6,6 +6,7 @@
 #include "../../headers/gameobjects/Camera.h"
 #include "../../headers/gameobjects/Enemy.h"
 #include "../../headers/gameobjects/Player.h"
+#include "../../headers/gameobjects/ShootingController.h"
 #include "../../headers/gameobjects/Ground.h"
 #include "../../headers/gameobjects/OuterWalls.h"
 #include "../../headers/gameobjects/Wall.h"
@@ -30,6 +31,9 @@ Game::Game() : level(this)
 	pt->position->x = 3;
 	pt->position->z = 1.5;
 	gameObjects["player"] = p;
+
+	ShootingController * shootingController = new ShootingController(this);
+	gameObjects["shootingController"] = shootingController;
 
 	//Wall * wall = new Wall();
 	//Transform * wallTransform = (Transform*)wall->getComponentById("transform");
@@ -241,6 +245,7 @@ void Game::Timer(int value)
 		}
 	}
 
+	((ShootingController*)gameObjects["shootingController"])->timerActions();
 	deleteBullets();
 }
 
@@ -335,6 +340,24 @@ void Game::SpecialKeyUp(int key, int x, int y)
 
 void Game::Mouse(int button, int mouse_state, int x, int y)
 {
+	if (mouse_state == GLUT_DOWN)
+	{
+		switch (button)
+		{
+		case GLUT_LEFT_BUTTON:
+			Application::instance()->getState()->getInputs()->playerShooting = true;
+			break;
+		}
+	}
+	else
+	{
+		switch (button)
+		{
+		case GLUT_LEFT_BUTTON:
+			Application::instance()->getState()->getInputs()->playerShooting = false;
+			break;
+		}
+	}
 }
 
 void Game::MouseMotion(int x, int y)

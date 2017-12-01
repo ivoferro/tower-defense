@@ -136,6 +136,7 @@
   <ItemGroup>
     <ClCompile Include="sources\gameobjects\Bullet.cpp" />
     <ClCompile Include="sources\gameobjects\MapObject.cpp" />
+    <ClCompile Include="sources\gameobjects\ShootingController.cpp" />
     <ClCompile Include="sources\mdlloader\mathlib.cpp" />
     <ClCompile Include="sources\mdlloader\MdlLoader.cpp" />
     <ClCompile Include="sources\mdlloader\studio_render.cpp" />
@@ -180,6 +181,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\gameobjects\Bullet.h" />
+    <ClInclude Include="headers\gameobjects\ShootingController.h" />
     <ClInclude Include="headers\mdlloader\mathlib.h" />
     <ClInclude Include="headers\mdlloader\MdlLoader.h" />
     <ClInclude Include="headers\mdlloader\studio.h" />
