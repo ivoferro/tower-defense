@@ -28,6 +28,7 @@ void MapObject::draw()
 	
 	glTranslatef(t->position->x, t->position->y, t->position->z);
 	glScalef(t->scale->x, t->scale->y, t->scale->z);
+	glRotatef(t->rotation->z, 0, 0, 1);
 	
 	mdlviewer_display(mdl);
 	glPopMatrix();
