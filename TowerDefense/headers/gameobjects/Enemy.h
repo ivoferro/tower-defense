@@ -15,10 +15,14 @@ private:
 	void drawModel();
 	void setUpCollider();
 	void onCollisionEnter(GameObject * collidingObject);
+	GLfloat health = 100;
+
 public:
 	Enemy();
 	~Enemy();
 	void draw();
 	void timerActions();
+
+	GLboolean isAlive = true;
 };
 

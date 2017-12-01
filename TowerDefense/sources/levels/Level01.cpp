@@ -28,8 +28,8 @@ void Level01::setWave01()
 	std::string e1Key = scene->addToWaitingObjects(e1);
 	targetPath->addObjective(new Transform::Coordinates(20.0f, -20.0f, 0.0f));
 	targetPath->addObjective(new Transform::Coordinates(15.0f, 10.0f, 0.0f));
-	targetPath->addObjective(new Transform::Coordinates(0.0f, 0.0f, 0.0f));
-	Wave::Enemy * enemy01 = new Wave::Enemy(e1Key, (Drawable*)e1, 0);
+	targetPath->addObjective(new Transform::Coordinates(2.0f, 2.0f, 0.0f));
+	Wave::WaveEnemy * enemy01 = new Wave::WaveEnemy(e1Key, (Drawable*)e1, 0);
 
 	Enemy * e2 = new Enemy();
 	Transform * e2T = (Transform*)e2->getComponentById("transform");
@@ -37,7 +37,7 @@ void Level01::setWave01()
 	e2T->position->y = 20;
 	e2T->position->z = 1;
 	std::string e2Key = scene->addToWaitingObjects(e2);
-	Wave::Enemy * enemy02 = new Wave::Enemy(e2Key, (Drawable*)e2, 0);
+	Wave::WaveEnemy * enemy02 = new Wave::WaveEnemy(e2Key, (Drawable*)e2, 0);
 
 	wave01->addEnemy(enemy01);
 	wave01->addEnemy(enemy02);
@@ -54,7 +54,7 @@ void Level01::setWave02()
 	e1T->position->y = -20;
 	e1T->position->z = 1;
 	std::string e1Key = scene->addToWaitingObjects(e1);
-	Wave::Enemy * enemy01 = new Wave::Enemy(e1Key, (Drawable*)e1, 0);
+	Wave::WaveEnemy * enemy01 = new Wave::WaveEnemy(e1Key, (Drawable*)e1, 0);
 
 	Enemy * e2 = new Enemy();
 	Transform * e2T = (Transform*)e2->getComponentById("transform");
@@ -62,7 +62,7 @@ void Level01::setWave02()
 	e2T->position->y = 20;
 	e2T->position->z = 1;
 	std::string e2Key = scene->addToWaitingObjects(e2);
-	Wave::Enemy * enemy02 = new Wave::Enemy(e2Key, (Drawable*)e2, 0);
+	Wave::WaveEnemy * enemy02 = new Wave::WaveEnemy(e2Key, (Drawable*)e2, 0);
 
 	Enemy * e3 = new Enemy();
 	Transform * e3T = (Transform*)e3->getComponentById("transform");
@@ -70,7 +70,7 @@ void Level01::setWave02()
 	e3T->position->y = 20;
 	e3T->position->z = 1;
 	std::string e3Key = scene->addToWaitingObjects(e3);
-	Wave::Enemy * enemy03 = new Wave::Enemy(e3Key, (Drawable*)e3, 10);
+	Wave::WaveEnemy * enemy03 = new Wave::WaveEnemy(e3Key, (Drawable*)e3, 10);
 
 	Enemy * e4 = new Enemy();
 	Transform * e4T = (Transform*)e4->getComponentById("transform");
@@ -78,7 +78,7 @@ void Level01::setWave02()
 	e4T->position->y = 0;
 	e4T->position->z = 1;
 	std::string e4Key = scene->addToWaitingObjects(e4);
-	Wave::Enemy * enemy04 = new Wave::Enemy(e4Key, (Drawable*)e4, 10);
+	Wave::WaveEnemy * enemy04 = new Wave::WaveEnemy(e4Key, (Drawable*)e4, 10);
 
 	wave02->addEnemy(enemy01);
 	wave02->addEnemy(enemy02);

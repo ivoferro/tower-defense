@@ -10,6 +10,8 @@ class Tower : public GameObject, Drawable
 
 private:
 	void drawTower();
+	void setUpCollider();
+	void onCollisionEnter(GameObject * collidingObject) override;
 	
 public:
 	Tower();

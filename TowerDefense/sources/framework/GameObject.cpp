@@ -32,6 +32,15 @@ Component * GameObject::getComponentById(std::string id)
 	return components[id];
 }
 
+GLboolean GameObject::removeComponent(std::string id)
+{
+	if (hasComponent(id)) {
+		components.erase(id);
+		return true;
+	}
+	return false;
+}
+
 std::list<Component*> GameObject::getComponentsByTag(std::string tag)
 {
 	std::list<Component*> componentsWithTag;
@@ -48,5 +57,9 @@ std::list<Component*> GameObject::getComponentsByTag(std::string tag)
 }
 
 void GameObject::onCollisionEnter(GameObject * collidingObject)
+{
+}
+
+void GameObject::draw()
 {
 }

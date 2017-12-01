@@ -135,6 +135,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="sources\components\MDLModel.cpp" />
+    <ClCompile Include="sources\gameobjects\Bullet.cpp" />
+    <ClCompile Include="sources\gameobjects\MapObject.cpp" />
+    <ClCompile Include="sources\gameobjects\ShootingController.cpp" />
     <ClCompile Include="sources\mdlloader\mathlib.cpp" />
     <ClCompile Include="sources\mdlloader\MdlLoader.cpp" />
     <ClCompile Include="sources\mdlloader\studio_render.cpp" />
@@ -179,6 +182,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\components\MDLModel.h" />
+    <ClInclude Include="headers\gameobjects\Bullet.h" />
+    <ClInclude Include="headers\gameobjects\ShootingController.h" />
     <ClInclude Include="headers\mdlloader\mathlib.h" />
     <ClInclude Include="headers\mdlloader\MdlLoader.h" />
     <ClInclude Include="headers\mdlloader\studio.h" />
@@ -221,6 +226,7 @@
     <ClInclude Include="headers\gameobjects\LifeBar.h" />
     <ClInclude Include="headers\components\Life.h" />
     <ClInclude Include="headers\framework\Textures.h" />
+    <ClInclude Include="headers\gameobjects\MapObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\metal_plate.jpg" />

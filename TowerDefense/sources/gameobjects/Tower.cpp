@@ -1,5 +1,6 @@
 #include "../../headers/gameobjects/Tower.h"
 #include "../../headers/components/Transform.h"
+#include "../../headers/components/Collider.h"
 #include "../../headers/gameobjects/LifeBar.h"
 #include "../../headers/objloader/glm.h"
 
@@ -8,6 +9,7 @@ GLMmodel* towerModel = NULL;
 Tower::Tower()
 {
 	addComponent("transform", new Transform());
+	setUpCollider();
 }
 
 Tower::~Tower()
@@ -139,5 +141,20 @@ void Tower::drawTower()
 	glVertex3f(0, -0.5, 1);
 
 	glEnd();
+}
+
+void Tower::setUpCollider()
+{
+	Collider * collider = new Collider(this);
+	collider->addBox(
+		new Transform::Coordinates(1, 1, 2),
+		new Transform::Coordinates(-1, -1, -2));
+
+	collider->registerOnCollisionEnterCallback(&GameObject::onCollisionEnter);
+	addComponent("collider", collider);
+}
+
+void Tower::onCollisionEnter(GameObject * collidingObject)
+{
 }
 

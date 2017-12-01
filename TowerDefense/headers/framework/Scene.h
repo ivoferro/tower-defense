@@ -10,13 +10,12 @@ private:
 	unsigned int idGenerator;
 	std::string generateKey();
 
-protected:
-	std::map<std::string, GameObject *> gameObjects;
-	std::map<std::string, GameObject *> waitingGameObjects;
-
 public:
 	Scene();
 	~Scene();
+
+	std::map<std::string, GameObject *> gameObjects;
+	std::map<std::string, GameObject *> waitingGameObjects;
 
 	virtual void Init() = 0;
 	virtual void Reshape(int width, int height) = 0;

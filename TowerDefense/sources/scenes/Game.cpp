@@ -6,17 +6,20 @@
 #include "../../headers/gameobjects/Camera.h"
 #include "../../headers/gameobjects/Enemy.h"
 #include "../../headers/gameobjects/Player.h"
+#include "../../headers/gameobjects/ShootingController.h"
 #include "../../headers/gameobjects/Ground.h"
 #include "../../headers/gameobjects/OuterWalls.h"
 #include "../../headers/gameobjects/Wall.h"
 #include "../../headers/gameobjects/Door.h"
 #include "../../headers/gameobjects/Tower.h"
 #include "../../headers/gameobjects/Plane.h"
+#include "../../headers/gameobjects/Bullet.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/components/CharacterPhysics.h"
 #include "../../headers/components/CameraSettings.h"
 #include "../../headers/gameobjects/LifeBar.h"
+#include "../../headers/gameobjects/MapObject.h"
 
 Game::Game() : level(this)
 {
@@ -28,6 +31,9 @@ Game::Game() : level(this)
 	pt->position->x = 3;
 	pt->position->z = 1.5;
 	gameObjects["player"] = p;
+
+	ShootingController * shootingController = new ShootingController(this);
+	gameObjects["shootingController"] = shootingController;
 
 	//Wall * wall = new Wall();
 	//Transform * wallTransform = (Transform*)wall->getComponentById("transform");
@@ -47,11 +53,210 @@ Game::Game() : level(this)
 	Transform * tt = (Transform*)t->getComponentById("transform");
 	gameObjects["tower"] = t;
 
-	Plane * plane = new Plane("snow");
+	Plane * plane = new Plane("rock_floor");
 	Transform * planeT = (Transform*)plane->getComponentById("transform");
-	planeT->scale->x = 105;
-	planeT->scale->y = 105;
+	planeT->scale->x = 100;
+	planeT->scale->y = 100;
 	gameObjects["plane01"] = plane;
+	
+	// barrel_brown
+	MapObject * mapObj1 = new MapObject("resources/map/barrel_brown.mdl");
+	Transform * t_mapObj1 = (Transform*)mapObj1->getComponentById("transform");
+	t_mapObj1->scale->x = 0.05;
+	t_mapObj1->scale->y = 0.05;
+	t_mapObj1->scale->z = 0.05;
+	t_mapObj1->position->x = 45;
+	t_mapObj1->position->y = 45;
+	t_mapObj1->position->z = 1;
+	gameObjects["mapObject01"] = mapObj1;
+
+	// camion
+	MapObject * mapObj2 = new MapObject("resources/map/camion.mdl");
+	Transform * t_mapObj2 = (Transform*)mapObj2->getComponentById("transform");
+	t_mapObj2->scale->x = 0.05;
+	t_mapObj2->scale->y = 0.05;
+	t_mapObj2->scale->z = 0.05;
+	t_mapObj2->position->x = 0;
+	t_mapObj2->position->y = -38;
+	t_mapObj2->rotation->z = 180;
+	gameObjects["mapObject02"] = mapObj2;
+	
+	// kamen
+	MapObject * mapObj3 = new MapObject("resources/map/kamen.mdl");
+	Transform * t_mapObj3 = (Transform*)mapObj3->getComponentById("transform");
+	t_mapObj3->scale->x = 0.5;
+	t_mapObj3->scale->y = 0.5;
+	t_mapObj3->scale->z = 0.5;
+	t_mapObj3->position->x = 10;
+	t_mapObj3->position->y = -38;
+	gameObjects["mapObject03"] = mapObj3;
+	
+	// oil_barrel
+	MapObject * mapObj4 = new MapObject("resources/map/oil_barrel_m1.mdl");
+	Transform * t_mapObj4 = (Transform*)mapObj4->getComponentById("transform");
+	t_mapObj4->scale->x = 0.06;
+	t_mapObj4->scale->y = 0.06;
+	t_mapObj4->scale->z = 0.06;
+	t_mapObj4->position->x = 35;
+	t_mapObj4->position->y = -48;
+	gameObjects["mapObject04"] = mapObj4;
+
+	// christmas_tree
+	MapObject * mapObj5 = new MapObject("resources/map/christmastree.mdl");
+	Transform * t_mapObj5 = (Transform*)mapObj5->getComponentById("transform");
+	t_mapObj5->scale->x = 0.05;
+	t_mapObj5->scale->y = 0.05;
+	t_mapObj5->scale->z = 0.05;
+	t_mapObj5->position->x = 10;
+	t_mapObj5->position->y = -24;
+	gameObjects["mapObject05"] = mapObj5;
+
+	// skeleton
+	MapObject * mapObj6 = new MapObject("resources/map/skeleton.mdl");
+	Transform * t_mapObj6 = (Transform*)mapObj6->getComponentById("transform");
+	t_mapObj6->scale->x = 0.05;
+	t_mapObj6->scale->y = 0.05;
+	t_mapObj6->scale->z = 0.05;
+	t_mapObj6->position->x = -40;
+	t_mapObj6->position->y = 35;
+	gameObjects["mapObject06"] = mapObj6;
+
+	// train (1)
+	MapObject * mapObj7 = new MapObject("resources/map/guterwagen.mdl");
+	Transform * t_mapObj7 = (Transform*)mapObj7->getComponentById("transform");
+	t_mapObj7->scale->x = 0.07;
+	t_mapObj7->scale->y = 0.07;
+	t_mapObj7->scale->z = 0.07;
+	t_mapObj7->position->x = -38;
+	t_mapObj7->position->y = 15;
+	gameObjects["mapObject07"] = mapObj7;
+
+	// train (2)
+	MapObject * mapObj8 = new MapObject("resources/map/hbtest.mdl");
+	Transform * t_mapObj8 = (Transform*)mapObj8->getComponentById("transform");
+	t_mapObj8->scale->x = 0.07;
+	t_mapObj8->scale->y = 0.07;
+	t_mapObj8->scale->z = 0.07;
+	t_mapObj8->position->x = -16;
+	t_mapObj8->position->y = 15;
+	gameObjects["mapObject08"] = mapObj8;
+
+	// sandbags (1)
+	MapObject * mapObj9 = new MapObject("resources/map/sandbags.mdl");
+	Transform * t_mapObj9 = (Transform*)mapObj9->getComponentById("transform");
+	t_mapObj9->scale->x = 0.05;
+	t_mapObj9->scale->y = 0.05;
+	t_mapObj9->scale->z = 0.05;
+	t_mapObj9->position->x = 6;
+	t_mapObj9->position->y = -24;
+	gameObjects["mapObject09"] = mapObj9;
+
+	// pc_MobileOffice (1)
+	MapObject * mapObj10 = new MapObject("resources/map/pc_MobileOffice.mdl");
+	Transform * t_mapObj10 = (Transform*)mapObj10->getComponentById("transform");
+	t_mapObj10->scale->x = 0.05;
+	t_mapObj10->scale->y = 0.05;
+	t_mapObj10->scale->z = 0.05;
+	t_mapObj10->position->x = -18;
+	t_mapObj10->position->y = -40;
+	t_mapObj10->rotation->z = 90;
+	gameObjects["mapObject10"] = mapObj10;
+
+	// AA_RangeTower_Height2_KN_Smesh
+	MapObject * mapObj11 = new MapObject("resources/map/AA_RangeTower_Height2_KN_Smesh.mdl");
+	Transform * t_mapObj11 = (Transform*)mapObj11->getComponentById("transform");
+	t_mapObj11->scale->x = 0.05;
+	t_mapObj11->scale->y = 0.05;
+	t_mapObj11->scale->z = 0.05;
+	t_mapObj11->position->x = 8;
+	t_mapObj11->position->y = -45;
+	gameObjects["mapObject11"] = mapObj11;
+
+	// sandbags (2)
+	MapObject * mapObj12 = new MapObject("resources/map/sandbags.mdl");
+	Transform * t_mapObj12 = (Transform*)mapObj12->getComponentById("transform");
+	t_mapObj12->scale->x = 0.05;
+	t_mapObj12->scale->y = 0.05;
+	t_mapObj12->scale->z = 0.05;
+	t_mapObj12->position->x = 8;
+	t_mapObj12->position->y = -24;
+	gameObjects["mapObject12"] = mapObj12;
+
+	// halftrack_us1
+	MapObject * mapObj13 = new MapObject("resources/map/halftrack_us1.mdl");
+	Transform * t_mapObj13 = (Transform*)mapObj13->getComponentById("transform");
+	t_mapObj13->scale->x = 0.05;
+	t_mapObj13->scale->y = 0.05;
+	t_mapObj13->scale->z = 0.05;
+	t_mapObj13->position->x = -8;
+	t_mapObj13->position->y = 25.5;
+	t_mapObj13->position->z = 2.3;
+	t_mapObj13->rotation->z = 180;
+	gameObjects["mapObject13"] = mapObj13;
+
+	// AF_tent_military
+	MapObject * mapObj14 = new MapObject("resources/map/AF_tent_military.mdl");
+	Transform * t_mapObj14 = (Transform*)mapObj14->getComponentById("transform");
+	t_mapObj14->scale->x = 0.05;
+	t_mapObj14->scale->y = 0.05;
+	t_mapObj14->scale->z = 0.05;
+	t_mapObj14->position->x = -40;
+	t_mapObj14->position->y = 35;
+	gameObjects["mapObject14"] = mapObj14;
+
+	// AF_outdoors_kiosk
+	MapObject * mapObj15 = new MapObject("resources/map/AF_outdoors_kiosk.mdl");
+	Transform * t_mapObj15 = (Transform*)mapObj15->getComponentById("transform");
+	t_mapObj15->scale->x = 0.05;
+	t_mapObj15->scale->y = 0.05;
+	t_mapObj15->scale->z = 0.05;
+	t_mapObj15->position->x = 8;
+	t_mapObj15->position->y = -30;
+	gameObjects["mapObject15"] = mapObj15;
+
+	// AA_Tent
+	MapObject * mapObj16 = new MapObject("resources/map/AA_Tent.mdl");
+	Transform * t_mapObj16 = (Transform*)mapObj16->getComponentById("transform");
+	t_mapObj16->scale->x = 0.05;
+	t_mapObj16->scale->y = 0.05;
+	t_mapObj16->scale->z = 0.05;
+	t_mapObj16->position->x = -42;
+	t_mapObj16->position->y = -30;
+	gameObjects["mapObject16"] = mapObj16;
+
+	// pc_MobileOffice (2)
+	MapObject * mapObj17 = new MapObject("resources/map/pc_MobileOffice.mdl");
+	Transform * t_mapObj17 = (Transform*)mapObj17->getComponentById("transform");
+	t_mapObj17->scale->x = 0.05;
+	t_mapObj17->scale->y = 0.05;
+	t_mapObj17->scale->z = 0.05;
+	t_mapObj17->position->x = -18;
+	t_mapObj17->position->y = -25;
+	t_mapObj17->rotation->z = 90;
+	gameObjects["mapObject17"] = mapObj17;
+
+	// pc_MobileOffice (3)
+	MapObject * mapObj18 = new MapObject("resources/map/pc_MobileOffice.mdl");
+	Transform * t_mapObj18 = (Transform*)mapObj18->getComponentById("transform");
+	t_mapObj18->scale->x = 0.05;
+	t_mapObj18->scale->y = 0.05;
+	t_mapObj18->scale->z = 0.05;
+	t_mapObj18->position->x = -18;
+	t_mapObj18->position->y = -10;
+	t_mapObj18->rotation->z = 90;
+	gameObjects["mapObject18"] = mapObj18;
+
+	// pc_MobileOffice (4)
+	MapObject * mapObj19 = new MapObject("resources/map/pc_MobileOffice.mdl");
+	Transform * t_mapObj19 = (Transform*)mapObj19->getComponentById("transform");
+	t_mapObj19->scale->x = 0.05;
+	t_mapObj19->scale->y = 0.05;
+	t_mapObj19->scale->z = 0.05;
+	t_mapObj19->position->x = -33;
+	t_mapObj19->position->y = -7;
+	t_mapObj19->rotation->z = 180;
+	gameObjects["mapObject19"] = mapObj19;
+
 }
 
 void Game::Init()
@@ -120,11 +325,13 @@ void Game::Reshape(int width, int height)
 
 void Game::Draw()
 {
-	glClearColor(.5f, .5f, .8f, 0.0f);
+	
+	glClearColor(.9f, .9f, .9f, 0.0f);
 	glClearDepth(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
 
+	glLoadIdentity();
+	
 	Transform * cameraT = (Transform*)((Camera*)gameObjects["camera"])->getComponentById("transform");
 	Transform * playerT = (Transform*)((Player*)gameObjects["player"])->getComponentById("transform");
 	
@@ -132,13 +339,40 @@ void Game::Draw()
 		cameraT->position->x, cameraT->position->y, cameraT->position->z,
 		playerT->position->x, playerT->position->y, playerT->position->z, 
 		0, 0, 1);
-
-	((Tower*)gameObjects["tower"])->draw();
-	//((Wall*)gameObjects["wall1"])->draw();
+	
 	((Player*)gameObjects["player"])->draw();
+	//((Wall*)gameObjects["wall1"])->draw();	
+	((Tower*)gameObjects["tower"])->draw();
 	((Plane*)gameObjects["plane01"])->draw();
+	
+	((MapObject*)gameObjects["mapObject01"])->draw();
+	((MapObject*)gameObjects["mapObject02"])->draw();
+	((MapObject*)gameObjects["mapObject03"])->draw();
+	((MapObject*)gameObjects["mapObject04"])->draw();
+	((MapObject*)gameObjects["mapObject05"])->draw();
+	((MapObject*)gameObjects["mapObject06"])->draw();
+	((MapObject*)gameObjects["mapObject07"])->draw();
+	((MapObject*)gameObjects["mapObject08"])->draw();
+	((MapObject*)gameObjects["mapObject09"])->draw();
+	((MapObject*)gameObjects["mapObject10"])->draw();
+	((MapObject*)gameObjects["mapObject11"])->draw();
+	((MapObject*)gameObjects["mapObject12"])->draw();
+	((MapObject*)gameObjects["mapObject13"])->draw();
+	((MapObject*)gameObjects["mapObject14"])->draw();
+	((MapObject*)gameObjects["mapObject15"])->draw();
+	((MapObject*)gameObjects["mapObject16"])->draw();
+	((MapObject*)gameObjects["mapObject17"])->draw();
+	((MapObject*)gameObjects["mapObject18"])->draw();
+	((MapObject*)gameObjects["mapObject19"])->draw();
 
 	level.draw();
+
+	for (std::map<std::string, GameObject*>::iterator it1 = gameObjects.begin(); it1 != gameObjects.end(); ++it1)
+	{
+		GameObject * obj = it1->second;
+		obj->draw();
+	}
+
 
 	glFlush();
 	if (Application::instance()->getState()->isDoubleBufferActivated())
@@ -181,7 +415,13 @@ void Game::Timer(int value)
 		if (Enemy * e = dynamic_cast<Enemy*>(obj)) {
 			e->timerActions();
 		}
+		else if (Bullet * b = dynamic_cast<Bullet*>(obj)) {
+			b->timerActions();
+		}
 	}
+
+	((ShootingController*)gameObjects["shootingController"])->timerActions();
+	deleteBullets();
 
 	glutPostRedisplay();
 
@@ -279,6 +519,24 @@ void Game::SpecialKeyUp(int key, int x, int y)
 
 void Game::Mouse(int button, int mouse_state, int x, int y)
 {
+	if (mouse_state == GLUT_DOWN)
+	{
+		switch (button)
+		{
+		case GLUT_LEFT_BUTTON:
+			Application::instance()->getState()->getInputs()->playerShooting = true;
+			break;
+		}
+	}
+	else
+	{
+		switch (button)
+		{
+		case GLUT_LEFT_BUTTON:
+			Application::instance()->getState()->getInputs()->playerShooting = false;
+			break;
+		}
+	}
 }
 
 void Game::MouseMotion(int x, int y)
@@ -392,4 +650,24 @@ void Game::setTextures()
 	Application::instance()->getTextures()->registerTexture("rock_floor", "resources/rock_floor.jpg");
 	Application::instance()->getTextures()->registerTexture("snow", "resources/snow.jpg");
 	Application::instance()->getTextures()->registerTexture("snow_ice", "resources/snow_ice.jpg");
+	Application::instance()->getTextures()->registerTexture("floor", "resources/floor.jpg");
+}
+
+void Game::deleteBullets()
+{
+	for (std::map<std::string, GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); it++)
+	{
+		GameObject * obj = it->second;
+		if (Bullet * bullet = dynamic_cast<Bullet*>(obj)) {
+			if (bullet->doRemove)
+			{
+				gameObjects.erase(it++);
+				bullet->~Bullet();
+			}
+			else
+			{
+				++it;
+			}
+		}
+	}
 }

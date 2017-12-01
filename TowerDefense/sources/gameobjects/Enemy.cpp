@@ -1,5 +1,6 @@
 #include "../../headers/gameobjects/Enemy.h"
 #include "../../headers/gameobjects/LifeBar.h"
+#include "../../headers/gameobjects/Bullet.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/components/TargetPath.h"
@@ -37,6 +38,14 @@ void Enemy::setUpCollider()
 
 void Enemy::onCollisionEnter(GameObject * collidingObject)
 {
+	if (Bullet * bullet = dynamic_cast<Bullet*>(collidingObject))
+	{
+		health -= bullet->damage;
+		if (health <= 0)
+		{
+			isAlive = false;
+		}
+	}
 }
 
 void Enemy::initModel()
@@ -90,6 +99,12 @@ void Enemy::draw()
 void Enemy::timerActions()
 {
 
+	if (!isAlive)
+	{
+		removeComponent("collider");
+		return;
+	}
+
 	// if sensoring targets atack them
 
 	TargetPath * targetPath = (TargetPath*)getComponentById("targetPath");
@@ -101,7 +116,7 @@ void Enemy::timerActions()
 	Transform::Coordinates * nextObjective = targetPath->nextObjective();
 	Transform::Coordinates * currentLocation = ((Transform*)getComponentById("transform"))->position;
 
-	GLfloat speed = 0.2f;
+	GLfloat speed = 0.1f;
 	GLfloat elapsed = 0.01f;
 
 	GLfloat distance = Math::distance2D(currentLocation, nextObjective);
