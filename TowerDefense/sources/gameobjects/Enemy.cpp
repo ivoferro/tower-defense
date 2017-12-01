@@ -116,7 +116,7 @@ void Enemy::timerActions()
 	Transform::Coordinates * nextObjective = targetPath->nextObjective();
 	Transform::Coordinates * currentLocation = ((Transform*)getComponentById("transform"))->position;
 
-	GLfloat speed = 0.3f;
+	GLfloat speed = 0.1f;
 	GLfloat elapsed = 0.01f;
 
 	GLfloat distance = Math::distance2D(currentLocation, nextObjective);
