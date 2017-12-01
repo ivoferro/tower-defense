@@ -2,6 +2,7 @@
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/objloader/glm.h"
+#include "../../headers/util/Math.h"
 
 void Bullet::setUpCollider()
 {
@@ -77,4 +78,13 @@ void Bullet::draw()
 		glScalef(t->scale->x, t->scale->y, t->scale->z);
 		initModel();
 	glPopMatrix();
+}
+
+void Bullet::timerActions()
+{
+	Transform * t = (Transform*)getComponentById("transform");
+
+	GLfloat speed = 1.0f;
+	t->position->x += speed * cos(Math::radians(t->rotation->y - 90));
+	t->position->y += speed * sin(Math::radians(t->rotation->y - 90));
 }

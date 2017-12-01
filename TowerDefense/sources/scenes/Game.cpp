@@ -243,6 +243,9 @@ void Game::Timer(int value)
 		if (Enemy * e = dynamic_cast<Enemy*>(obj)) {
 			e->timerActions();
 		}
+		else if (Bullet * b = dynamic_cast<Bullet*>(obj)) {
+			b->timerActions();
+		}
 	}
 
 	((ShootingController*)gameObjects["shootingController"])->timerActions();

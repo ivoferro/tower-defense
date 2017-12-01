@@ -23,5 +23,6 @@ public:
 	GLboolean doRemove = false;
 
 	void draw();
+	void timerActions();
 
 };

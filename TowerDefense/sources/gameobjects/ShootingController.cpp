@@ -2,6 +2,7 @@
 #include "../../headers/gameobjects/Bullet.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/framework/Application.h"
+#include "../../headers/util/Math.h"
 
 void ShootingController::spawnBullet()
 {
@@ -10,8 +11,9 @@ void ShootingController::spawnBullet()
 
 	Bullet * bullet = new Bullet(parentScene);
 	Transform * bulletTransform = (Transform*)bullet->getComponentById("transform");
-	bulletTransform->position->x = playerTransform->position->x;
-	bulletTransform->position->y = playerTransform->position->y - 1;
+	bulletTransform->rotation->y = playerTransform->rotation->z;
+	bulletTransform->position->x = playerTransform->position->x + 1 * cos(Math::radians(playerTransform->rotation->z - 90));
+	bulletTransform->position->y = playerTransform->position->y + 1 * sin(Math::radians(playerTransform->rotation->z - 90));
 	bulletTransform->position->z = 1;
 }
 
