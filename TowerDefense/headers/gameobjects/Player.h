@@ -5,16 +5,18 @@
 #include "../framework/GameObject.h"
 #include "../framework/Drawable.h"
 #include "../components/Transform.h"
+#include "../components/MDLModel.h"
 
 class Player : public GameObject, Drawable
 {
 	
 private:
-	void drawCube(GLfloat color[]);
-	void drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat normal[], GLfloat color[]);
+	MDLModel* model;
+	GLint timer;
 	void setUpCollider();
 	void onCollisionEnter(GameObject * collidingObject) override;
 	void initModel();
+	void drawModel();
 
 	Transform oldTransform;
 
@@ -22,10 +24,9 @@ public:
 	Player();
 	~Player();
 	void draw();
-
-	void timerActions();
+	void timerActions(int value);
+	void animate();
 	void move();
 	GLboolean isColliding;
-
 };
 

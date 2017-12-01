@@ -8,18 +8,9 @@
 #include "../../headers/mdlloader/studio.h"
 #include "../../headers/util/Math.h"
 
-typedef struct MODEL {
-	GLboolean	isInit;
-	StudioModel   mdl;   // MDL Model
-	GLboolean     walking;
-	GLuint        prev;
-}MODEL;
-
-MODEL model;
-
 Enemy::Enemy()
 {
-	//mdlviewer_init("resources/enemy/zombie.mdl", model.mdl);
+	model = new MDLModel();
 
 	addComponent("transform", new Transform());
 	addComponent("transformLifeBar", new Transform());
@@ -31,23 +22,6 @@ Enemy::Enemy()
 
 Enemy::~Enemy()
 {
-}
-
-void Enemy::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat normal[], GLfloat color[])
-{
-	glBegin(GL_POLYGON);
-
-	glMaterialfv(GL_FRONT, GL_AMBIENT, color);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, Illumination::NO_MATERIAL);
-	glMaterialfv(GL_FRONT, GL_SHININESS, Illumination::NO_SHININESS);
-	glMaterialfv(GL_FRONT, GL_EMISSION, Illumination::NO_MATERIAL);
-
-	glVertex3fv(a);
-	glVertex3fv(b);
-	glVertex3fv(c);
-	glVertex3fv(d);
-	glEnd();
 }
 
 void Enemy::setUpCollider()
@@ -65,18 +39,25 @@ void Enemy::onCollisionEnter(GameObject * collidingObject)
 {
 }
 
-void Enemy::initEnemy()
+void Enemy::initModel()
 {
-	if (model.isInit == GL_FALSE)
+	if (model->isInit == GL_FALSE)
 	{
-		mdlviewer_init("resources/enemy/zombie.mdl", model.mdl);
-		model.isInit = GL_TRUE;
+		mdlviewer_init("resources/enemy/zombie.mdl", model->model);
+		model->isInit = GL_TRUE;
 	}
+}
+
+void Enemy::drawModel()
+{
+	mdlviewer_display(model->model);
 }
 
 void Enemy::draw()
 {
-	initEnemy();
+	// Intitialize enemy MDL Model
+	initModel();
+
 	// ****** ENEMY ******
 	Transform * t = (Transform*)getComponentById("transform");
 
@@ -85,7 +66,7 @@ void Enemy::draw()
 	glTranslatef(0, 0, 1);
 	glRotatef(90.0, 0,0,1);
 	glScalef(0.035, 0.035, 0.035);
-	mdlviewer_display(model.mdl);
+	drawModel();
 	glPopMatrix();
 
 	// ****** LIFEBAR ******
@@ -136,9 +117,4 @@ void Enemy::timerActions()
 
 	delete subtractedVecs;
 	delete direction;
-
-	if (model.isInit)
-	{
-		model.mdl.SetSequence(3);
-	}
 }
