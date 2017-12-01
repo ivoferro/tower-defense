@@ -18,6 +18,7 @@
 #include "../../headers/components/CharacterPhysics.h"
 #include "../../headers/components/CameraSettings.h"
 #include "../../headers/gameobjects/LifeBar.h"
+#include "../../headers/gameobjects/MapObject.h"
 
 Game::Game() : level(this)
 {
@@ -48,11 +49,66 @@ Game::Game() : level(this)
 	Transform * tt = (Transform*)t->getComponentById("transform");
 	gameObjects["tower"] = t;
 
-	Plane * plane = new Plane("snow");
+	Plane * plane = new Plane("floor");
 	Transform * planeT = (Transform*)plane->getComponentById("transform");
 	planeT->scale->x = 105;
 	planeT->scale->y = 105;
 	gameObjects["plane01"] = plane;
+	
+	MapObject * mapObj1 = new MapObject("resources/map/barrel_brown.mdl");
+	Transform * t_mapObj1 = (Transform*)mapObj1->getComponentById("transform");
+	t_mapObj1->scale->x = 0.05;
+	t_mapObj1->scale->y = 0.05;
+	t_mapObj1->scale->z = 0.2;
+	t_mapObj1->position->x = -35;
+	t_mapObj1->position->y = -35;
+	gameObjects["mapObject01"] = mapObj1;
+
+	MapObject * mapObj2 = new MapObject("resources/map/camion.mdl");
+	Transform * t_mapObj2 = (Transform*)mapObj2->getComponentById("transform");
+	t_mapObj2->scale->x = 0.05;
+	t_mapObj2->scale->y = 0.05;
+	t_mapObj2->scale->z = 0.05;
+	t_mapObj2->position->x = 0;
+	t_mapObj2->position->y = -25;
+	gameObjects["mapObject02"] = mapObj2;
+	
+	MapObject * mapObj3 = new MapObject("resources/map/kamen.mdl");
+	Transform * t_mapObj3 = (Transform*)mapObj3->getComponentById("transform");
+	t_mapObj3->scale->x = 0.5;
+	t_mapObj3->scale->y = 0.5;
+	t_mapObj3->scale->z = 0.5;
+	t_mapObj3->position->x = 25;
+	t_mapObj3->position->y = -25;
+	gameObjects["mapObject03"] = mapObj3;
+	
+	MapObject * mapObj4 = new MapObject("resources/map/oil_barrel_m1.mdl");
+	Transform * t_mapObj4 = (Transform*)mapObj4->getComponentById("transform");
+	t_mapObj4->scale->x = 0.05;
+	t_mapObj4->scale->y = 0.05;
+	t_mapObj4->scale->z = 0.05;
+	t_mapObj4->position->x = 10;
+	t_mapObj4->position->y = -25;
+	gameObjects["mapObject04"] = mapObj4;
+
+	MapObject * mapObj5 = new MapObject("resources/map/christmastree.mdl");
+	Transform * t_mapObj5 = (Transform*)mapObj5->getComponentById("transform");
+	t_mapObj5->scale->x = 0.05;
+	t_mapObj5->scale->y = 0.05;
+	t_mapObj5->scale->z = 0.05;
+	t_mapObj5->position->x = 30;
+	t_mapObj5->position->y = 0;
+	gameObjects["mapObject05"] = mapObj5;
+
+	MapObject * mapObj6 = new MapObject("resources/map/skeleton.mdl");
+	Transform * t_mapObj6 = (Transform*)mapObj6->getComponentById("transform");
+	t_mapObj6->scale->x = 0.05;
+	t_mapObj6->scale->y = 0.05;
+	t_mapObj6->scale->z = 0.05;
+	t_mapObj6->position->x = 10;
+	t_mapObj6->position->y = 15;
+	gameObjects["mapObject06"] = mapObj6;
+	
 }
 
 void Game::Init()
@@ -121,11 +177,13 @@ void Game::Reshape(int width, int height)
 
 void Game::Draw()
 {
-	glClearColor(.5f, .5f, .8f, 0.0f);
+	
+	glClearColor(.9f, .9f, .9f, 0.0f);
 	glClearDepth(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();
 
+	glLoadIdentity();
+	
 	Transform * cameraT = (Transform*)((Camera*)gameObjects["camera"])->getComponentById("transform");
 	Transform * playerT = (Transform*)((Player*)gameObjects["player"])->getComponentById("transform");
 	
@@ -390,6 +448,7 @@ void Game::setTextures()
 	Application::instance()->getTextures()->registerTexture("rock_floor", "resources/rock_floor.jpg");
 	Application::instance()->getTextures()->registerTexture("snow", "resources/snow.jpg");
 	Application::instance()->getTextures()->registerTexture("snow_ice", "resources/snow_ice.jpg");
+	Application::instance()->getTextures()->registerTexture("floor", "resources/floor.jpg");
 }
 
 void Game::deleteBullets()
