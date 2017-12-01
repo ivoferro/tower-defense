@@ -19,6 +19,8 @@ public:
 	Bullet(Scene * parentScene);
 	~Bullet();
 
+	GLfloat damage = 50.0f;
+
 	std::string id;
 	GLboolean doRemove = false;
 
