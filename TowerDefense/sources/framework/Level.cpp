@@ -62,6 +62,12 @@ void Level::timerActions()
 	if (phase == Phase::COMBAT)
 	{
 		Wave * currentWave = waves.front();
-		currentWave->spawnEnemies();
+		currentWave->timerActions();
+
+		if (currentWave->enemiesLeft <= 0)
+		{
+			printf("Wave clear");
+			clearCurrentWave();
+		}
 	}
 }

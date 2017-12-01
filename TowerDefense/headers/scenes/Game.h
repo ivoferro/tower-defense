@@ -13,6 +13,7 @@ private:
 	void moveCamera();
 	void setLight();
 	void setTextures();
+	void deleteBullets();
 	
 	Level01 level;
 

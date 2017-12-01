@@ -10,11 +10,11 @@ class Wave
 {
 
 public:
-	class Enemy
+	class WaveEnemy
 	{
 	public:
-		Enemy(std::string objectKey, Drawable * obj, int spawnSeconds);
-		~Enemy();
+		WaveEnemy(std::string objectKey, Drawable * obj, int spawnSeconds);
+		~WaveEnemy();
 
 		std::string objectKey;
 		Drawable * obj;
@@ -22,10 +22,10 @@ public:
 	};
 
 private:
-	std::list<Enemy*> enemies;
-	std::list<Enemy*> enemiesSpawned;
+	std::list<WaveEnemy*> enemies;
+	std::list<WaveEnemy*> enemiesSpawned;
+	std::list<WaveEnemy*> enemiesDead;
 	time_t timer;
-	int enemiesLeft;
 	Scene * scene;
 
 	static size_t idGenerator;
@@ -33,9 +33,12 @@ private:
 public:
 	Wave(Scene * scene);
 	~Wave();
-	void addEnemy(Enemy * e);
+	void addEnemy(WaveEnemy * e);
+	void timerActions();
 	void spawnEnemies();
 	void drawEnemies();
 	void begin();
+
+	int enemiesLeft;
 
 };

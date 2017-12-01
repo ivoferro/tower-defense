@@ -12,6 +12,8 @@ public:
 	GLboolean move_player_left = false;
 	GLboolean move_player_right = false;
 
+	GLboolean playerShooting = false;
+
 	GLboolean zoom_in = false;
 	GLboolean zoom_out = false;
 

@@ -6,12 +6,14 @@
 #include "../../headers/gameobjects/Camera.h"
 #include "../../headers/gameobjects/Enemy.h"
 #include "../../headers/gameobjects/Player.h"
+#include "../../headers/gameobjects/ShootingController.h"
 #include "../../headers/gameobjects/Ground.h"
 #include "../../headers/gameobjects/OuterWalls.h"
 #include "../../headers/gameobjects/Wall.h"
 #include "../../headers/gameobjects/Door.h"
 #include "../../headers/gameobjects/Tower.h"
 #include "../../headers/gameobjects/Plane.h"
+#include "../../headers/gameobjects/Bullet.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/components/CharacterPhysics.h"
@@ -29,6 +31,9 @@ Game::Game() : level(this)
 	pt->position->x = 3;
 	pt->position->z = 1.5;
 	gameObjects["player"] = p;
+
+	ShootingController * shootingController = new ShootingController(this);
+	gameObjects["shootingController"] = shootingController;
 
 	//Wall * wall = new Wall();
 	//Transform * wallTransform = (Transform*)wall->getComponentById("transform");
@@ -334,7 +339,6 @@ void Game::Draw()
 		cameraT->position->x, cameraT->position->y, cameraT->position->z,
 		playerT->position->x, playerT->position->y, playerT->position->z, 
 		0, 0, 1);
-
 	
 	((Player*)gameObjects["player"])->draw();
 	//((Wall*)gameObjects["wall1"])->draw();	
@@ -362,6 +366,13 @@ void Game::Draw()
 	((MapObject*)gameObjects["mapObject19"])->draw();
 
 	level.draw();
+
+	for (std::map<std::string, GameObject*>::iterator it1 = gameObjects.begin(); it1 != gameObjects.end(); ++it1)
+	{
+		GameObject * obj = it1->second;
+		obj->draw();
+	}
+
 
 	glFlush();
 	if (Application::instance()->getState()->isDoubleBufferActivated())
@@ -404,7 +415,13 @@ void Game::Timer(int value)
 		if (Enemy * e = dynamic_cast<Enemy*>(obj)) {
 			e->timerActions();
 		}
+		else if (Bullet * b = dynamic_cast<Bullet*>(obj)) {
+			b->timerActions();
+		}
 	}
+
+	((ShootingController*)gameObjects["shootingController"])->timerActions();
+	deleteBullets();
 }
 
 void Game::Key(unsigned char key, int x, int y)
@@ -498,6 +515,24 @@ void Game::SpecialKeyUp(int key, int x, int y)
 
 void Game::Mouse(int button, int mouse_state, int x, int y)
 {
+	if (mouse_state == GLUT_DOWN)
+	{
+		switch (button)
+		{
+		case GLUT_LEFT_BUTTON:
+			Application::instance()->getState()->getInputs()->playerShooting = true;
+			break;
+		}
+	}
+	else
+	{
+		switch (button)
+		{
+		case GLUT_LEFT_BUTTON:
+			Application::instance()->getState()->getInputs()->playerShooting = false;
+			break;
+		}
+	}
 }
 
 void Game::MouseMotion(int x, int y)
@@ -612,4 +647,23 @@ void Game::setTextures()
 	Application::instance()->getTextures()->registerTexture("snow", "resources/snow.jpg");
 	Application::instance()->getTextures()->registerTexture("snow_ice", "resources/snow_ice.jpg");
 	Application::instance()->getTextures()->registerTexture("floor", "resources/floor.jpg");
+}
+
+void Game::deleteBullets()
+{
+	for (std::map<std::string, GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); it++)
+	{
+		GameObject * obj = it->second;
+		if (Bullet * bullet = dynamic_cast<Bullet*>(obj)) {
+			if (bullet->doRemove)
+			{
+				gameObjects.erase(it++);
+				bullet->~Bullet();
+			}
+			else
+			{
+				++it;
+			}
+		}
+	}
 }

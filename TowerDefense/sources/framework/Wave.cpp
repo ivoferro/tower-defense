@@ -1,4 +1,5 @@
 #include "..\..\headers\framework\Wave.h"
+#include "../../headers/gameobjects/Enemy.h"
 
 Wave::Wave(Scene * scene)
 {
@@ -8,29 +9,51 @@ Wave::Wave(Scene * scene)
 
 Wave::~Wave()
 {
-	for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); ++it)
+	for (std::list<WaveEnemy*>::iterator it = enemies.begin(); it != enemies.end(); ++it)
 	{
 		scene->removeGameObject((*it)->objectKey);
-		(*it)->~Enemy();
+		(*it)->~WaveEnemy();
 	}
-	for (std::list<Enemy*>::iterator it = enemiesSpawned.begin(); it != enemiesSpawned.end(); ++it)
+	for (std::list<WaveEnemy*>::iterator it = enemiesSpawned.begin(); it != enemiesSpawned.end(); ++it)
 	{
 		scene->removeGameObject((*it)->objectKey);
-		(*it)->~Enemy();
+		(*it)->~WaveEnemy();
+	}
+	for (std::list<WaveEnemy*>::iterator it = enemiesDead.begin(); it != enemiesDead.end(); ++it)
+	{
+		scene->removeGameObject((*it)->objectKey);
+		(*it)->~WaveEnemy();
 	}
 }
 
-void Wave::addEnemy(Enemy * e)
+void Wave::addEnemy(WaveEnemy * e)
 {
 	enemies.push_back(e);
 	enemiesLeft++;
 }
 
+void Wave::timerActions()
+{
+	std::list<WaveEnemy*>::iterator it = enemiesSpawned.begin();
+
+	spawnEnemies();
+
+	while (it != enemiesSpawned.end()) {
+		WaveEnemy *e = *(it++);
+		if (!((Enemy*)(e->obj))->isAlive)
+		{
+			enemiesSpawned.remove(e);
+			enemiesDead.push_back(e);
+			enemiesLeft--;
+		}
+	}
+}
+
 void Wave::spawnEnemies()
 {
-	std::list<Enemy*>::iterator it = enemies.begin();
+	std::list<WaveEnemy*>::iterator it = enemies.begin();
 	while (it != enemies.end()) {
-		Enemy *e = *(it++);
+		WaveEnemy *e = *(it++);
 		int currentSeconds = difftime(time(0), timer);
 		if (e->spawnSeconds <= currentSeconds)
 		{
@@ -43,9 +66,9 @@ void Wave::spawnEnemies()
 
 void Wave::drawEnemies()
 {
-	for (std::list<Enemy*>::iterator it = enemiesSpawned.begin(); it != enemiesSpawned.end(); ++it)
+	for (std::list<WaveEnemy*>::iterator it = enemiesSpawned.begin(); it != enemiesSpawned.end(); ++it)
 	{
-		Enemy *e = *it;
+		WaveEnemy *e = *it;
 		e->obj->draw();
 	}
 }
@@ -55,14 +78,14 @@ void Wave::begin()
 	timer = time(0);
 }
 
-Wave::Enemy::Enemy(std::string objectKey, Drawable * obj, int spawnSeconds)
+Wave::WaveEnemy::WaveEnemy(std::string objectKey, Drawable * obj, int spawnSeconds)
 {
 	this->objectKey = objectKey;
 	this->obj = obj;
 	this->spawnSeconds = spawnSeconds;
 }
 
-Wave::Enemy::~Enemy()
+Wave::WaveEnemy::~WaveEnemy()
 {
 	obj->~Drawable();
 }
