@@ -50,3 +50,7 @@ std::list<Component*> GameObject::getComponentsByTag(std::string tag)
 void GameObject::onCollisionEnter(GameObject * collidingObject)
 {
 }
+
+void GameObject::draw()
+{
+}

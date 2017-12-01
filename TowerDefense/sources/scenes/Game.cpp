@@ -12,6 +12,7 @@
 #include "../../headers/gameobjects/Door.h"
 #include "../../headers/gameobjects/Tower.h"
 #include "../../headers/gameobjects/Plane.h"
+#include "../../headers/gameobjects/Bullet.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/components/CharacterPhysics.h"
@@ -133,12 +134,11 @@ void Game::Draw()
 		playerT->position->x, playerT->position->y, playerT->position->z, 
 		0, 0, 1);
 
-	((Tower*)gameObjects["tower"])->draw();
-	//((Wall*)gameObjects["wall1"])->draw();
-	((Player*)gameObjects["player"])->draw();
-	((Plane*)gameObjects["plane01"])->draw();
-
-	level.draw();
+	for (std::map<std::string, GameObject*>::iterator it1 = gameObjects.begin(); it1 != gameObjects.end(); ++it1)
+	{
+		GameObject * obj = it1->second;
+		obj->draw();
+	}
 
 	glFlush();
 	if (Application::instance()->getState()->isDoubleBufferActivated())
@@ -182,6 +182,8 @@ void Game::Timer(int value)
 			e->timerActions();
 		}
 	}
+
+	deleteBullets();
 }
 
 void Game::Key(unsigned char key, int x, int y)
@@ -388,4 +390,23 @@ void Game::setTextures()
 	Application::instance()->getTextures()->registerTexture("rock_floor", "resources/rock_floor.jpg");
 	Application::instance()->getTextures()->registerTexture("snow", "resources/snow.jpg");
 	Application::instance()->getTextures()->registerTexture("snow_ice", "resources/snow_ice.jpg");
+}
+
+void Game::deleteBullets()
+{
+	for (std::map<std::string, GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); it++)
+	{
+		GameObject * obj = it->second;
+		if (Bullet * bullet = dynamic_cast<Bullet*>(obj)) {
+			if (bullet->doRemove)
+			{
+				gameObjects.erase(it++);
+				bullet->~Bullet();
+			}
+			else
+			{
+				++it;
+			}
+		}
+	}
 }
