@@ -384,7 +384,7 @@ void Game::Timer(int value)
 	// has to be in this order, to prevent player from crossing objects
 	// could be more clean!
 	((Player*)gameObjects["player"])->isColliding = false;
-	((Player*)gameObjects["player"])->timerActions();
+	((Player*)gameObjects["player"])->timerActions(value);
 	detectCollisions();
 	((Player*)gameObjects["player"])->move();
 	// order ends here
@@ -422,6 +422,10 @@ void Game::Timer(int value)
 
 	((ShootingController*)gameObjects["shootingController"])->timerActions();
 	deleteBullets();
+
+	glutPostRedisplay();
+
+	((Player*)gameObjects["player"])->animate();
 }
 
 void Game::Key(unsigned char key, int x, int y)

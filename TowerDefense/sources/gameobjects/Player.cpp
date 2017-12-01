@@ -6,12 +6,12 @@
 #include "../../headers/framework/Application.h"
 #include "../../headers/util/Math.h"
 #include "../../headers/util/Illumination.h"
-#include "../../headers/objloader/glm.h"
-
-GLMmodel* model1 = NULL;
 
 Player::Player()
 {
+	model = new MDLModel();
+	timer = 0;
+
 	addComponent("transform", new Transform());
 	addComponent("physics", new CharacterPhysics());
 
@@ -24,40 +24,25 @@ Player::~Player()
 
 void Player::initModel()
 {
-	// Load the model only if it hasn't been loaded before
-	// If it's been loaded then pmodel1 should be a pointer to the model geometry data...otherwise it's null
-	if (!model1)
+	if (model->isInit == GL_FALSE)
 	{
-		// this is the call that actualy reads the OBJ and creates the model object
-		model1 = glmReadOBJ("resources/player/FLASH.obj", "resources/player/FL_CW_D.tga");
-		if (!model1) exit(0);
-		// This will rescale the object to fit into the unity matrix
-		// Depending on your project you might want to keep the original size and positions you had in 3DS Max or GMAX so you may have to comment this.
-		glmUnitize(model1);
-		// These 2 functions calculate triangle and vertex normals from the geometry data.
-		// To be honest I had some problem with very complex models that didn't look to good because of how vertex normals were calculated
-		// So if you can export these directly from you modeling tool do it and comment these line
-		// 3DS Max can calculate these for you and GLM is perfectly capable of loading them
-		glmFacetNormals(model1);
-		glmVertexNormals(model1, 90.0);
+		mdlviewer_init("resources/player/player.mdl", model->model);
+		model->isInit = GL_TRUE;
 	}
+}
 
-	// This is the call that will actualy draw the model
-	// Don't forget to tell it if you want textures or not :))
-	//idleFrames.push_back(glmList(model, GLM_SMOOTH | GLM_TEXTURE | GLM_MATERIAL));
-	//dl = glmList(model, GLM_SMOOTH | GLM_TEXTURE | GLM_MATERIAL);
-	glmDraw(model1, GLM_SMOOTH | GLM_TEXTURE | GLM_MATERIAL);
+void Player::drawModel()
+{
+	mdlviewer_display(model->model);
 }
 
 
 void Player::draw()
 {
+	// Intitialize enemy MDL Model
+	initModel();
+
 	Transform * t = (Transform*) getComponentById("transform");
-
-	GLfloat color1[3] = { 0.15f, 0.15f, 0.45f };
-	GLfloat color2[3] = { 0.05f, 0.15f, 0.25f };
-
-	GLfloat headColor[3] = { 0.75f, 0.5f, 0.25f };
 
 	glPushMatrix();
 		glTranslatef(t->position->x, t->position->y, t->position->z);
@@ -66,10 +51,11 @@ void Player::draw()
 		glRotatef(t->rotation->z, 0, 0, 1);
 		glScalef(t->scale->x, t->scale->y, t->scale->z);
 
-		glTranslatef(0, 0, 0);
-		glRotatef(90.0, 1, 0, 0);
-		glScalef(1.3, 1.3, 1.3);
-		initModel();
+		// Initial values
+		glTranslatef(0, 0, 0.3);
+		glRotatef(-90.0, 0, 0, 1);
+		glScalef(0.05, 0.05, 0.05);
+		drawModel();
 	glPopMatrix();
 
 	// ****** LIFEBAR ******
@@ -78,7 +64,7 @@ void Player::draw()
 	//Transform * e1t_lifebar = (Transform*)e1->getComponentById("transformLifeBar");
 	lt->position->x = t->position->x;
 	lt->position->y = t->position->y;
-	lt->position->z = (t->position->z + 1.8); // ... + val -> above the object
+	lt->position->z = (t->position->z + 2.3); // ... + val -> above the object
 
 	// change scale->x between 0 and 1 scale->x when lifebar need to be reduced
 	lt->scale->x = 0.5;
@@ -90,52 +76,6 @@ void Player::draw()
 	glPushMatrix();
 	lifebar->draw();
 	glPopMatrix();
-}
-
-void Player::drawCube(GLfloat color[])
-{
-	GLfloat vertices[][3] = {
-		{ 0.5,  0.5,  0.5 },
-		{ -0.5,  0.5,  0.5 },
-		{ -0.5,  0.5, -0.5 },
-		{ 0.5,  0.5, -0.5 },
-		{ 0.5, -0.5,  0.5 },
-		{ -0.5, -0.5,  0.5 },
-		{ -0.5, -0.5, -0.5 },
-		{ 0.5, -0.5, -0.5 } };
-
-	GLfloat normals[][3] = {
-		{ 0,  1,  0 },
-		{ -1,  0,  0 },
-		{ 0,  -1, 0 },
-		{ 1,  0,  0 },
-		{ 0,  0,  1 },
-		{ 0,  0, -1 } };
-
-	drawPolygon(vertices[0], vertices[3], vertices[2], vertices[1], normals[0], color);
-	drawPolygon(vertices[1], vertices[2], vertices[6], vertices[5], normals[1], color);
-	drawPolygon(vertices[5], vertices[6], vertices[7], vertices[4], normals[2], color);
-	drawPolygon(vertices[4], vertices[7], vertices[3], vertices[0], normals[3], color);
-	drawPolygon(vertices[1], vertices[5], vertices[4], vertices[0], normals[4], color);
-	drawPolygon(vertices[2], vertices[3], vertices[7], vertices[6], normals[5], color);
-}
-
-void Player::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], GLfloat normal[], GLfloat color[])
-{
-	glBegin(GL_POLYGON);
-
-	glMaterialfv(GL_FRONT, GL_AMBIENT, color);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, Illumination::NO_MATERIAL);
-	glMaterialfv(GL_FRONT, GL_SHININESS, Illumination::NO_SHININESS);
-	glMaterialfv(GL_FRONT, GL_EMISSION, Illumination::NO_MATERIAL);
-
-	glColor3fv(color);
-	glVertex3fv(a);
-	glVertex3fv(b);
-	glVertex3fv(c);
-	glVertex3fv(d);
-	glEnd();
 }
 
 void Player::setUpCollider()
@@ -154,10 +94,28 @@ void Player::onCollisionEnter(GameObject * collidingObject)
 	isColliding = true;
 }
 
-void Player::timerActions()
+void Player::timerActions(int value)
 {
+	//model->isWalking = GL_FALSE;
+
 	Transform * playerT = (Transform*) getComponentById("transform");
 	CharacterPhysics * playerPhy = (CharacterPhysics*) getComponentById("physics");
+
+	// state control (eg. walking, sidewalking, attacking, etc..)
+	if (playerPhy->velocity != 0)
+	{
+		model->walk();
+	}
+	else if (playerPhy->sideVelocity != 0)  {
+		model->sideWalk();
+	}
+	else
+	{
+		model->idle();
+	}
+
+	GLuint curr = glutGet(GLUT_ELAPSED_TIME);
+	model->prevSequence = curr;
 
 	// acelarations
 	if (Application::instance()->getState()->getInputs()->move_player_front)
@@ -165,6 +123,7 @@ void Player::timerActions()
 		if (playerPhy->velocity < playerPhy->maxFrontVelocity)
 		{
 			playerPhy->velocity += 0.01;
+			//model->isWalking = GL_TRUE;
 		}
 	}
 	if (Application::instance()->getState()->getInputs()->move_player_back)
@@ -172,6 +131,7 @@ void Player::timerActions()
 		if (playerPhy->velocity > -playerPhy->maxBackVelocity)
 		{
 			playerPhy->velocity -= 0.01;
+			//model->isWalking = GL_TRUE;
 		}
 	}
 	if (!Application::instance()->getState()->getInputs()->move_player_front &&
@@ -186,6 +146,7 @@ void Player::timerActions()
 		if (playerPhy->sideVelocity < playerPhy->maxSideVelocity)
 		{
 			playerPhy->sideVelocity += 0.01;
+			//model->isWalking = GL_TRUE;
 		}
 	}
 	if (Application::instance()->getState()->getInputs()->move_player_right)
@@ -193,6 +154,7 @@ void Player::timerActions()
 		if (playerPhy->sideVelocity > -playerPhy->maxSideVelocity)
 		{
 			playerPhy->sideVelocity -= 0.01;
+			//model->isWalking = GL_TRUE;
 		}
 	}
 	if (!Application::instance()->getState()->getInputs()->move_player_left &&
@@ -211,6 +173,30 @@ void Player::timerActions()
 	// changes player position according to side movements
 	playerT->position->x += playerPhy->sideVelocity * cos(Math::radians(playerT->rotation->z));
 	playerT->position->y += playerPhy->sideVelocity * sin(Math::radians(playerT->rotation->z));
+}
+
+void Player::animate()
+{
+	if (model->isInit)
+	{
+		if (model->state == Walking)
+		{
+			if (model->model.GetSequence() != 3)
+			{
+				model->model.SetSequence(3);
+			}
+		}
+		else if (model->state == SideWalking)
+		{
+			if (model->model.GetSequence() != 4)
+			{
+				model->model.SetSequence(4);
+			}
+		}
+		else {
+			model->model.SetSequence(0);
+		}
+	}
 }
 
 void Player::move()

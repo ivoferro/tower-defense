@@ -138,6 +138,9 @@
     <ClCompile Include="sources\mdlloader\mathlib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sources\components\MDLModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="sources\gameobjects\Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -273,6 +276,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\mdlloader\studio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\components\MDLModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\gameobjects\Bullet.h">
