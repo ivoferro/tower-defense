@@ -11,7 +11,6 @@ class Enemy : public GameObject, Drawable
 
 private:
 	LifeBar * lifebar;
-	MDLModel* model;
 	void initModel();
 	void drawModel();
 	void setUpCollider();
@@ -20,6 +19,7 @@ private:
 public:
 	Enemy();
 	~Enemy();
+	MDLModel* model;
 	void draw();
 	void timerActions();
 	void animate();

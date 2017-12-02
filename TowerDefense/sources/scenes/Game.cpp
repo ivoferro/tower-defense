@@ -203,6 +203,7 @@ void Game::Timer(int value)
 		GameObject * obj = it1->second;
 		if (Enemy * e = dynamic_cast<Enemy*>(obj)) {
 			e->timerActions();
+			e->animate();
 		}
 		else if (Bullet * b = dynamic_cast<Bullet*>(obj)) {
 			b->timerActions();
@@ -244,6 +245,10 @@ void Game::Key(unsigned char key, int x, int y)
 	case 'K':
 		Application::instance()->getState()->getInputs()->kill_all_enemies = true;
 		break;
+	case 'p':
+	case 'P':
+		Application::instance()->getState()->getInputs()->kill_player = true;
+		break;
 	case '1':
 		Application::instance()->getState()->getInputs()->zoom_in = true;
 		break;
@@ -281,6 +286,9 @@ void Game::KeyUp(unsigned char key, int x, int y)
 	case 'K':
 		Application::instance()->getState()->getInputs()->kill_all_enemies = false;
 		break;
+	case 'p':
+	case 'P':
+		Application::instance()->getState()->getInputs()->kill_player = false;
 	case '1':
 		Application::instance()->getState()->getInputs()->zoom_in = false;
 		break;

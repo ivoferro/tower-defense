@@ -1,4 +1,5 @@
 #include "../../headers/gameobjects/Player.h"
+#include "../../headers/gameobjects/Enemy.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/components/CharacterPhysics.h"
@@ -93,12 +94,26 @@ void Player::setUpCollider()
 void Player::onCollisionEnter(GameObject * collidingObject)
 {
 	isColliding = true;
+
+	Life * life = (Life*)getComponentById("life");
+	if (Enemy* enemy = dynamic_cast<Enemy*>(collidingObject))
+	{
+		if (enemy->model->state == Attacking)
+		{
+			life->health -= 10;
+			if (life->health <= 0)
+			{
+				isAlive = false;
+				removeComponent("collider");
+				model->death(glutGet(GLUT_ELAPSED_TIME));
+			}
+		}
+	}
 }
 
 void Player::timerActions(int value)
 {
-	Transform * playerT = (Transform*) getComponentById("transform");
-	CharacterPhysics * playerPhy = (CharacterPhysics*) getComponentById("physics");
+	Transform * playerT = (Transform*)getComponentById("transform");
 
 	// ***********************************************************
 	// state control (eg. walking, sidewalking, attacking, etc..)
@@ -111,7 +126,19 @@ void Player::timerActions(int value)
 		}
 		return;
 	}
-	if (!isAlive) // TODO: Review after death logic
+
+	CharacterPhysics * playerPhy = (CharacterPhysics*)getComponentById("physics");
+	Life * life = (Life*)this->getComponentById("life");
+
+	// TESTING
+	// TODO: When colliding with enemy in attack state
+	if (Application::instance()->getState()->getInputs()->kill_player)
+	{
+		life->health -= 10;
+	}
+	// *********
+
+	if (life->health <= 0) // TODO: Review after death logic
 	{
 		isAlive = GL_FALSE;
 		model->death(glutGet(GLUT_ELAPSED_TIME));
