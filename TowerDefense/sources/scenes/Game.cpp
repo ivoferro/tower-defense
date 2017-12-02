@@ -20,6 +20,7 @@
 #include "../../headers/components/CameraSettings.h"
 #include "../../headers/gameobjects/LifeBar.h"
 #include "../../headers/gameobjects/MapObject.h"
+#include "../../headers/util/Drawer.h"
 
 Game::Game() : level(this)
 {
@@ -493,6 +494,8 @@ void Game::Reshape(int width, int height)
 
 void Game::Draw()
 {
+	// FIXME NOT WORKING
+	//debugDrawingActions();
 	
 	glClearColor(.9f, .9f, .9f, 0.0f);
 	glClearDepth(1.0f);
@@ -507,39 +510,6 @@ void Game::Draw()
 		cameraT->position->x, cameraT->position->y, cameraT->position->z,
 		playerT->position->x, playerT->position->y, playerT->position->z, 
 		0, 0, 1);
-	
-	((Player*)gameObjects["player"])->draw();
-	//((Wall*)gameObjects["wall1"])->draw();	
-	((Tower*)gameObjects["tower"])->draw();
-	((Plane*)gameObjects["plane01"])->draw();
-	
-	((MapObject*)gameObjects["mapObject01"])->draw();
-	((MapObject*)gameObjects["mapObject02"])->draw();
-	((MapObject*)gameObjects["mapObject03"])->draw();
-	((MapObject*)gameObjects["mapObject04"])->draw();
-	((MapObject*)gameObjects["mapObject05"])->draw();
-	((MapObject*)gameObjects["mapObject06"])->draw();
-	((MapObject*)gameObjects["mapObject07"])->draw();
-	((MapObject*)gameObjects["mapObject08"])->draw();
-	((MapObject*)gameObjects["mapObject09"])->draw();
-	((MapObject*)gameObjects["mapObject10"])->draw();
-	((MapObject*)gameObjects["mapObject11"])->draw();
-	((MapObject*)gameObjects["mapObject12"])->draw();
-	((MapObject*)gameObjects["mapObject13"])->draw();
-	((MapObject*)gameObjects["mapObject14"])->draw();
-	((MapObject*)gameObjects["mapObject15"])->draw();
-	((MapObject*)gameObjects["mapObject16"])->draw();
-	((MapObject*)gameObjects["mapObject17"])->draw();
-	((MapObject*)gameObjects["mapObject18"])->draw();
-	((MapObject*)gameObjects["mapObject19"])->draw();
-	((MapObject*)gameObjects["mapObject20"])->draw();
-	((MapObject*)gameObjects["mapObject21"])->draw();
-	((MapObject*)gameObjects["mapObject22"])->draw();
-	((MapObject*)gameObjects["mapObject23"])->draw();
-	((MapObject*)gameObjects["mapObject24"])->draw();
-	((MapObject*)gameObjects["mapObject25"])->draw();
-
-	level.draw();
 
 	for (std::map<std::string, GameObject*>::iterator it1 = gameObjects.begin(); it1 != gameObjects.end(); ++it1)
 	{
@@ -849,6 +819,44 @@ void Game::deleteBullets()
 			else
 			{
 				++it;
+			}
+		}
+	}
+}
+
+void Game::debugDrawingActions()
+{
+	if (!Application::instance()->getDebugger()->isActive)
+	{
+		return;
+	}
+
+	if (Application::instance()->getDebugger()->showColliders)
+	{
+		for (std::map<std::string, GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it)
+		{
+			GameObject * obj = it->second;
+			if (obj->hasComponent("collider"))
+			{
+				Collider * collider = (Collider*)obj->getComponentById("collider");
+				std::list<std::pair<Transform::Coordinates*, Transform::Coordinates*>> boxes = collider->getBoxes();
+				for (const std::pair<Transform::Coordinates*, Transform::Coordinates*> box : boxes)
+				{
+					glPushMatrix();
+					{
+						glTranslatef(0.0f, 0.0f, 0.0f);
+						if (obj->hasComponent("transform"))
+						{
+							Transform * t = (Transform*)obj->getComponentById("transform");
+							glTranslatef(t->position->x, t->position->y, t->position->z);
+							glRotatef(t->rotation->x, 1, 0, 0);
+							glRotatef(t->rotation->y, 0, 1, 0);
+							glRotatef(t->rotation->z, 0, 0, 1);
+						}
+						Drawer::drawBox(std::get<0>(box), std::get<1>(box));
+					}
+					glPopMatrix();
+				}
 			}
 		}
 	}

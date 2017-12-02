@@ -7,6 +7,7 @@ Application::Application()
 	state = new State();
 	sceneManager = new SceneManager();
 	textures = new Textures();
+	debugger = new Debugger();
 }
 
 Application::~Application()
@@ -36,4 +37,9 @@ SceneManager * Application::getSceneManager()
 Textures * Application::getTextures()
 {
 	return textures;
+}
+
+Debugger * Application::getDebugger()
+{
+	return debugger;
 }

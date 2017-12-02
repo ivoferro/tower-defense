@@ -61,8 +61,8 @@ void LifeBar::drawLifeBar(GLfloat color[])
 
 void LifeBar::draw()
 {
-	GLfloat greencolor[3] = { 0.0, 1.0, 0.0 };
-	GLfloat blackcolor[3] = { 0.0, 0.0, 0.0 };
+	GLfloat greencolor[] = { 0.0, 1.0, 0.0, 1.0 };
+	GLfloat blackcolor[] = { 0.0, 0.0, 0.0, 1.0 };
 	
 	Transform * parentTransform = (Transform*)parent->getComponentById("transform");
 	Life * life = (Life*)parent->getComponentById("life");
@@ -77,9 +77,12 @@ void LifeBar::draw()
 			drawLifeBar(blackcolor);
 		glPopMatrix();
 
-		glPushMatrix();
-			glScalef(currentPercentage, 0.1f, 0.1f);
-			drawLifeBar(greencolor);
-		glPopMatrix();
+		if (life->health > 0)
+		{
+			glPushMatrix();
+				glScalef(currentPercentage, 0.1f, 0.1f);
+				drawLifeBar(greencolor);
+			glPopMatrix();
+		}
 	glPopMatrix();
 }

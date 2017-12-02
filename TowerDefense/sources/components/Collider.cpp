@@ -85,7 +85,7 @@ void Collider::registerOnCollisionEnterCallback(void(GameObject::*OnCollisionEnt
 	this->onCollisionEnterCallback = OnCollisionEnterCallback;
 }
 
-GLboolean Collider::doCollide(GLfloat * ac1, GLfloat * ac2, GLfloat * bc1, GLfloat * bc2)
+GLboolean Collider::doCollide(GLfloat ac1[], GLfloat ac2[], GLfloat bc1[], GLfloat bc2[])
 {
 	for (size_t i = 0; i < 3; i++) // loop dimensions
 	{

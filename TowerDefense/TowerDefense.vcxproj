@@ -159,6 +159,7 @@
     <ClCompile Include="sources\levels\Level01.cpp" />
     <ClCompile Include="sources\objloader\glmimg.cpp" />
     <ClCompile Include="sources\objloader\texture.cpp" />
+    <ClCompile Include="sources\util\Drawer.cpp" />
     <ClCompile Include="sources\util\Illumination.cpp" />
     <ClCompile Include="sources\util\Math.cpp" />
     <ClCompile Include="sources\components\CharacterPhysics.cpp" />
@@ -182,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\components\MDLModel.h" />
+    <ClInclude Include="headers\framework\Debugger.h" />
     <ClInclude Include="headers\gameobjects\Bullet.h" />
     <ClInclude Include="headers\gameobjects\ShootingController.h" />
     <ClInclude Include="headers\mdlloader\mathlib.h" />
@@ -220,6 +222,7 @@
     <ClInclude Include="headers\components\Transform.h" />
     <ClInclude Include="headers\gameobjects\Player.h" />
     <ClInclude Include="headers\framework\Inputs.h" />
+    <ClInclude Include="headers\util\Drawer.h" />
     <ClInclude Include="headers\util\Illumination.h" />
     <ClInclude Include="headers\util\Math.h" />
     <ClInclude Include="headers\gameobjects\Tower.h" />

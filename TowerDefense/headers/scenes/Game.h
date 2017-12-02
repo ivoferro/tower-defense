@@ -14,6 +14,7 @@ private:
 	void setLight();
 	void setTextures();
 	void deleteBullets();
+	void debugDrawingActions();
 	
 	Level01 level;
 
