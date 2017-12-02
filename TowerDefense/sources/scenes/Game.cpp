@@ -20,6 +20,7 @@
 #include "../../headers/components/CameraSettings.h"
 #include "../../headers/gameobjects/LifeBar.h"
 #include "../../headers/gameobjects/MapObject.h"
+#include "../../headers/util/Drawer.h"
 
 Game::Game() : level(this)
 {
@@ -135,6 +136,9 @@ void Game::Reshape(int width, int height)
 
 void Game::Draw()
 {
+	// FIXME NOT WORKING
+	//debugDrawingActions();
+
 	glClearColor(.9f, .9f, .9f, 0.0f);
 	glClearDepth(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -151,8 +155,6 @@ void Game::Draw()
 
 	// Display Map Objects
 	glCallList(mapDisplayList);
-
-	level.draw();
 
 	for (std::map<std::string, GameObject*>::iterator it1 = gameObjects.begin(); it1 != gameObjects.end(); ++it1)
 	{
@@ -474,6 +476,44 @@ void Game::deleteBullets()
 			else
 			{
 				++it;
+			}
+		}
+	}
+}
+
+void Game::debugDrawingActions()
+{
+	if (!Application::instance()->getDebugger()->isActive)
+	{
+		return;
+	}
+
+	if (Application::instance()->getDebugger()->showColliders)
+	{
+		for (std::map<std::string, GameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); ++it)
+		{
+			GameObject * obj = it->second;
+			if (obj->hasComponent("collider"))
+			{
+				Collider * collider = (Collider*)obj->getComponentById("collider");
+				std::list<std::pair<Transform::Coordinates*, Transform::Coordinates*>> boxes = collider->getBoxes();
+				for (const std::pair<Transform::Coordinates*, Transform::Coordinates*> box : boxes)
+				{
+					glPushMatrix();
+					{
+						glTranslatef(0.0f, 0.0f, 0.0f);
+						if (obj->hasComponent("transform"))
+						{
+							Transform * t = (Transform*)obj->getComponentById("transform");
+							glTranslatef(t->position->x, t->position->y, t->position->z);
+							glRotatef(t->rotation->x, 1, 0, 0);
+							glRotatef(t->rotation->y, 0, 1, 0);
+							glRotatef(t->rotation->z, 0, 0, 1);
+						}
+						Drawer::drawBox(std::get<0>(box), std::get<1>(box));
+					}
+					glPopMatrix();
+				}
 			}
 		}
 	}

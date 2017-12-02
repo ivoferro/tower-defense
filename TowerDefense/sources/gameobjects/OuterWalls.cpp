@@ -13,7 +13,6 @@ void OuterWalls::setUpCollider()
 	collider->addBox(
 		new Transform::Coordinates(60, -50, 60),
 		new Transform::Coordinates(-60, -100, -60));
-
 	collider->addBox(
 		new Transform::Coordinates(50, 60, 60),
 		new Transform::Coordinates(100, -60, -60));

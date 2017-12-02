@@ -18,7 +18,7 @@ private:
 	// Callback to be called when a collision happens
 	void (GameObject::*onCollisionEnterCallback) (GameObject * collidingObject);
 
-	GLboolean doCollide(GLfloat * ac1, GLfloat * ac2, GLfloat * bc1, GLfloat * bc2);
+	GLboolean doCollide(GLfloat ac1[], GLfloat ac2[], GLfloat bc1[], GLfloat bc2[]);
 
 	void triggerCollisionCallback(GameObject * collidingObject);
 

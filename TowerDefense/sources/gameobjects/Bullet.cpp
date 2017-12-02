@@ -8,8 +8,8 @@ void Bullet::setUpCollider()
 {
 	Collider * collider = new Collider(this);
 	collider->addBox(
-		new Transform::Coordinates(.01, .01, .01),
-		new Transform::Coordinates(-.01, -.01, -.01));
+		new Transform::Coordinates(0.1f, 0.1f, 0.1f),
+		new Transform::Coordinates(-0.1f, -0.1f, -0.1f));
 
 	collider->registerOnCollisionEnterCallback(&GameObject::onCollisionEnter);
 	addComponent("collider", collider);
