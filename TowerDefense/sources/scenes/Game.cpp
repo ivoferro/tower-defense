@@ -5,6 +5,7 @@
 #include "../../headers/util/Math.h"
 #include "../../headers/gameobjects/Camera.h"
 #include "../../headers/gameobjects/Enemy.h"
+#include "../../headers/gameobjects/Boss.h"
 #include "../../headers/gameobjects/Player.h"
 #include "../../headers/gameobjects/ShootingController.h"
 #include "../../headers/gameobjects/Ground.h"
@@ -209,6 +210,10 @@ void Game::Timer(int value)
 		if (Enemy * e = dynamic_cast<Enemy*>(obj)) {
 			e->timerActions();
 			e->animate();
+		}
+		if (Boss * boss = dynamic_cast<Boss*>(obj)) {
+			boss->timerActions();
+			boss->animate();
 		}
 		else if (Bullet * b = dynamic_cast<Bullet*>(obj)) {
 			b->timerActions();

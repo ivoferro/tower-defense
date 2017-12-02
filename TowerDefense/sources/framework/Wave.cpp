@@ -1,5 +1,6 @@
-#include "..\..\headers\framework\Wave.h"
+#include "../../headers/framework/Wave.h"
 #include "../../headers/gameobjects/Enemy.h"
+#include "../../headers/gameobjects/Boss.h"
 
 Wave::Wave(Scene * scene)
 {
@@ -41,6 +42,12 @@ void Wave::timerActions()
 	while (it != enemiesSpawned.end()) {
 		WaveEnemy *e = *(it++);
 		if (!((Enemy*)(e->obj))->isAlive)
+		{
+			enemiesSpawned.remove(e);
+			enemiesDead.push_back(e);
+			enemiesLeft--;
+		}
+		if (((Boss*)(e->obj))->model->state == Death)
 		{
 			enemiesSpawned.remove(e);
 			enemiesDead.push_back(e);

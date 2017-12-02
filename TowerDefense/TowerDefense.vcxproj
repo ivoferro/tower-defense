@@ -135,6 +135,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="sources\components\MDLModel.cpp" />
+    <ClCompile Include="sources\gameobjects\Boss.cpp" />
     <ClCompile Include="sources\gameobjects\Bullet.cpp" />
     <ClCompile Include="sources\gameobjects\MapObject.cpp" />
     <ClCompile Include="sources\gameobjects\ShootingController.cpp" />
@@ -185,6 +186,7 @@
   <ItemGroup>
     <ClInclude Include="headers\components\MDLModel.h" />
     <ClInclude Include="headers\framework\Debugger.h" />
+    <ClInclude Include="headers\gameobjects\Boss.h" />
     <ClInclude Include="headers\gameobjects\Bullet.h" />
     <ClInclude Include="headers\gameobjects\ShootingController.h" />
     <ClInclude Include="headers\gameobjects\TextBox.h" />

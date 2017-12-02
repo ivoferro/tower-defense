@@ -11,7 +11,7 @@
 Player::Player()
 {
 	model = new MDLModel(0, 3, 4, 159, 13, 177, "resources/player/player.mdl");
-	lifebar = new LifeBar(this, 2.5f);
+	lifebar = new LifeBar(this, 2.5f, 0.0f);
 	timer = 0;
 	isAlive = GL_TRUE;
 	prevAttack = glutGet(GLUT_ELAPSED_TIME);

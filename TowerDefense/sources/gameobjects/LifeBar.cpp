@@ -2,10 +2,11 @@
 #include "../../headers/components/Transform.h"
 #include "../../headers/util/Illumination.h"
 
-LifeBar::LifeBar(GameObject * parent, GLfloat offSetUp)
+LifeBar::LifeBar(GameObject * parent, GLfloat offSetUp, GLfloat rotationOffSet)
 {
 	this->parent = parent;
 	this->offSetUp = offSetUp;
+	this->rotationOffSet = rotationOffSet;
 }
 
 LifeBar::~LifeBar()
@@ -70,7 +71,7 @@ void LifeBar::draw()
 
 	glPushMatrix();
 		glTranslatef(parentTransform->position->x, parentTransform->position->y, parentTransform->position->z + offSetUp);
-		glRotatef(parentTransform->rotation->z, 0, 0, 1);
+		glRotatef(parentTransform->rotation->z + rotationOffSet, 0, 0, 1);
 
 		glPushMatrix();
 			glScalef(1.1f, 0.09, 0.09);
