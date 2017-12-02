@@ -54,7 +54,10 @@ void Enemy::onCollisionEnter(GameObject * collidingObject)
 
 	if (Tower * tower = dynamic_cast<Tower*>(collidingObject))
 	{
-		model->attack(glutGet(GLUT_ELAPSED_TIME));
+		if (model->state != Death)
+		{
+			model->attack(glutGet(GLUT_ELAPSED_TIME));
+		}
 	}
 }
 
