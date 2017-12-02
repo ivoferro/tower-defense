@@ -18,4 +18,6 @@ public:
 	GLboolean hasTexture(std::string textureID);
 	GLuint getTexture(std::string textureID);
 
+	GLboolean areTexturesLoaded = false;
+
 };
