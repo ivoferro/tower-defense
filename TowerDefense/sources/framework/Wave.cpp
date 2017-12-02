@@ -41,17 +41,24 @@ void Wave::timerActions()
 
 	while (it != enemiesSpawned.end()) {
 		WaveEnemy *e = *(it++);
-		if (!((Enemy*)(e->obj))->isAlive)
+
+		if (Enemy * enemy = dynamic_cast<Enemy*>(e->obj))
 		{
-			enemiesSpawned.remove(e);
-			enemiesDead.push_back(e);
-			enemiesLeft--;
+			if (!enemy->isAlive)
+			{
+				enemiesSpawned.remove(e);
+				enemiesDead.push_back(e);
+				enemiesLeft--;
+			}
 		}
-		if (((Boss*)(e->obj))->model->state == Death)
+		else if (Boss * boss = dynamic_cast<Boss*>(e->obj))
 		{
-			enemiesSpawned.remove(e);
-			enemiesDead.push_back(e);
-			enemiesLeft--;
+			if (boss->model->state == Death)
+			{
+				enemiesSpawned.remove(e);
+				enemiesDead.push_back(e);
+				enemiesLeft--;
+			}
 		}
 	}
 }
