@@ -1,5 +1,6 @@
 #include "../../headers/gameobjects/Enemy.h"
 #include "../../headers/gameobjects/Bullet.h"
+#include "../../headers/gameobjects/Tower.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/components/TargetPath.h"
@@ -11,7 +12,7 @@
 
 Enemy::Enemy()
 {
-	model = new MDLModel(0,0,0,0,0,0,"");
+	model = new MDLModel(0,4,4,26,19,73, "resources/enemy/zombie.mdl");
 	lifebar = new LifeBar(this, 2.5f);
 
 	addComponent("transform", new Transform());
@@ -47,22 +48,25 @@ void Enemy::onCollisionEnter(GameObject * collidingObject)
 		if (life->health <= 0)
 		{
 			isAlive = false;
+			removeComponent("collider");
+			model->death(glutGet(GLUT_ELAPSED_TIME));
 		}
+	}
+
+	if (Tower * tower = dynamic_cast<Tower*>(collidingObject))
+	{
+		model->attack(glutGet(GLUT_ELAPSED_TIME));
 	}
 }
 
 void Enemy::initModel()
 {
-	if (model->isInit == GL_FALSE)
-	{
-		mdlviewer_init("resources/enemy/zombie.mdl", model->model);
-		model->isInit = GL_TRUE;
-	}
+	model->init();
 }
 
 void Enemy::drawModel()
 {
-	mdlviewer_display(model->model);
+	model->draw();
 }
 
 void Enemy::draw()
@@ -93,18 +97,39 @@ void Enemy::draw()
 void Enemy::timerActions()
 {
 
-	if (!isAlive)
+	Transform * enemyT = (Transform*)getComponentById("transform");
+
+	// ***********************************************************
+	// state control (eg. walking, sidewalking, attacking, etc..)
+	if (model->state == Death)
 	{
-		removeComponent("collider");
+		if (!model->stillDying(glutGet(GLUT_ELAPSED_TIME), 922))
+		{
+			model->dead();
+			enemyT->position->z = -0.3;
+		}
 		return;
 	}
 
-	// if sensoring targets atack them
-
-	TargetPath * targetPath = (TargetPath*)getComponentById("targetPath");
-	if (targetPath->isObjectivesEmpty())
+	if (model->state == Attacking)
+	{
+		model->attack(glutGet(GLUT_ELAPSED_TIME));
+	}
+	if (model->stillShooting(glutGet(GLUT_ELAPSED_TIME), 500))
 	{
 		return;
+	}
+
+	TargetPath * targetPath = (TargetPath*)getComponentById("targetPath");
+	// if sensoring targets atack them
+	if (targetPath->isObjectivesEmpty())
+	{
+		model->idle();
+		return;
+	}
+	else
+	{
+		model->walk();
 	}
 
 	Transform::Coordinates * nextObjective = targetPath->nextObjective();
@@ -140,24 +165,5 @@ void Enemy::timerActions()
 
 void Enemy::animate()
 {
-	if (model->isInit)
-	{
-		if (model->state == Walking)
-		{
-			if (model->model.GetSequence() != 3)
-			{
-				model->model.SetSequence(3);
-			}
-		}
-		else if (model->state == SideWalking)
-		{
-			if (model->model.GetSequence() != 4)
-			{
-				model->model.SetSequence(4);
-			}
-		}
-		else {
-			model->model.SetSequence(0);
-		}
-	}
+	model->animate();
 }

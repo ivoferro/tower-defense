@@ -20,5 +20,7 @@ public:
 	GLboolean activate_wave = false;
 	GLboolean kill_all_enemies = false;
 
+	GLboolean kill_player = false;
+
 };
 
