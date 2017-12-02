@@ -1,9 +1,10 @@
 #pragma once
 
 #include "../framework/GameObject.h"
+#include "../framework/Drawable.h"
 #include <map>
 
-class GameText : public GameObject
+class GameText : public GameObject, Drawable
 {
 
 private:
@@ -16,6 +17,6 @@ public:
 	GameText(char* text);
 	~GameText();
 
-	void drawText();
+	void draw();
 	void setColor(GLfloat color[3]);
 };

@@ -6,7 +6,7 @@
 MenuBar::MenuBar()
 {
 	addComponent("transform", new Transform());
-	this->width = 0.4f;
+	this->width = 0.25f;
 	this->height = 0.15f;
 	this->texture = "vinil";
 }
@@ -96,6 +96,6 @@ void MenuBar::drawWithText(char* text, GLfloat color[3])
 	
 	glPopMatrix();
 	gameText->setColor(color);
-	gameText->drawText();
+	gameText->draw();
 
 }

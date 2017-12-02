@@ -14,7 +14,8 @@ GameText::GameText(char * text)
 {
 	addComponent("transform", new Transform());
 	this->text = text;
-	GLfloat color[3] = { 1.0, 1.0, 1.0 };
+	GLfloat whitecolor[3] = { 1.0, 1.0, 1.0 };
+	setColor(whitecolor);
 }
 
 GameText::~GameText()
@@ -30,7 +31,7 @@ void GameText::writeText() {
 	}
 }
 
-void GameText::drawText()
+void GameText::draw()
 {
 	
 	Transform * t = (Transform*)getComponentById("transform");
@@ -53,7 +54,8 @@ void GameText::drawText()
 
 void GameText::setColor(GLfloat colorC[3])
 {
-	color[0] = colorC[0];
-	color[1] = colorC[1];
-	color[2] = colorC[2];
+	int i;
+	for (i = 0; i < 3; i++) {
+		color[i] = colorC[i];
+	}
 }
