@@ -71,11 +71,17 @@ void Enemy::draw()
 	Transform * t = (Transform*)getComponentById("transform");
 
 	glPushMatrix();
-	glTranslatef(t->position->x, t->position->y, t->position->z);
-	glTranslatef(0, 0, 1);
-	glRotatef(90.0, 0,0,1);
-	glScalef(0.035, 0.035, 0.035);
-	drawModel();
+		glTranslatef(t->position->x, t->position->y, t->position->z);
+		glRotatef(t->rotation->x, 1, 0, 0);
+		glRotatef(t->rotation->y, 0, 1, 0);
+		glRotatef(t->rotation->z, 0, 0, 1);
+		glScalef(t->scale->x, t->scale->y, t->scale->z);
+
+		glTranslatef(0, 0, 1);
+		glRotatef(90.0, 0,0,1);
+		glScalef(0.035, 0.035, 0.035);
+
+		drawModel();
 	glPopMatrix();
 
 	// ****** LIFEBAR ******
@@ -114,7 +120,9 @@ void Enemy::timerActions()
 	}
 
 	Transform::Coordinates * nextObjective = targetPath->nextObjective();
-	Transform::Coordinates * currentLocation = ((Transform*)getComponentById("transform"))->position;
+
+	Transform * currentT = ((Transform*)getComponentById("transform"));
+	Transform::Coordinates * currentLocation = currentT->position;
 
 	GLfloat speed = 0.1f;
 	GLfloat elapsed = 0.01f;
@@ -125,6 +133,14 @@ void Enemy::timerActions()
 
 	currentLocation->x += direction->x * speed;
 	currentLocation->y += direction->y * speed;
+
+
+	currentT->rotation->z = atan2(
+		nextObjective->y - currentLocation->y,
+		nextObjective->x - currentLocation->x);
+	currentT->rotation->z = (currentT->rotation->z * (180 / M_PI)) - 90 ;
+
+
 	if (distance <= 0.01)
 	{
 		targetPath->popCoordinate();
