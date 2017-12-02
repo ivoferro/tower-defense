@@ -15,8 +15,10 @@ private:
 	void setTextures();
 	void deleteBullets();
 	void debugDrawingActions();
+	void initMapObjects();
 	
 	Level01 level;
+	GLuint mapDisplayList;
 
 public:
 	Game();
