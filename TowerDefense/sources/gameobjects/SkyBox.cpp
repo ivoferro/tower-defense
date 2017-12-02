@@ -9,10 +9,10 @@ void SkyBox::drawBack()
 	glBegin(GL_QUADS);
 
 	GLfloat vertices[][3] = {
-		{ -50.0f,  50.0f,  25.0f },
-		{ -50.0f,  50.0f,  0.0f },
-		{ 50.0f,  50.0f,  0.0f },
-		{ 50.0f,  50.0f,  25.0f }
+		{ -51.0f,  51.0f,  25.0f },
+		{ -51.0f,  51.0f,  0.0f },
+		{ 51.0f,  51.0f,  0.0f },
+		{ 51.0f,  51.0f,  25.0f }
 	};
 
 	GLfloat normal[] = { 0.0f,  -1.0f,  0.0f };
@@ -40,10 +40,10 @@ void SkyBox::drawFront()
 	glBegin(GL_QUADS);
 
 	GLfloat vertices[][3] = {
-		{ 50.0f,  -50.0f,  25.0f },
-		{ 50.0f,  -50.0f, 0.0f },
-		{ -50.0f,  -50.0f,  0.0f },
-		{ -50.0f,  -50.0f,  25.0f }
+		{ 51.0f,  -51.0f,  25.0f },
+		{ 51.0f,  -51.0f, 0.0f },
+		{ -51.0f,  -51.0f,  0.0f },
+		{ -51.0f,  -51.0f,  25.0f }
 	};
 
 	GLfloat normal[] = { 0.0f,  -1.0f,  0.0f };
@@ -71,10 +71,10 @@ void SkyBox::drawLeft()
 	glBegin(GL_QUADS);
 
 	GLfloat vertices[][3] = {
-		{ 50.0f, 50.0f, 25.0f },
-		{ 50.0f, 50.0f, 0.0f },
-		{ 50.0f, -50.0f, 0.0f },
-		{ 50.0f, -50.0f, 25.0f },
+		{ 51.0f, 51.0f, 25.0f },
+		{ 51.0f, 51.0f, 0.0f },
+		{ 51.0f, -51.0f, 0.0f },
+		{ 51.0f, -51.0f, 25.0f },
 	};
 
 	GLfloat normal[] = { 0.0f,  -1.0f,  0.0f };
@@ -102,10 +102,10 @@ void SkyBox::drawRight()
 	glBegin(GL_QUADS);
 
 	GLfloat vertices[][3] = {
-		{ -50.0f, -50.0f, 25.0f },
-		{ -50.0f, -50.0f, 0.0f },
-		{ -50.0f, 50.0f, 0.0f },
-		{ -50.0f, 50.0f, 25.0f }
+		{ -51.0f, -51.0f, 25.0f },
+		{ -51.0f, -51.0f, 0.0f },
+		{ -51.0f, 51.0f, 0.0f },
+		{ -51.0f, 51.0f, 25.0f }
 	};
 
 	GLfloat normal[] = { 0.0f,  -1.0f,  0.0f };
@@ -133,10 +133,10 @@ void SkyBox::drawUp()
 	glBegin(GL_QUADS);
 
 	GLfloat vertices[][3] = {
-		{ 50.0f, -50.0f, 25.0f },
-		{ -50.0f, -50.0f, 25.0f },
-		{ -50.0f, 50.0f, 25.0f },
-		{ 50.0f, 50.0f, 25.0f }
+		{ 51.0f, -51.0f, 25.0f },
+		{ -51.0f, -51.0f, 25.0f },
+		{ -51.0f, 51.0f, 25.0f },
+		{ 51.0f, 51.0f, 25.0f }
 	};
 
 	GLfloat normal[] = { 0.0f,  -1.0f,  0.0f };

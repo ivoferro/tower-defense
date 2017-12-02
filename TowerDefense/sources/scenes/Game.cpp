@@ -61,8 +61,8 @@ Game::Game() : level(this)
 
 	Plane * plane = new Plane("stone");
 	Transform * planeT = (Transform*)plane->getComponentById("transform");
-	planeT->scale->x = 100;
-	planeT->scale->y = 100;
+	planeT->scale->x = 110;
+	planeT->scale->y = 110;
 	gameObjects["plane01"] = plane;
 }
 
