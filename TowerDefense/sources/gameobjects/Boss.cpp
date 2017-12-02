@@ -1,43 +1,40 @@
-#include "../../headers/gameobjects/Enemy.h"
+#include "../../headers/gameobjects/Boss.h"
 #include "../../headers/gameobjects/Bullet.h"
 #include "../../headers/gameobjects/Tower.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/components/TargetPath.h"
-#include "../../headers/components/Life.h"
-#include "../../headers/util/Illumination.h"
-#include "../../headers/mdlloader/Mdlloader.h"
-#include "../../headers/mdlloader/studio.h"
 #include "../../headers/util/Math.h"
 
-Enemy::Enemy()
+Boss::Boss()
 {
-	model = new MDLModel(0,4,4,26,19,73, "resources/enemy/zombie.mdl");
-	lifebar = new LifeBar(this, 3.0f, 90.0f);
+	model = new MDLModel(0, 4, 4, 26, 19, 73, "resources/boss/zbs_bossl_big05.mdl");
+	lifebar = new LifeBar(this, 5.0f, 90.0f);
 
 	addComponent("transform", new Transform());
+	addComponent("transformLifeBar", new Transform());
 	addComponent("targetPath", new TargetPath());
-	addComponent("life", new Life(100.0f, 100.0f));
+	addComponent("life", new Life(500.0f, 500.0f));
 
 	setUpCollider();
 }
 
-Enemy::~Enemy()
+Boss::~Boss()
 {
 }
 
-void Enemy::setUpCollider()
+void Boss::setUpCollider()
 {
 	Collider * collider = new Collider(this);
 	collider->addBox(
-		new Transform::Coordinates(1, 1, 1),
-		new Transform::Coordinates(-1, -1, -1));
+		new Transform::Coordinates(2, 2, 3),
+		new Transform::Coordinates(-2, -2, -3));
 
 	collider->registerOnCollisionEnterCallback(&GameObject::onCollisionEnter);
 	addComponent("collider", collider);
 }
 
-void Enemy::onCollisionEnter(GameObject * collidingObject)
+void Boss::onCollisionEnter(GameObject * collidingObject)
 {
 	Life * life = (Life*)getComponentById("life");
 	if (Bullet * bullet = dynamic_cast<Bullet*>(collidingObject))
@@ -45,7 +42,6 @@ void Enemy::onCollisionEnter(GameObject * collidingObject)
 		life->health -= bullet->damage;
 		if (life->health <= 0)
 		{
-			isAlive = false;
 			model->death(glutGet(GLUT_ELAPSED_TIME));
 		}
 	}
@@ -56,42 +52,31 @@ void Enemy::onCollisionEnter(GameObject * collidingObject)
 	}
 }
 
-void Enemy::initModel()
+void Boss::draw()
 {
-	model->init();
-}
-
-void Enemy::drawModel()
-{
-	model->draw();
-}
-
-void Enemy::draw()
-{
-	// Intitialize enemy MDL Model
-	initModel();
-
-	// ****** ENEMY ******
-	Transform * t = (Transform*)getComponentById("transform");
-
 	lifebar->draw();
 
+	model->init();
+
+	Transform * t = (Transform*)getComponentById("transform");
 	glPushMatrix();
+		glTranslatef(-0.8f, -0.8f, -2.0f); // model pivot point
+
 		glTranslatef(t->position->x, t->position->y, t->position->z);
 		glRotatef(t->rotation->x, 1, 0, 0);
 		glRotatef(t->rotation->y, 0, 1, 0);
 		glRotatef(t->rotation->z, 0, 0, 1);
 		glScalef(t->scale->x, t->scale->y, t->scale->z);
 
-		glScalef(0.05, 0.05, 0.05);
+		glScalef(0.04, 0.04, 0.04);
+		model->draw();
 
-		drawModel();
 	glPopMatrix();
 }
 
-void Enemy::timerActions()
+void Boss::timerActions()
 {
-	Transform * enemyT = (Transform*)getComponentById("transform");
+	Transform * bossTransform = (Transform*)getComponentById("transform");
 
 	// ***********************************************************
 	// state control (eg. walking, sidewalking, attacking, etc..)
@@ -100,7 +85,7 @@ void Enemy::timerActions()
 		if (!model->stillDying(glutGet(GLUT_ELAPSED_TIME), 922))
 		{
 			model->dead();
-			enemyT->position->z = -0.3;
+			bossTransform->position->z = -0.3;
 		}
 		return;
 	}
@@ -127,11 +112,9 @@ void Enemy::timerActions()
 	}
 
 	Transform::Coordinates * nextObjective = targetPath->nextObjective();
+	Transform::Coordinates * currentLocation = bossTransform->position;
 
-	Transform * currentT = ((Transform*)getComponentById("transform"));
-	Transform::Coordinates * currentLocation = currentT->position;
-
-	GLfloat speed = 0.1f;
+	GLfloat speed = 0.2f;
 	GLfloat elapsed = 0.01f;
 
 	GLfloat distance = Math::distance2D(currentLocation, nextObjective);
@@ -142,10 +125,10 @@ void Enemy::timerActions()
 	currentLocation->y += direction->y * speed;
 
 
-	currentT->rotation->z = atan2(
+	bossTransform->rotation->z = atan2(
 		nextObjective->y - currentLocation->y,
 		nextObjective->x - currentLocation->x);
-	currentT->rotation->z = (currentT->rotation->z * (180 / M_PI));
+	bossTransform->rotation->z = (bossTransform->rotation->z * (180 / M_PI));
 
 
 	if (distance <= 0.01)
@@ -157,7 +140,7 @@ void Enemy::timerActions()
 	delete direction;
 }
 
-void Enemy::animate()
+void Boss::animate()
 {
 	model->animate();
 }

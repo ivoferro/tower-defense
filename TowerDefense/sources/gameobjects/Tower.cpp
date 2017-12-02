@@ -9,7 +9,7 @@ GLMmodel* towerModel = NULL;
 
 Tower::Tower()
 {
-	lifebar = new LifeBar(this, 3.5f);
+	lifebar = new LifeBar(this, 3.5f, 0.0f);
 
 	addComponent("transform", new Transform());
 	addComponent("life", new Life(500.0f, 500.0f));
