@@ -15,6 +15,8 @@ private:
 	GLboolean	isInit;
 	StudioModel   mdl;
 	void initMapObject(char * path);
+	void setUpCollider();
+	void onCollisionEnter(GameObject * collidingObject) override;
 
 public:
 	MapObject(char * path);

@@ -1,6 +1,7 @@
 #include "../../headers/components/Transform.h"
 #include "../../headers/gameobjects/MapObject.h"
 #include "../../headers/objloader/glm.h"
+#include "../../headers/components/Collider.h"
 
 
 MapObject::MapObject(char * path)
@@ -11,6 +12,8 @@ MapObject::MapObject(char * path)
 	StudioModel   mdl;   // MDL Model
 
 	addComponent("transform", new Transform());
+
+	setUpCollider();
 }
 
 
@@ -41,4 +44,15 @@ void MapObject::initMapObject(char * path)
 		mdlviewer_init(path, mdl);
 		isInit = GL_TRUE;
 	}
+}
+
+void MapObject::setUpCollider()
+{
+	Collider * collider = new Collider(this);
+	collider->registerOnCollisionEnterCallback(&GameObject::onCollisionEnter);
+	addComponent("collider", collider);
+}
+
+void MapObject::onCollisionEnter(GameObject * collidingObject)
+{
 }
