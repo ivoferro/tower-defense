@@ -9,7 +9,7 @@ GLMmodel* towerModel = NULL;
 
 Tower::Tower()
 {
-	lifebar = new LifeBar(this, 6.5f);
+	lifebar = new LifeBar(this, 3.5f);
 
 	addComponent("transform", new Transform());
 	addComponent("life", new Life(500.0f, 500.0f));
@@ -60,7 +60,7 @@ void Tower::draw()
 		glRotatef(t->rotation->y, 0, 1, 0);
 		glRotatef(t->rotation->z, 0, 0, 1);
 		glScalef(t->scale->x, t->scale->y, t->scale->z);
-		glTranslatef(0,0,3);
+
 		glScalef(3, 3, 3);
 		initModel();
 	glPopMatrix();
@@ -71,8 +71,8 @@ void Tower::setUpCollider()
 {
 	Collider * collider = new Collider(this);
 	collider->addBox(
-		new Transform::Coordinates(1, 1, 2),
-		new Transform::Coordinates(-1, -1, -2));
+		new Transform::Coordinates(2.25, 2.25, 3),
+		new Transform::Coordinates(-0.75, -0.75, -3));
 
 	collider->registerOnCollisionEnterCallback(&GameObject::onCollisionEnter);
 	addComponent("collider", collider);

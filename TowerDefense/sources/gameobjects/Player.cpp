@@ -94,11 +94,14 @@ void Player::setUpCollider()
 
 void Player::onCollisionEnter(GameObject * collidingObject)
 {
-	isColliding = true;
-
 	Life * life = (Life*)getComponentById("life");
 	if (Enemy* enemy = dynamic_cast<Enemy*>(collidingObject))
 	{
+		if (enemy->model->state == Death)
+		{
+			return;
+		}
+		
 		if (enemy->model->state == Attacking && (glutGet(GLUT_ELAPSED_TIME) - prevAttack) > 1000)
 		{
 			prevAttack = glutGet(GLUT_ELAPSED_TIME);
@@ -110,6 +113,8 @@ void Player::onCollisionEnter(GameObject * collidingObject)
 			}
 		}
 	}
+
+	isColliding = true;
 }
 
 void Player::timerActions(int value)

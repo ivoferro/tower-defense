@@ -51,10 +51,7 @@ Game::Game() : level(this)
 
 	Tower * t = new Tower();
 	Transform * tt = (Transform*)t->getComponentById("transform");
-	Collider * tower_Collider = (Collider*)t->getComponentById("collider");
-	tower_Collider->addBox(
-		new Transform::Coordinates(3, 3, 3),
-		new Transform::Coordinates(-1, -1, -3));
+	tt->position->z = 3;
 	gameObjects["tower"] = t;
 
 	Plane * plane = new Plane("rock_floor");

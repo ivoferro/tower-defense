@@ -32,8 +32,8 @@ void Enemy::setUpCollider()
 {
 	Collider * collider = new Collider(this);
 	collider->addBox(
-		new Transform::Coordinates(0.5, 0.5, 1),
-		new Transform::Coordinates(-0.5, -0.5, -1));
+		new Transform::Coordinates(1, 1, 1),
+		new Transform::Coordinates(-1, -1, -1));
 
 	collider->registerOnCollisionEnterCallback(&GameObject::onCollisionEnter);
 	addComponent("collider", collider);
@@ -48,7 +48,6 @@ void Enemy::onCollisionEnter(GameObject * collidingObject)
 		if (life->health <= 0)
 		{
 			isAlive = false;
-			removeComponent("collider");
 			model->death(glutGet(GLUT_ELAPSED_TIME));
 		}
 	}
@@ -86,8 +85,6 @@ void Enemy::draw()
 		glRotatef(t->rotation->z, 0, 0, 1);
 		glScalef(t->scale->x, t->scale->y, t->scale->z);
 
-		glTranslatef(0, 0, 1);
-		glRotatef(90.0, 0,0,1);
 		glScalef(0.05, 0.05, 0.05);
 
 		drawModel();
@@ -151,7 +148,7 @@ void Enemy::timerActions()
 	currentT->rotation->z = atan2(
 		nextObjective->y - currentLocation->y,
 		nextObjective->x - currentLocation->x);
-	currentT->rotation->z = (currentT->rotation->z * (180 / M_PI)) - 90 ;
+	currentT->rotation->z = (currentT->rotation->z * (180 / M_PI));
 
 
 	if (distance <= 0.01)

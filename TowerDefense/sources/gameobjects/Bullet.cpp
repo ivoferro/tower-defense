@@ -1,4 +1,5 @@
 #include "../../headers/gameobjects/Bullet.h"
+#include "../../headers/gameobjects/Player.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/objloader/glm.h"
@@ -18,6 +19,10 @@ void Bullet::setUpCollider()
 void Bullet::onCollisionEnter(GameObject * collidingObject)
 {
 	// TODO expload!!!
+	if (Player * player = dynamic_cast<Player*>(collidingObject))
+	{
+		return;
+	}
 	doRemove = true;
 }
 
