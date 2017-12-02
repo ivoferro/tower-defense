@@ -1,4 +1,5 @@
 #include "../../headers/gameobjects/Tower.h"
+#include "../../headers/gameobjects/Enemy.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/components/Life.h"
@@ -13,6 +14,9 @@ Tower::Tower()
 	addComponent("transform", new Transform());
 	addComponent("life", new Life(500.0f, 500.0f));
 	setUpCollider();
+
+	gameover = GL_FALSE;
+	prevAttack = glutGet(GLUT_ELAPSED_TIME);
 }
 
 Tower::~Tower()
@@ -48,6 +52,8 @@ void Tower::draw()
 {
 	Transform * t = (Transform*)getComponentById("transform");
 
+	lifebar->draw();
+
 	glPushMatrix();
 		glTranslatef(t->position->x, t->position->y, t->position->z);
 		glRotatef(t->rotation->x, 1, 0, 0);
@@ -59,7 +65,6 @@ void Tower::draw()
 		initModel();
 	glPopMatrix();
 
-	lifebar->draw();
 }
 
 void Tower::setUpCollider()
@@ -75,5 +80,18 @@ void Tower::setUpCollider()
 
 void Tower::onCollisionEnter(GameObject * collidingObject)
 {
+	Life * life = (Life*)getComponentById("life");
+	if (Enemy * enemy = dynamic_cast<Enemy*>(collidingObject))
+	{
+		if (enemy->model->state == Attacking && (glutGet(GLUT_ELAPSED_TIME) - prevAttack) > 1000)
+		{
+			prevAttack = glutGet(GLUT_ELAPSED_TIME);
+			life->health -= 20;
+			if (life->health <= 0)
+			{
+				gameover = GL_TRUE;
+			}
+		}
+	}
 }
 

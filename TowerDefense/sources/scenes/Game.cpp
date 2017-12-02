@@ -174,6 +174,14 @@ void Game::Draw()
 
 void Game::Timer(int value)
 {
+	//if (true)
+	//{
+	//	GameText *title = new GameText("TOWER DEFENSE");
+	//	Transform *titleT = (Transform*)title->getComponentById("transform");
+	//	titleT->position->x = 0.1;
+	//	titleT->position->y = 0.7;
+	//}
+
 	// has to be in this order, to prevent player from crossing objects
 	// could be more clean!
 	((Player*)gameObjects["player"])->isColliding = false;

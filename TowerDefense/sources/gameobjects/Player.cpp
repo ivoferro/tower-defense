@@ -14,6 +14,7 @@ Player::Player()
 	lifebar = new LifeBar(this, 2.5f);
 	timer = 0;
 	isAlive = GL_TRUE;
+	prevAttack = glutGet(GLUT_ELAPSED_TIME);
 
 	addComponent("transform", new Transform());
 	addComponent("physics", new CharacterPhysics());
@@ -98,13 +99,13 @@ void Player::onCollisionEnter(GameObject * collidingObject)
 	Life * life = (Life*)getComponentById("life");
 	if (Enemy* enemy = dynamic_cast<Enemy*>(collidingObject))
 	{
-		if (enemy->model->state == Attacking)
+		if (enemy->model->state == Attacking && (glutGet(GLUT_ELAPSED_TIME) - prevAttack) > 1000)
 		{
+			prevAttack = glutGet(GLUT_ELAPSED_TIME);
 			life->health -= 10;
 			if (life->health <= 0)
 			{
 				isAlive = false;
-				removeComponent("collider");
 				model->death(glutGet(GLUT_ELAPSED_TIME));
 			}
 		}

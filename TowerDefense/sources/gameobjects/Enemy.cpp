@@ -13,7 +13,7 @@
 Enemy::Enemy()
 {
 	model = new MDLModel(0,4,4,26,19,73, "resources/enemy/zombie.mdl");
-	lifebar = new LifeBar(this, 2.5f);
+	lifebar = new LifeBar(this, 3.0f);
 
 	addComponent("transform", new Transform());
 	addComponent("transformLifeBar", new Transform());
@@ -77,6 +77,8 @@ void Enemy::draw()
 	// ****** ENEMY ******
 	Transform * t = (Transform*)getComponentById("transform");
 
+	lifebar->draw();
+
 	glPushMatrix();
 		glTranslatef(t->position->x, t->position->y, t->position->z);
 		glRotatef(t->rotation->x, 1, 0, 0);
@@ -86,12 +88,10 @@ void Enemy::draw()
 
 		glTranslatef(0, 0, 1);
 		glRotatef(90.0, 0,0,1);
-		glScalef(0.035, 0.035, 0.035);
+		glScalef(0.05, 0.05, 0.05);
 
 		drawModel();
 	glPopMatrix();
-
-	lifebar->draw();
 }
 
 void Enemy::timerActions()

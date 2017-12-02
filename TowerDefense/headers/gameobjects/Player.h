@@ -21,6 +21,7 @@ private:
 	void initModel();
 	void drawModel();
 
+	GLuint prevAttack;
 	Transform oldTransform;
 
 public:

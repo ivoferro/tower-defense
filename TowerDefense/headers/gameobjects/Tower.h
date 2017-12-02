@@ -14,10 +14,15 @@ private:
 	void setUpCollider();
 	void onCollisionEnter(GameObject * collidingObject) override;
 	
+	GLuint prevAttack;
+
+
 public:
 	Tower();
 	~Tower();
 	void draw();
 	void initModel();
+
+	GLboolean gameover;
 };
 
