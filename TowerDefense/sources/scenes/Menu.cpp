@@ -211,7 +211,7 @@ void Menu::MousePassiveMotion(int x, int y)
 }
 
 void Menu::createGameObjects() {
-	double coordBars[4][3] = { {0,0.7,0}, {0,0.2,0}, {0,-0.3,0},{0,-0.8,0} };
+	double coordBars[4][3] = { {-0.3,0.7,0}, {-0.3,0.2,0}, {-0.3,-0.3,0},{-0.3,-0.8,0} };
 
 	// -------------------------- START BAR ----------------------------//
 	MenuBar *mb = new MenuBar();
@@ -258,6 +258,12 @@ void Menu::createGameObjects() {
 	mbT3->position->y = coordBars[3][1];
 	mbT3->position->z = coordBars[3][2];
 	gameObjects["menubar3"] = mb3;
+	//-------------------------- TITLE ----------------------------------//
+	GameText *title = new GameText("TOWER DEFENSE");
+	Transform *titleT = (Transform*)title->getComponentById("transform");
+	titleT->position->x = 0.1;
+	titleT->position->y = 0.7;
+	gameObjects["title"] = title;
 
 	//-----------------------------------------------------------------------
 	Player * p = new Player();
@@ -346,7 +352,6 @@ void Menu::drawGameObjects() {
 	glPushName(1);
 	((MenuBar*)gameObjects["menubar3"])->drawWithText("Exit", whitecolor);
 	glPopName();
-	
 
 	//-----------------------CREDITS BOX ------------------------//
 	((TextBox*)gameObjects["creditsBox"])->draw();
@@ -359,6 +364,8 @@ void Menu::drawGameObjects() {
 		"Zoom In: 1", "Zoom Out: 2"};
 	((TextBox*)gameObjects["helpBox"])->drawWithText(helpText, 6);
 	//-----------------------------------------------------------//
+	((GameText*)gameObjects["title"])->draw();
+
 	//((Tower*)gameObjects["tower"])->draw();
 	((Player*)gameObjects["player"])->draw();
 	
