@@ -49,6 +49,9 @@ Game::Game() : level(this)
 		new Transform::Coordinates(-10, -10, -3));
 	gameObjects["wall1"] = wall;
 
+	OuterWalls * outerWalls = new OuterWalls();
+	gameObjects["outerWalls"] = outerWalls;
+
 	Tower * t = new Tower();
 	Transform * tt = (Transform*)t->getComponentById("transform");
 	Collider * tower_Collider = (Collider*)t->getComponentById("collider");
@@ -595,7 +598,6 @@ void Game::Timer(int value)
 	deleteBullets();
 
 	glutPostRedisplay();
-
 	((Player*)gameObjects["player"])->animate();
 }
 
