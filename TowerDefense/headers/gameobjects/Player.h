@@ -27,6 +27,7 @@ public:
 	void timerActions(int value);
 	void animate();
 	void move();
+	GLboolean isAlive;
 	GLboolean isColliding;
 };
 

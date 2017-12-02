@@ -11,7 +11,7 @@
 
 Enemy::Enemy()
 {
-	model = new MDLModel();
+	model = new MDLModel(0,0,0,0,0,0,"");
 
 	addComponent("transform", new Transform());
 	addComponent("transformLifeBar", new Transform());
@@ -132,4 +132,28 @@ void Enemy::timerActions()
 
 	delete subtractedVecs;
 	delete direction;
+}
+
+void Enemy::animate()
+{
+	if (model->isInit)
+	{
+		if (model->state == Walking)
+		{
+			if (model->model.GetSequence() != 3)
+			{
+				model->model.SetSequence(3);
+			}
+		}
+		else if (model->state == SideWalking)
+		{
+			if (model->model.GetSequence() != 4)
+			{
+				model->model.SetSequence(4);
+			}
+		}
+		else {
+			model->model.SetSequence(0);
+		}
+	}
 }

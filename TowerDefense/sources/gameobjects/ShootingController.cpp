@@ -14,12 +14,13 @@ void ShootingController::spawnBullet()
 	bulletTransform->rotation->y = playerTransform->rotation->z;
 	bulletTransform->position->x = playerTransform->position->x + 1 * cos(Math::radians(playerTransform->rotation->z - 90));
 	bulletTransform->position->y = playerTransform->position->y + 1 * sin(Math::radians(playerTransform->rotation->z - 90));
-	bulletTransform->position->z = 1;
+	bulletTransform->position->z = 2;
 }
 
 ShootingController::ShootingController(Scene * parentScene)
 {
 	this->parentScene = parentScene;
+	this->player = (Player*)parentScene->gameObjects["player"];
 	cooldownSeconds = 1;
 	isOnCooldown = false;
 }
@@ -39,8 +40,11 @@ void ShootingController::timerActions()
 	if (Application::instance()->getState()->getInputs()->playerShooting
 		&& !isOnCooldown)
 	{
-		spawnBullet();
-		isOnCooldown = true;
-		timer = time(0);
+		if (player->isAlive)
+		{
+			spawnBullet();
+			isOnCooldown = true;
+			timer = time(0);
+		}
 	}
 }

@@ -424,7 +424,6 @@ void Game::Timer(int value)
 	deleteBullets();
 
 	glutPostRedisplay();
-
 	((Player*)gameObjects["player"])->animate();
 }
 

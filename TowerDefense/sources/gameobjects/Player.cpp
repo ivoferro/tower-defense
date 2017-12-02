@@ -9,8 +9,9 @@
 
 Player::Player()
 {
-	model = new MDLModel();
+	model = new MDLModel(0, 3, 4, 159, 13, 177, "resources/player/player.mdl");
 	timer = 0;
+	isAlive = GL_TRUE;
 
 	addComponent("transform", new Transform());
 	addComponent("physics", new CharacterPhysics());
@@ -24,16 +25,12 @@ Player::~Player()
 
 void Player::initModel()
 {
-	if (model->isInit == GL_FALSE)
-	{
-		mdlviewer_init("resources/player/player.mdl", model->model);
-		model->isInit = GL_TRUE;
-	}
+	model->init();
 }
 
 void Player::drawModel()
 {
-	mdlviewer_display(model->model);
+	model->draw();
 }
 
 
@@ -96,12 +93,34 @@ void Player::onCollisionEnter(GameObject * collidingObject)
 
 void Player::timerActions(int value)
 {
-	//model->isWalking = GL_FALSE;
-
 	Transform * playerT = (Transform*) getComponentById("transform");
 	CharacterPhysics * playerPhy = (CharacterPhysics*) getComponentById("physics");
 
+	// ***********************************************************
 	// state control (eg. walking, sidewalking, attacking, etc..)
+	if (model->state == Death)
+	{
+		if (!model->stillDying(glutGet(GLUT_ELAPSED_TIME), 922))
+		{
+			model->dead();
+			playerT->position->z = -0.3;
+		}
+		return;
+	}
+	if (!isAlive) // TODO: Review after death logic
+	{
+		isAlive = GL_FALSE;
+		model->death(glutGet(GLUT_ELAPSED_TIME));
+		return;
+	}
+	if (Application::instance()->getState()->getInputs()->playerShooting)
+	{
+		model->attack(glutGet(GLUT_ELAPSED_TIME));
+	}
+	if (model->stillShooting(glutGet(GLUT_ELAPSED_TIME), 300))
+	{
+		return;
+	}
 	if (playerPhy->velocity != 0)
 	{
 		model->walk();
@@ -113,9 +132,7 @@ void Player::timerActions(int value)
 	{
 		model->idle();
 	}
-
-	GLuint curr = glutGet(GLUT_ELAPSED_TIME);
-	model->prevSequence = curr;
+	// ***********************************************************
 
 	// acelarations
 	if (Application::instance()->getState()->getInputs()->move_player_front)
@@ -123,7 +140,6 @@ void Player::timerActions(int value)
 		if (playerPhy->velocity < playerPhy->maxFrontVelocity)
 		{
 			playerPhy->velocity += 0.01;
-			//model->isWalking = GL_TRUE;
 		}
 	}
 	if (Application::instance()->getState()->getInputs()->move_player_back)
@@ -131,7 +147,6 @@ void Player::timerActions(int value)
 		if (playerPhy->velocity > -playerPhy->maxBackVelocity)
 		{
 			playerPhy->velocity -= 0.01;
-			//model->isWalking = GL_TRUE;
 		}
 	}
 	if (!Application::instance()->getState()->getInputs()->move_player_front &&
@@ -146,7 +161,6 @@ void Player::timerActions(int value)
 		if (playerPhy->sideVelocity < playerPhy->maxSideVelocity)
 		{
 			playerPhy->sideVelocity += 0.01;
-			//model->isWalking = GL_TRUE;
 		}
 	}
 	if (Application::instance()->getState()->getInputs()->move_player_right)
@@ -154,7 +168,6 @@ void Player::timerActions(int value)
 		if (playerPhy->sideVelocity > -playerPhy->maxSideVelocity)
 		{
 			playerPhy->sideVelocity -= 0.01;
-			//model->isWalking = GL_TRUE;
 		}
 	}
 	if (!Application::instance()->getState()->getInputs()->move_player_left &&
@@ -177,26 +190,7 @@ void Player::timerActions(int value)
 
 void Player::animate()
 {
-	if (model->isInit)
-	{
-		if (model->state == Walking)
-		{
-			if (model->model.GetSequence() != 3)
-			{
-				model->model.SetSequence(3);
-			}
-		}
-		else if (model->state == SideWalking)
-		{
-			if (model->model.GetSequence() != 4)
-			{
-				model->model.SetSequence(4);
-			}
-		}
-		else {
-			model->model.SetSequence(0);
-		}
-	}
+	model->animate();
 }
 
 void Player::move()

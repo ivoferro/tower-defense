@@ -22,6 +22,7 @@ public:
 	~Enemy();
 	void draw();
 	void timerActions();
+	void animate();
 
 	GLboolean isAlive = true;
 };
