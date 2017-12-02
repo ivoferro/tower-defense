@@ -14,8 +14,10 @@ private:
 	void setLight();
 	void setTextures();
 	void deleteBullets();
+	void initMapObjects();
 	
 	Level01 level;
+	GLuint mapDisplayList;
 
 public:
 	Game();
