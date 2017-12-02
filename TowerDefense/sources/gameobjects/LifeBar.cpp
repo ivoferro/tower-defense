@@ -2,9 +2,10 @@
 #include "../../headers/components/Transform.h"
 #include "../../headers/util/Illumination.h"
 
-LifeBar::LifeBar()
+LifeBar::LifeBar(GameObject * parent, GLfloat offSetUp)
 {
-	addComponent("transformLifeBar", new Transform());
+	this->parent = parent;
+	this->offSetUp = offSetUp;
 }
 
 LifeBar::~LifeBar()
@@ -21,11 +22,12 @@ void LifeBar::drawPolygon(GLfloat a[], GLfloat b[], GLfloat c[], GLfloat  d[], G
 	glMaterialfv(GL_FRONT, GL_SHININESS, Illumination::NO_SHININESS);
 	glMaterialfv(GL_FRONT, GL_EMISSION, Illumination::NO_MATERIAL);
 
-	glColor3fv(color);
+	glNormal3fv(normal);
 	glVertex3fv(a);
 	glVertex3fv(b);
 	glVertex3fv(c);
 	glVertex3fv(d);
+
 	glEnd();
 }
 
@@ -62,19 +64,22 @@ void LifeBar::draw()
 	GLfloat greencolor[3] = { 0.0, 1.0, 0.0 };
 	GLfloat blackcolor[3] = { 0.0, 0.0, 0.0 };
 	
-	Transform * t = (Transform*)getComponentById("transformLifeBar");
-
-	glTranslatef(t->position->x, t->position->y, t->position->z);
-
-	glPushMatrix();
-	glRotatef(t->rotation->z, 0, 0, 1);
-	glScalef(0.99, 0.09, 0.09);
-	drawLifeBar(blackcolor);
-	glPopMatrix();
+	Transform * parentTransform = (Transform*)parent->getComponentById("transform");
+	Life * life = (Life*)parent->getComponentById("life");
+	GLfloat currentPercentage = life->health / life->maxHealth;
 
 	glPushMatrix();
-	glRotatef(t->rotation->z, 0, 0, 1);
-	glScalef(t->scale->x, t->scale->y, t->scale->z);
-	drawLifeBar(greencolor);
+		glTranslatef(parentTransform->position->x, parentTransform->position->y, parentTransform->position->z + offSetUp);
+		glRotatef(parentTransform->rotation->z, 0, 0, 1);
+
+		glPushMatrix();
+			glScalef(1.1f, 0.09, 0.09);
+			drawLifeBar(blackcolor);
+		glPopMatrix();
+
+		glPushMatrix();
+			glScalef(currentPercentage, 0.1f, 0.1f);
+			drawLifeBar(greencolor);
+		glPopMatrix();
 	glPopMatrix();
 }

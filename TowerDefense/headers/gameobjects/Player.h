@@ -4,6 +4,7 @@
 #include <GL/glut.h>
 #include "../framework/GameObject.h"
 #include "../framework/Drawable.h"
+#include "LifeBar.h"
 #include "../components/Transform.h"
 #include "../components/MDLModel.h"
 
@@ -11,7 +12,9 @@ class Player : public GameObject, Drawable
 {
 	
 private:
-	MDLModel* model;
+	MDLModel * model;
+	LifeBar * lifebar;
+
 	GLint timer;
 	void setUpCollider();
 	void onCollisionEnter(GameObject * collidingObject) override;

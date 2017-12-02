@@ -6,10 +6,13 @@
 
 class Life : public Component
 {
+
 public:
-	Life();
+	Life(GLfloat health, GLfloat maxHealth);
 	~Life();
 
 	GLfloat health;
+	GLfloat maxHealth;
+
 };
 

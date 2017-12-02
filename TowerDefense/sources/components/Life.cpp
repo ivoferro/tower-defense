@@ -1,12 +1,10 @@
 #include "../../headers/components/Life.h"
 
-
-
-Life::Life()
+Life::Life(GLfloat health, GLfloat maxHealth)
 {
-	health = 100;
+	this->health = health;
+	this->maxHealth = maxHealth;
 }
-
 
 Life::~Life()
 {

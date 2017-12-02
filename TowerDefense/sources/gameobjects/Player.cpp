@@ -2,7 +2,7 @@
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/components/CharacterPhysics.h"
-#include "../../headers/gameobjects/LifeBar.h"
+#include "../../headers/components/Life.h"
 #include "../../headers/framework/Application.h"
 #include "../../headers/util/Math.h"
 #include "../../headers/util/Illumination.h"
@@ -10,11 +10,13 @@
 Player::Player()
 {
 	model = new MDLModel(0, 3, 4, 159, 13, 177, "resources/player/player.mdl");
+	lifebar = new LifeBar(this, 2.5f);
 	timer = 0;
 	isAlive = GL_TRUE;
 
 	addComponent("transform", new Transform());
 	addComponent("physics", new CharacterPhysics());
+	addComponent("life", new Life(150.0f, 150.0f));
 
 	setUpCollider();
 }
@@ -55,8 +57,10 @@ void Player::draw()
 		drawModel();
 	glPopMatrix();
 
+	lifebar->draw();
+
 	// ****** LIFEBAR ******
-	LifeBar *lifebar = new LifeBar();
+	/*LifeBar *lifebar = new LifeBar();
 	Transform * lt = (Transform*)lifebar->getComponentById("transformLifeBar");
 	//Transform * e1t_lifebar = (Transform*)e1->getComponentById("transformLifeBar");
 	lt->position->x = t->position->x;
@@ -72,7 +76,7 @@ void Player::draw()
 
 	glPushMatrix();
 	lifebar->draw();
-	glPopMatrix();
+	glPopMatrix();*/
 }
 
 void Player::setUpCollider()

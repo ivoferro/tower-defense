@@ -1,9 +1,9 @@
 #include "../../headers/gameobjects/Enemy.h"
-#include "../../headers/gameobjects/LifeBar.h"
 #include "../../headers/gameobjects/Bullet.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/components/TargetPath.h"
+#include "../../headers/components/Life.h"
 #include "../../headers/util/Illumination.h"
 #include "../../headers/mdlloader/Mdlloader.h"
 #include "../../headers/mdlloader/studio.h"
@@ -12,10 +12,12 @@
 Enemy::Enemy()
 {
 	model = new MDLModel(0,0,0,0,0,0,"");
+	lifebar = new LifeBar(this, 2.5f);
 
 	addComponent("transform", new Transform());
 	addComponent("transformLifeBar", new Transform());
 	addComponent("targetPath", new TargetPath());
+	addComponent("life", new Life(100.0f, 100.0f));
 
 	setUpCollider();
 }
@@ -38,10 +40,11 @@ void Enemy::setUpCollider()
 
 void Enemy::onCollisionEnter(GameObject * collidingObject)
 {
+	Life * life = (Life*)getComponentById("life");
 	if (Bullet * bullet = dynamic_cast<Bullet*>(collidingObject))
 	{
-		health -= bullet->damage;
-		if (health <= 0)
+		life->health -= bullet->damage;
+		if (life->health <= 0)
 		{
 			isAlive = false;
 		}
@@ -84,22 +87,7 @@ void Enemy::draw()
 		drawModel();
 	glPopMatrix();
 
-	// ****** LIFEBAR ******
-	LifeBar *lifebar = new LifeBar();
-	Transform * lt = (Transform*)lifebar->getComponentById("transformLifeBar");
-	//Transform * e1t_lifebar = (Transform*)e1->getComponentById("transformLifeBar");
-	lt->position->x = t->position->x;
-	lt->position->y = t->position->y;
-	lt->position->z = (t->position->z + 2.5); // ... + val -> above the object
-
-	// change scale->x between 0 and 1 scale->x when lifebar need to be reduced
-	lt->scale->x = 0.85;
-	lt->scale->y = 0.1;
-	lt->scale->z = 0.1;
-
-	glPushMatrix();
 	lifebar->draw();
-	glPopMatrix();	
 }
 
 void Enemy::timerActions()

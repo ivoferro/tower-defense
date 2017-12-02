@@ -4,12 +4,13 @@
 #include <GL/glut.h>
 #include "../framework/GameObject.h"
 #include "../framework/Drawable.h"
+#include "LifeBar.h"
 
 class Tower : public GameObject, Drawable
 {
 
 private:
-	void drawTower();
+	LifeBar * lifebar;
 	void setUpCollider();
 	void onCollisionEnter(GameObject * collidingObject) override;
 	
