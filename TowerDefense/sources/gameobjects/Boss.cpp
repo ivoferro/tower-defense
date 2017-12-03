@@ -8,8 +8,9 @@
 
 Boss::Boss()
 {
-	model = new MDLModel(0, 4, 4, 26, 19, 73, "resources/boss/zbs_bossl_big05.mdl");
+	model = new MDLModel(2, 3, 3, 9, 16, 16, "resources/boss/zbs_bossl_big05.mdl");
 	lifebar = new LifeBar(this, 5.0f, 90.0f);
+	isAlive = GL_TRUE;
 
 	addComponent("transform", new Transform());
 	addComponent("transformLifeBar", new Transform());
@@ -27,8 +28,8 @@ void Boss::setUpCollider()
 {
 	Collider * collider = new Collider(this);
 	collider->addBox(
-		new Transform::Coordinates(2, 2, 3),
-		new Transform::Coordinates(-2, -2, -3));
+		new Transform::Coordinates(5, 5, 3),
+		new Transform::Coordinates(-5, -5, -3));
 
 	collider->registerOnCollisionEnterCallback(&GameObject::onCollisionEnter);
 	addComponent("collider", collider);
@@ -36,6 +37,8 @@ void Boss::setUpCollider()
 
 void Boss::onCollisionEnter(GameObject * collidingObject)
 {
+	if (model->state == Death) return;
+
 	Life * life = (Life*)getComponentById("life");
 	if (Bullet * bullet = dynamic_cast<Bullet*>(collidingObject))
 	{
@@ -82,8 +85,9 @@ void Boss::timerActions()
 	// state control (eg. walking, sidewalking, attacking, etc..)
 	if (model->state == Death)
 	{
-		if (!model->stillDying(glutGet(GLUT_ELAPSED_TIME), 922))
+		if (!model->stillDying(glutGet(GLUT_ELAPSED_TIME), 11290))
 		{
+			isAlive = GL_FALSE;
 			model->dead();
 			bossTransform->position->z = -0.3;
 		}
@@ -94,7 +98,7 @@ void Boss::timerActions()
 	{
 		model->attack(glutGet(GLUT_ELAPSED_TIME));
 	}
-	if (model->stillShooting(glutGet(GLUT_ELAPSED_TIME), 500))
+	if (model->stillShooting(glutGet(GLUT_ELAPSED_TIME), 4330))
 	{
 		return;
 	}
