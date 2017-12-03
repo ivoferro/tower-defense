@@ -93,7 +93,7 @@ void TextBox:: drawWithText(char* texts[], int size)
 			textT->position->z = previous->position->z;
 		}else {
 			//TITLE
-			textT->position->x = t->position->x-0.25;
+			textT->position->x = t->position->x-0.15;
 			textT->position->y = t->position->y;
 			textT->position->z = t->position->z;
 		}

@@ -28,6 +28,7 @@ void GameText::writeText() {
 	for (int i = 0; i < len; i++)
 	{
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]);
+		//glutBitmapCharacter(GLUT_BITMAP_9_BY_15, (int)text[i]);
 	}
 }
 

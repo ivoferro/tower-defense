@@ -273,6 +273,11 @@ void Game::Key(unsigned char key, int x, int y)
 	case 'N':
 		PlaySound(TEXT("resources/sound/sound.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 		break;
+
+	case 'r':
+	case 'R':
+		Application::instance()->getSceneManager()->changeScene("game");
+		break;
 	case 'M':
 	case 'm':
 		PlaySound(NULL, NULL, 0);
@@ -313,6 +318,11 @@ void Game::KeyUp(unsigned char key, int x, int y)
 	case 'k':
 	case 'K':
 		Application::instance()->getState()->getInputs()->kill_all_enemies = false;
+		break;
+
+	case 'r':
+	case 'R':
+		Application::instance()->getSceneManager()->restartScene("game");
 		break;
 	case 'p':
 	case 'P':
@@ -479,21 +489,22 @@ void Game::setLight()
 void Game::setTextures()
 {
 	glEnable(GL_TEXTURE_2D);
-	Application::instance()->getTextures()->registerTexture("metal_plate", "resources/metal_plate.jpg");
-	Application::instance()->getTextures()->registerTexture("rock_floor", "resources/rock_floor.jpg");
-	Application::instance()->getTextures()->registerTexture("snow", "resources/snow.jpg");
-	Application::instance()->getTextures()->registerTexture("snow_ice", "resources/snow_ice.jpg");
-	Application::instance()->getTextures()->registerTexture("floor", "resources/floor.jpg");
-	Application::instance()->getTextures()->registerTexture("sandstone", "resources/sandstone.jpg");
-	Application::instance()->getTextures()->registerTexture("stone", "resources/stone.jpg");
+	if (!Application::instance()->getTextures()->areTexturesLoaded) {
+		Application::instance()->getTextures()->registerTexture("metal_plate", "resources/metal_plate.jpg");
+		Application::instance()->getTextures()->registerTexture("rock_floor", "resources/rock_floor.jpg");
+		Application::instance()->getTextures()->registerTexture("snow", "resources/snow.jpg");
+		Application::instance()->getTextures()->registerTexture("snow_ice", "resources/snow_ice.jpg");
+		Application::instance()->getTextures()->registerTexture("floor", "resources/floor.jpg");
+		Application::instance()->getTextures()->registerTexture("sandstone", "resources/sandstone.jpg");
+		Application::instance()->getTextures()->registerTexture("stone", "resources/stone.jpg");
 
-	Application::instance()->getTextures()->registerTexture("back", "resources/skybox/back.jpg");
-	Application::instance()->getTextures()->registerTexture("front", "resources/skybox/front.jpg");
-	Application::instance()->getTextures()->registerTexture("left", "resources/skybox/left.jpg");
-	Application::instance()->getTextures()->registerTexture("right", "resources/skybox/right.jpg");
-	Application::instance()->getTextures()->registerTexture("up", "resources/skybox/up.jpg");
-	Application::instance()->getTextures()->registerTexture("down", "resources/skybox/down.jpg");
-
+		Application::instance()->getTextures()->registerTexture("back", "resources/skybox/back.jpg");
+		Application::instance()->getTextures()->registerTexture("front", "resources/skybox/front.jpg");
+		Application::instance()->getTextures()->registerTexture("left", "resources/skybox/left.jpg");
+		Application::instance()->getTextures()->registerTexture("right", "resources/skybox/right.jpg");
+		Application::instance()->getTextures()->registerTexture("up", "resources/skybox/up.jpg");
+		Application::instance()->getTextures()->registerTexture("down", "resources/skybox/down.jpg");
+	}
 	Application::instance()->getTextures()->areTexturesLoaded = true;
 }
 

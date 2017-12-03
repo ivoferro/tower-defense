@@ -32,3 +32,11 @@ void SceneManager::changeScene(std::string sceneKey)
 		activeSceneKey = sceneKey;
 	}
 }
+
+void SceneManager::restartScene(std::string sceneKey) {
+	delete(scenes["game"]);
+	scenes[sceneKey] = new Game();
+	scenes[sceneKey]->Init();
+	scenes[sceneKey]->Reshape(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+	activeSceneKey = sceneKey;
+}

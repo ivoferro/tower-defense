@@ -16,5 +16,6 @@ public:
 
 	Scene * activeScene();
 	void changeScene(std::string sceneKey);
+	void SceneManager::restartScene(std::string sceneKey);
 
 };
