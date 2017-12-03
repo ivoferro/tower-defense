@@ -89,9 +89,6 @@ void Menu::Draw()
 
 void Menu::Timer(int value)
 {
-	//rotate crystall
-	Transform * towerT = (Transform*)(gameObjects["tower"])->getComponentById("transform");
-	towerT->rotation->z += 1;
 }
 
 void Menu::Key(unsigned char key, int x, int y)
@@ -273,19 +270,6 @@ void Menu::createGameObjects() {
 	pt->rotation->x = 90;
 
 	gameObjects["player"] = p;
-
-	Tower * t = new Tower();
-	Transform * tt = (Transform*)t->getComponentById("transform");
-	tt->position->x = 0;
-	tt->position->y = -0.2;
-	tt->position->z = -0.5;
-	tt->scale->x = 0.20;
-	tt->scale->y = 0.20;
-	tt->scale->z = 0.20;
-	tt->rotation->x = -90;
-
-	gameObjects["tower"] = t;
-
 }
 
 void Menu::setLight()
@@ -354,15 +338,14 @@ void Menu::drawGameObjects() {
 
 	//----------------------HELP BOX-----------------------------//
 	((TextBox*)gameObjects["helpBox"])->draw();
-	char* helpText[] = {"HELP", "Move front: w", "Move left: a", 
-						"Move back: s", "Move right: d", "Shoot: left click",
-						"Zoom In: 1", "Zoom Out: 2", "Mute sound: m", "Unmute sound: n",
-						"Kill Player: p", "Kill all enemies: k"};
-	((TextBox*)gameObjects["helpBox"])->drawWithText(helpText, 12);
+	char* helpText[] = {"HELP", "Move front: [w]", "Move left: [a]", 
+						"Move back: [s]", "Move right: [d]",
+						"Zoom In: [1]", "Zoom Out: [2]", "Mute sound: [m]", "Unmute sound: [n]",
+						"Kill Player: [p]", "Kill all enemies: [k]", "Shoot: left click", "Restart: [r]"};
+	((TextBox*)gameObjects["helpBox"])->drawWithText(helpText, 13);
 	//-----------------------------------------------------------//
 	((GameText*)gameObjects["title"])->draw();
 
-	//((Tower*)gameObjects["tower"])->draw();
 	((Player*)gameObjects["player"])->draw();
 	
 }
