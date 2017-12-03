@@ -238,8 +238,10 @@
     <ClInclude Include="headers\gameobjects\MapObject.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="resources\floor.jpg" />
     <Image Include="resources\metal_plate.jpg" />
     <Image Include="resources\rock_floor.jpg" />
+    <Image Include="resources\sandstone.jpg" />
     <Image Include="resources\skybox\back.jpg" />
     <Image Include="resources\skybox\down.jpg" />
     <Image Include="resources\skybox\front.jpg" />
@@ -249,6 +251,8 @@
     <Image Include="resources\snow.jpg" />
     <Image Include="resources\snow_ice.jpg" />
     <Image Include="resources\snow_ice.png" />
+    <Image Include="resources\stone.jpg" />
+    <Image Include="resources\tower\Texture_.tga" />
     <Image Include="resources\vinil.jpg" />
     <Image Include="resources\vinil2.jpg" />
   </ItemGroup>
@@ -258,7 +262,11 @@
     <Media Include="resources\sound\flip.wav" />
     <Media Include="resources\sound\gun.wav" />
     <Media Include="resources\sound\open.wav" />
+    <Media Include="resources\sound\sound.wav" />
     <Media Include="resources\sound\wahoo.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\tower\Tower_obj.mtl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

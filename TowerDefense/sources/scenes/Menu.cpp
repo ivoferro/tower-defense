@@ -99,25 +99,17 @@ void Menu::Key(unsigned char key, int x, int y)
 	switch (key)
 	{
 	case 's':
-		Application::instance()->getSceneManager()->changeScene("game");
+		startGame();
 		break;
 	case 'e':
 		exit(0);
 		break;
 	}
 	if (key == 'h') {
-		clearText();
-		Transform *ht = (Transform*)(gameObjects["helpBox"])->getComponentById("transform");
-		ht->position->x = 0.5;
-
+		help();
 	}
 	if (key == 'c') {
-		clearText();
-		Transform *creditsT = (Transform*)(gameObjects["creditsBox"])->getComponentById("transform");
-		creditsT->position->x = 0.4;		
-	}
-	if (key == 'd') {
-		clearText();
+		credits();
 	}
 
 }
@@ -149,30 +141,13 @@ void Menu::Mouse(int button, int mouse_state, int x, int y)
 		setSelection(x, y);
 
 		if (id == 1) {
-			PlaySound(TEXT("resources/sound/wahoo.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
-			Application::instance()->getSceneManager()->changeScene("game");
-			PlaySound(NULL, NULL, 0);
+			startGame();
 		}
 		if (id == 2) {
-			clearText();
-			Transform *ht = (Transform*)(gameObjects["helpBox"])->getComponentById("transform");
-			ht->position->x = 0.5;
-		
-			Transform *t = (Transform*)(gameObjects["title"])->getComponentById("transform");
-			t->position->x = 2;
-			PlaySound(TEXT("resources/sound/explosion.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
-			glutWarpPointer(width / 2, height / 2);
+			help();
 		}
 		if (id == 3) {
-			clearText();
-			Transform *creditsT = (Transform*)(gameObjects["creditsBox"])->getComponentById("transform");
-			creditsT->position->x = 0.4;
-
-			Transform *t = (Transform*)(gameObjects["title"])->getComponentById("transform");
-			t->position->x = 2;
-
-			PlaySound(TEXT("resources/sound/credits.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
-			glutWarpPointer(width / 2, height / 2);
+			credits();		
 		}
 		if (id == 4)	
 			exit(0);
@@ -191,8 +166,8 @@ void Menu::MousePassiveMotion(int x, int y)
 	setSelection(x,y);
 
 	if (id == 0) {
-		dragOptions(-0.5);
 		clearText();
+		dragOptions(-0.5);
 		Transform *t = (Transform*)(gameObjects["title"])->getComponentById("transform");
 		t->position->x = 0.1;
 		PlaySound(NULL, NULL, 0);
@@ -200,24 +175,19 @@ void Menu::MousePassiveMotion(int x, int y)
 
 	if (id == 1) {	
 		Transform * titleT1 = (Transform*)(gameObjects["menubar1"])->getComponentById("transform");
-		titleT1->position->x = -0.6;
-		PlaySound(TEXT("resources/sound/gun.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
-		
+		titleT1->position->x = -0.6;	
 	}
 	if (id == 2) {
-		Transform * titleT1 = (Transform*)(gameObjects["helpbar"])->getComponentById("transform");
-		titleT1->position->x = -0.6;
-		PlaySound(TEXT("resources/sound/gun.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+		Transform * titleT4 = (Transform*)(gameObjects["helpbar"])->getComponentById("transform");
+		titleT4->position->x = -0.6;
 	}
 	if (id == 3) {
 		Transform * titleT2 = (Transform*)(gameObjects["menubar2"])->getComponentById("transform");
 		titleT2->position->x = -0.6;
-		PlaySound(TEXT("resources/sound/gun.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 	}
 	if (id == 4) {
 		Transform * titleT3 = (Transform*)(gameObjects["menubar3"])->getComponentById("transform");
 		titleT3->position->x = -0.6;
-		PlaySound(TEXT("resources/sound/gun.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 	}
 
 	glPopMatrix();
@@ -375,13 +345,14 @@ void Menu::drawGameObjects() {
 	//----------------------HELP BOX-----------------------------//
 	((TextBox*)gameObjects["helpBox"])->draw();
 	char* helpText[] = { "HELP", "w: Move front", "a: Move left", "d: Move right", 
-		"Zoom In: 1", "Zoom Out: 2"};
-	((TextBox*)gameObjects["helpBox"])->drawWithText(helpText, 6);
+		"Shoot: left click", "Restart game: R", "Mute Sound: M", "Zoom In: 1", "Zoom Out: 2", 
+		"Orthographic camera: O", "Perspetive camera: P"};
+	((TextBox*)gameObjects["helpBox"])->drawWithText(helpText, 11);
 	//-----------------------------------------------------------//
 	((GameText*)gameObjects["title"])->draw();
 
 	//((Tower*)gameObjects["tower"])->draw();
-	((Player*)gameObjects["player"])->draw();
+	//((Player*)gameObjects["player"])->draw();
 	
 }
 
@@ -461,4 +432,32 @@ void Menu::clearText() {
 	creditsT->position->x = clear;
 	Transform * helpT = (Transform*)(gameObjects["helpBox"])->getComponentById("transform");
 	helpT->position->x = clear;
+}
+
+void Menu::startGame() {
+	PlaySound(TEXT("resources/sound/sound.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+	Application::instance()->getSceneManager()->changeScene("game");
+}
+
+void Menu::help() {
+	clearText();
+	Transform *ht = (Transform*)(gameObjects["helpBox"])->getComponentById("transform");
+	ht->position->x = 0.5;
+	Transform *t = (Transform*)(gameObjects["title"])->getComponentById("transform");
+	t->position->x = 2;
+
+	PlaySound(TEXT("resources/sound/explosion.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+	glutWarpPointer(width / 2, height / 2);
+}
+
+void Menu::credits() {
+	clearText();
+	Transform *creditsT = (Transform*)(gameObjects["creditsBox"])->getComponentById("transform");
+	creditsT->position->x = 0.4;
+
+	Transform *t = (Transform*)(gameObjects["title"])->getComponentById("transform");
+	t->position->x = 2;
+
+	PlaySound(TEXT("resources/sound/credits.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+	glutWarpPointer(width / 2, height / 2);
 }
