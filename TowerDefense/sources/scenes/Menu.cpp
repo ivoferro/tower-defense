@@ -8,6 +8,11 @@
 #include "../../headers/gameobjects/Tower.h"
 #include "../../headers/gameobjects/MenuBar.h"
 
+//sound
+#include <iostream>
+#include<Windows.h>
+#include<MMSystem.h>
+using namespace std;
 
 
 Menu::Menu()
@@ -143,29 +148,31 @@ void Menu::Mouse(int button, int mouse_state, int x, int y)
 
 		setSelection(x, y);
 
-		if (id == 0)
-			dragOptions(0);
-
-		if (id == 1) 
+		if (id == 1) {
+			PlaySound(TEXT("resources/sound/wahoo.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 			Application::instance()->getSceneManager()->changeScene("game");
-		
-
+			PlaySound(NULL, NULL, 0);
+		}
 		if (id == 2) {
-
+			clearText();
 			Transform *ht = (Transform*)(gameObjects["helpBox"])->getComponentById("transform");
 			ht->position->x = 0.5;
 		
-			//dragOptions();
-			//glutWarpPointer(width / 0.1, y);
-
+			Transform *t = (Transform*)(gameObjects["title"])->getComponentById("transform");
+			t->position->x = 2;
+			PlaySound(TEXT("resources/sound/explosion.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+			glutWarpPointer(width / 2, height / 2);
 		}
 		if (id == 3) {
-
+			clearText();
 			Transform *creditsT = (Transform*)(gameObjects["creditsBox"])->getComponentById("transform");
 			creditsT->position->x = 0.4;
 
-			//dragOptions(0.35);
-			//glutWarpPointer(width / 0.1, y);
+			Transform *t = (Transform*)(gameObjects["title"])->getComponentById("transform");
+			t->position->x = 2;
+
+			PlaySound(TEXT("resources/sound/credits.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+			glutWarpPointer(width / 2, height / 2);
 		}
 		if (id == 4)	
 			exit(0);
@@ -177,7 +184,6 @@ void Menu::Mouse(int button, int mouse_state, int x, int y)
 
 void Menu::MouseMotion(int x, int y)
 {
-
 }
 
 void Menu::MousePassiveMotion(int x, int y)
@@ -187,23 +193,31 @@ void Menu::MousePassiveMotion(int x, int y)
 	if (id == 0) {
 		dragOptions(-0.5);
 		clearText();
+		Transform *t = (Transform*)(gameObjects["title"])->getComponentById("transform");
+		t->position->x = 0.1;
+		PlaySound(NULL, NULL, 0);
 	}
 
 	if (id == 1) {	
 		Transform * titleT1 = (Transform*)(gameObjects["menubar1"])->getComponentById("transform");
 		titleT1->position->x = -0.6;
+		PlaySound(TEXT("resources/sound/gun.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+		
 	}
 	if (id == 2) {
 		Transform * titleT1 = (Transform*)(gameObjects["helpbar"])->getComponentById("transform");
 		titleT1->position->x = -0.6;
+		PlaySound(TEXT("resources/sound/gun.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 	}
 	if (id == 3) {
 		Transform * titleT2 = (Transform*)(gameObjects["menubar2"])->getComponentById("transform");
 		titleT2->position->x = -0.6;
+		PlaySound(TEXT("resources/sound/gun.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 	}
 	if (id == 4) {
 		Transform * titleT3 = (Transform*)(gameObjects["menubar3"])->getComponentById("transform");
 		titleT3->position->x = -0.6;
+		PlaySound(TEXT("resources/sound/gun.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
 	}
 
 	glPopMatrix();

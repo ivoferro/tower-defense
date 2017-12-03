@@ -329,4 +329,24 @@
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="resources\sound\flip.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sound\wahoo.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sound\open.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sound\credits.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sound\explosion.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resources\sound\gun.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
 </Project>

@@ -242,6 +242,14 @@
     <Image Include="resources\vinil.jpg" />
     <Image Include="resources\vinil2.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="resources\sound\credits.wav" />
+    <Media Include="resources\sound\explosion.wav" />
+    <Media Include="resources\sound\flip.wav" />
+    <Media Include="resources\sound\gun.wav" />
+    <Media Include="resources\sound\open.wav" />
+    <Media Include="resources\sound\wahoo.wav" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
