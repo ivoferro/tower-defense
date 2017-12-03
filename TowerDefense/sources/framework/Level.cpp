@@ -66,6 +66,7 @@ void Level::timerActions()
 
 		if (currentWave->enemiesLeft <= 0)
 		{
+			this->scene->score += 100;
 			printf("Wave clear");
 			clearCurrentWave();
 		}

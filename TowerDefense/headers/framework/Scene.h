@@ -41,4 +41,5 @@ public:
 	std::string addToWaitingObjects(GameObject * gameObject);
 	GLboolean activateObject(std::string objectKey);
 
+	int score;
 };
