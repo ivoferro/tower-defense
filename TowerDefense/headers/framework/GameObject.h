@@ -11,10 +11,14 @@ class GameObject
 
 private:
 	std::map<std::string, Component*> components;
+	std::list<std::string> tags;
 
 public:
 	GameObject();
 	~GameObject();
+
+	GLboolean addTag(std::string tag);
+	GLboolean hasTag(std::string tag);
 
 	GLboolean hasComponent(std::string id);
 	GLboolean addComponent(std::string id, Component *aComponent);

@@ -1,5 +1,6 @@
-#include "..\..\headers\framework\Wave.h"
+#include "../../headers/framework/Wave.h"
 #include "../../headers/gameobjects/Enemy.h"
+#include "../../headers/gameobjects/Boss.h"
 
 Wave::Wave(Scene * scene)
 {
@@ -40,11 +41,24 @@ void Wave::timerActions()
 
 	while (it != enemiesSpawned.end()) {
 		WaveEnemy *e = *(it++);
-		if (!((Enemy*)(e->obj))->isAlive)
+
+		if (Enemy * enemy = dynamic_cast<Enemy*>(e->obj))
 		{
-			enemiesSpawned.remove(e);
-			enemiesDead.push_back(e);
-			enemiesLeft--;
+			if (!enemy->isAlive)
+			{
+				enemiesSpawned.remove(e);
+				enemiesDead.push_back(e);
+				enemiesLeft--;
+			}
+		}
+		else if (Boss * boss = dynamic_cast<Boss*>(e->obj))
+		{
+			if (!boss->isAlive)
+			{
+				enemiesSpawned.remove(e);
+				enemiesDead.push_back(e);
+				enemiesLeft--;
+			}
 		}
 	}
 }

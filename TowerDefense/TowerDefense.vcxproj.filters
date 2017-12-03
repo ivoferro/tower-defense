@@ -156,6 +156,12 @@
     <ClCompile Include="sources\gameobjects\TextBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sources\gameobjects\Boss.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sources\gameobjects\SkyBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\framework\Application.h">
@@ -305,6 +311,12 @@
     <ClInclude Include="headers\gameobjects\TextBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="headers\gameobjects\Boss.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\gameobjects\SkyBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resources\metal_plate.jpg">
@@ -326,6 +338,24 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resources\vinil2.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\skybox\back.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\skybox\down.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\skybox\front.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\skybox\left.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\skybox\right.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\skybox\up.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

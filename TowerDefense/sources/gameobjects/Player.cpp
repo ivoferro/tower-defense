@@ -1,5 +1,6 @@
 #include "../../headers/gameobjects/Player.h"
 #include "../../headers/gameobjects/Enemy.h"
+#include "../../headers/gameobjects/Boss.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/components/CharacterPhysics.h"
@@ -11,7 +12,7 @@
 Player::Player()
 {
 	model = new MDLModel(0, 3, 4, 159, 13, 177, "resources/player/player.mdl");
-	lifebar = new LifeBar(this, 2.5f);
+	lifebar = new LifeBar(this, 2.5f, 0.0f);
 	timer = 0;
 	isAlive = GL_TRUE;
 	prevAttack = glutGet(GLUT_ELAPSED_TIME);
@@ -60,25 +61,6 @@ void Player::draw()
 	glPopMatrix();
 
 	lifebar->draw();
-
-	// ****** LIFEBAR ******
-	/*LifeBar *lifebar = new LifeBar();
-	Transform * lt = (Transform*)lifebar->getComponentById("transformLifeBar");
-	//Transform * e1t_lifebar = (Transform*)e1->getComponentById("transformLifeBar");
-	lt->position->x = t->position->x;
-	lt->position->y = t->position->y;
-	lt->position->z = (t->position->z + 2.3); // ... + val -> above the object
-
-	// change scale->x between 0 and 1 scale->x when lifebar need to be reduced
-	lt->scale->x = 0.5;
-	lt->scale->y = 0.1;
-	lt->scale->z = 0.1;
-
-	lt->rotation->z = t->rotation->z;
-
-	glPushMatrix();
-	lifebar->draw();
-	glPopMatrix();*/
 }
 
 void Player::setUpCollider()
@@ -94,6 +76,9 @@ void Player::setUpCollider()
 
 void Player::onCollisionEnter(GameObject * collidingObject)
 {
+	isColliding = true;
+	if (model->state == Death) return;
+
 	Life * life = (Life*)getComponentById("life");
 	if (Enemy* enemy = dynamic_cast<Enemy*>(collidingObject))
 	{
@@ -113,8 +98,19 @@ void Player::onCollisionEnter(GameObject * collidingObject)
 			}
 		}
 	}
-
-	isColliding = true;
+	if (Boss * boss = dynamic_cast<Boss*>(collidingObject))
+	{
+		if (boss->model->state == Attacking && (glutGet(GLUT_ELAPSED_TIME) - prevAttack) > 1000)
+		{
+			prevAttack = glutGet(GLUT_ELAPSED_TIME);
+			life->health -= 50;
+			if (life->health <= 0)
+			{
+				isAlive = false;
+				model->death(glutGet(GLUT_ELAPSED_TIME));
+			}
+		}
+	}
 }
 
 void Player::timerActions(int value)

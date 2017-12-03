@@ -135,9 +135,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="sources\components\MDLModel.cpp" />
+    <ClCompile Include="sources\gameobjects\Boss.cpp" />
     <ClCompile Include="sources\gameobjects\Bullet.cpp" />
     <ClCompile Include="sources\gameobjects\MapObject.cpp" />
     <ClCompile Include="sources\gameobjects\ShootingController.cpp" />
+    <ClCompile Include="sources\gameobjects\SkyBox.cpp" />
     <ClCompile Include="sources\gameobjects\TextBox.cpp" />
     <ClCompile Include="sources\mdlloader\mathlib.cpp" />
     <ClCompile Include="sources\mdlloader\MdlLoader.cpp" />
@@ -185,8 +187,10 @@
   <ItemGroup>
     <ClInclude Include="headers\components\MDLModel.h" />
     <ClInclude Include="headers\framework\Debugger.h" />
+    <ClInclude Include="headers\gameobjects\Boss.h" />
     <ClInclude Include="headers\gameobjects\Bullet.h" />
     <ClInclude Include="headers\gameobjects\ShootingController.h" />
+    <ClInclude Include="headers\gameobjects\SkyBox.h" />
     <ClInclude Include="headers\gameobjects\TextBox.h" />
     <ClInclude Include="headers\mdlloader\mathlib.h" />
     <ClInclude Include="headers\mdlloader\MdlLoader.h" />
@@ -236,6 +240,12 @@
   <ItemGroup>
     <Image Include="resources\metal_plate.jpg" />
     <Image Include="resources\rock_floor.jpg" />
+    <Image Include="resources\skybox\back.jpg" />
+    <Image Include="resources\skybox\down.jpg" />
+    <Image Include="resources\skybox\front.jpg" />
+    <Image Include="resources\skybox\left.jpg" />
+    <Image Include="resources\skybox\right.jpg" />
+    <Image Include="resources\skybox\up.jpg" />
     <Image Include="resources\snow.jpg" />
     <Image Include="resources\snow_ice.jpg" />
     <Image Include="resources\snow_ice.png" />

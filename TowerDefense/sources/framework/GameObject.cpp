@@ -12,6 +12,22 @@ GameObject::~GameObject()
 	}
 }
 
+GLboolean GameObject::addTag(std::string tag)
+{
+	if (hasTag(tag))
+	{
+		return false;
+	}
+
+	tags.push_back(tag);
+	return true;
+}
+
+GLboolean GameObject::hasTag(std::string tag)
+{
+	return std::find(tags.begin(), tags.end(), tag) != tags.end();
+}
+
 GLboolean GameObject::hasComponent(std::string id)
 {
 	return (components.find(id) != components.end());

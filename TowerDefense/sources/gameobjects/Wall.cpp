@@ -17,6 +17,11 @@ Wall::~Wall()
 
 void Wall::draw()
 {
+	if (!Application::instance()->getTextures()->areTexturesLoaded)
+	{
+		return;
+	}
+
 	Transform * t = (Transform*)getComponentById("transform");
 
 	glPushMatrix();
