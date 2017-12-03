@@ -491,11 +491,6 @@ void Game::setTextures()
 	glEnable(GL_TEXTURE_2D);
 	if (!Application::instance()->getTextures()->areTexturesLoaded) {
 		Application::instance()->getTextures()->registerTexture("metal_plate", "resources/metal_plate.jpg");
-		Application::instance()->getTextures()->registerTexture("rock_floor", "resources/rock_floor.jpg");
-		Application::instance()->getTextures()->registerTexture("snow", "resources/snow.jpg");
-		Application::instance()->getTextures()->registerTexture("snow_ice", "resources/snow_ice.jpg");
-		Application::instance()->getTextures()->registerTexture("floor", "resources/floor.jpg");
-		Application::instance()->getTextures()->registerTexture("sandstone", "resources/sandstone.jpg");
 		Application::instance()->getTextures()->registerTexture("stone", "resources/stone.jpg");
 
 		Application::instance()->getTextures()->registerTexture("back", "resources/skybox/back.jpg");
@@ -503,7 +498,6 @@ void Game::setTextures()
 		Application::instance()->getTextures()->registerTexture("left", "resources/skybox/left.jpg");
 		Application::instance()->getTextures()->registerTexture("right", "resources/skybox/right.jpg");
 		Application::instance()->getTextures()->registerTexture("up", "resources/skybox/up.jpg");
-		Application::instance()->getTextures()->registerTexture("down", "resources/skybox/down.jpg");
 	}
 	Application::instance()->getTextures()->areTexturesLoaded = true;
 }

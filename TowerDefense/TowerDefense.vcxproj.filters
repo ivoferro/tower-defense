@@ -319,16 +319,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="resources\rock_floor.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="resources\snow.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="resources\snow_ice.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="resources\snow_ice.jpg">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resources\vinil.jpg">
@@ -338,9 +329,6 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resources\skybox\back.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="resources\skybox\down.jpg">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resources\skybox\front.jpg">
@@ -353,12 +341,6 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resources\skybox\up.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="resources\floor.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="resources\sandstone.jpg">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="resources\stone.jpg">
