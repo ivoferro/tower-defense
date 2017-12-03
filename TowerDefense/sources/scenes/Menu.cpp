@@ -352,7 +352,7 @@ void Menu::drawGameObjects() {
 	((GameText*)gameObjects["title"])->draw();
 
 	//((Tower*)gameObjects["tower"])->draw();
-	//((Player*)gameObjects["player"])->draw();
+	((Player*)gameObjects["player"])->draw();
 	
 }
 
