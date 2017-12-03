@@ -82,15 +82,18 @@ void TextBox:: drawWithText(char* texts[], int size)
 
 		Transform * t = (Transform*)getComponentById("transform");
 		glPushMatrix();
+	
 		if (i != 0) {
 			//TEXT
 			textT->position->x = previous->position->x;
-			textT->position->y = previous->position->y -0.3;
+			if(size>5)
+				textT->position->y = previous->position->y - 0.15;
+			else
+				textT->position->y = previous->position->y -0.3;
 			textT->position->z = previous->position->z;
-		}
-		else {
+		}else {
 			//TITLE
-			textT->position->x = t->position->x-0.15;
+			textT->position->x = t->position->x-0.25;
 			textT->position->y = t->position->y;
 			textT->position->z = t->position->z;
 		}

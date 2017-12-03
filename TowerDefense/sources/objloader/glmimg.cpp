@@ -23,11 +23,9 @@ GLuint glmLoadTexture(char *filename, GLboolean alpha, GLboolean repeat, GLboole
 	int width, height, pixelsize;
 	int type;
 	int filter_min, filter_mag;
-	GLubyte *data, *rdata;
-	double xPow2, yPow2;
+	GLubyte *data;
 	int ixPow2, iyPow2;
 	int xSize2, ySize2;
-	GLint retval;
 
 	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &gl_max_texture_size);
 	char *numefis = filename;

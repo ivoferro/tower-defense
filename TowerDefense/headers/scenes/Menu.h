@@ -13,6 +13,9 @@ private:
 	void drawGameObjects();
 	void dragOptions(GLfloat pos);
 	void clearText();
+	void startGame();
+	void help();
+	void credits();
 	int width, height, id;
 	GLdouble coordBars[5][3];
 
