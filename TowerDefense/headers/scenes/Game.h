@@ -3,6 +3,7 @@
 #include "../framework/Scene.h"
 #include "../framework/Level.h"
 #include "../../headers/levels/Level01.h"
+#include "../../headers/gameobjects/GameText.h"
 
 class Game : public Scene
 {
@@ -16,6 +17,8 @@ private:
 	void deleteBullets();
 	void debugDrawingActions();
 	void initMapObjects();
+	void TextLogic();
+	void TextOverlayDraw();
 	
 	Level01 level;
 	GLuint mapDisplayList;
@@ -33,5 +36,4 @@ public:
 	void Mouse(int button, int mouse_state, int x, int y);
 	void MouseMotion(int x, int y);
 	void MousePassiveMotion(int x, int y);
-
 };

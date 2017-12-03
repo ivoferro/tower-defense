@@ -19,7 +19,6 @@ public:
 
 private:
 	std::list<Wave*> waves;
-	Phase phase;
 
 protected:
 	Scene * scene;
@@ -27,6 +26,8 @@ protected:
 public:
 	Level(Scene * scene);
 	~Level();
+
+	Phase phase;
 
 	void addWave(Wave * wave);
 

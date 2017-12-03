@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string>
 #include <GL/glut.h>
 #include "../../headers/scenes/Game.h"
 #include "../../headers/framework/Application.h"
@@ -7,6 +8,7 @@
 #include "../../headers/gameobjects/Enemy.h"
 #include "../../headers/gameobjects/Boss.h"
 #include "../../headers/gameobjects/Player.h"
+#include "../../headers/gameobjects/GameText.h"
 #include "../../headers/gameobjects/ShootingController.h"
 #include "../../headers/gameobjects/Ground.h"
 #include "../../headers/gameobjects/OuterWalls.h"
@@ -82,6 +84,8 @@ void Game::Init()
 
 	initMapObjects();
 
+	score = 0;
+
 	glutPostRedisplay();
 }
 
@@ -151,9 +155,6 @@ void Game::Draw()
 		playerT->position->x, playerT->position->y, playerT->position->z, 
 		0, 0, 1);
 
-	// Display Map Objects
-	glCallList(mapDisplayList);
-
 	for (std::map<std::string, GameObject*>::iterator it1 = gameObjects.begin(); it1 != gameObjects.end(); ++it1)
 	{
 
@@ -164,6 +165,11 @@ void Game::Draw()
 		}
 	}
 
+	// Display Map Objects
+	glCallList(mapDisplayList);
+
+	// Display Screen Text
+	TextOverlayDraw();
 
 	glFlush();
 	if (Application::instance()->getState()->isDoubleBufferActivated())
@@ -172,13 +178,6 @@ void Game::Draw()
 
 void Game::Timer(int value)
 {
-	//if (true)
-	//{
-	//	GameText *title = new GameText("TOWER DEFENSE");
-	//	Transform *titleT = (Transform*)title->getComponentById("transform");
-	//	titleT->position->x = 0.1;
-	//	titleT->position->y = 0.7;
-	//}
 
 	// has to be in this order, to prevent player from crossing objects
 	// could be more clean!
@@ -818,4 +817,87 @@ void Game::initMapObjects()
 	mapObj25->draw();
 
 	glEndList();
+}
+
+void displayBitMapText(char * text, void *font, int x, int y)
+{
+	glPushMatrix();
+	int length = strlen(text);
+	glRasterPos2i(x, y);
+	for (int i = 0; i < length; i++) {
+		glutBitmapCharacter(font, (int)text[i]);
+	}
+	glPopMatrix();
+}
+
+void displayStrokeText(char * text, void *font, int x, int y)
+{
+	glPushMatrix();
+	int length = strlen(text);
+	//glRasterPos2i(x, y);
+	glTranslatef(50, 300, 0);
+	for (int i = 0; i < length; i++) {
+		glutStrokeCharacter(font, (int)text[i]);
+	}
+	glPopMatrix();
+}
+
+void Game::TextLogic()
+{
+	char* scoreLabel = "SCORE: ";
+	char* gameover = "GAMEOVER";
+	char* victory = "VICTORY";
+	char* gameMode = "GAME MODE: ";
+	char* combateMode = "COMBATE MODE [PRESS K TO KILL ALL ENEMIES]";
+	char* pauseMode = "PAUSE MODE [PRESS G TO START NEXT WAVE]";
+	// SCORE
+	char scoreValue[12];
+	sprintf(scoreValue, "%d", score);
+	displayBitMapText(scoreLabel, GLUT_BITMAP_9_BY_15, 10, 10);
+	displayBitMapText(scoreValue, GLUT_BITMAP_9_BY_15, 100, 10);
+
+	// GAME MODE
+	displayBitMapText(gameMode, GLUT_BITMAP_9_BY_15, 10, 580);
+	if (level.phase == Level::Phase::COMBAT)
+	{
+		displayBitMapText(combateMode, GLUT_BITMAP_9_BY_15, 80, 580);
+	}
+	else if (level.phase == Level::Phase::WAVE_CLEAR ||
+		level.phase == Level::Phase::INITIAL)
+	{
+		displayBitMapText(pauseMode, GLUT_BITMAP_9_BY_15, 80, 580);
+	}
+	else if (level.phase == Level::Phase::VICTORY)
+	{
+		displayStrokeText(victory, GLUT_STROKE_MONO_ROMAN, 10, 0);
+	} // Game over
+	else if (!((Player*)gameObjects["player"])->isAlive || ((Tower*)gameObjects["tower"])->gameover)
+	{
+		displayStrokeText(gameover, GLUT_STROKE_ROMAN, 10, 0);
+	}
+}
+
+void Game::TextOverlayDraw()
+{
+
+	glMatrixMode(GL_PROJECTION);
+	double *matrix = new double[16];
+	glGetDoublev(GL_PROJECTION_MATRIX, matrix);
+	glLoadIdentity();
+	glOrtho(0, 800, 0, 600, -5, 5);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glPushMatrix();
+	glLoadIdentity();
+
+	// PUT TEXT LOGIC HERE **********************
+
+	TextLogic();
+
+	// ******************************************
+
+	glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glLoadMatrixd(matrix);
+	glMatrixMode(GL_MODELVIEW);
 }
