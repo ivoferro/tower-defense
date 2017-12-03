@@ -1,5 +1,6 @@
 #include "../../headers/gameobjects/Tower.h"
 #include "../../headers/gameobjects/Enemy.h"
+#include "../../headers/gameobjects/Boss.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/components/Life.h"
@@ -87,6 +88,18 @@ void Tower::onCollisionEnter(GameObject * collidingObject)
 		{
 			prevAttack = glutGet(GLUT_ELAPSED_TIME);
 			life->health -= 20;
+			if (life->health <= 0)
+			{
+				gameover = GL_TRUE;
+			}
+		}
+	}
+	if (Boss * boss = dynamic_cast<Boss*>(collidingObject))
+	{
+		if (boss->model->state == Attacking && (glutGet(GLUT_ELAPSED_TIME) - prevAttack) > 4300)
+		{
+			prevAttack = glutGet(GLUT_ELAPSED_TIME);
+			life->health -= 50;
 			if (life->health <= 0)
 			{
 				gameover = GL_TRUE;

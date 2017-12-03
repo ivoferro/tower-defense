@@ -39,6 +39,8 @@ void Enemy::setUpCollider()
 
 void Enemy::onCollisionEnter(GameObject * collidingObject)
 {
+	if (model->state == Death) return;
+
 	Life * life = (Life*)getComponentById("life");
 	if (Bullet * bullet = dynamic_cast<Bullet*>(collidingObject))
 	{
@@ -52,10 +54,7 @@ void Enemy::onCollisionEnter(GameObject * collidingObject)
 
 	if (Tower * tower = dynamic_cast<Tower*>(collidingObject))
 	{
-		if (model->state != Death)
-		{
-			model->attack(glutGet(GLUT_ELAPSED_TIME));
-		}
+		model->attack(glutGet(GLUT_ELAPSED_TIME));
 	}
 }
 
@@ -100,10 +99,10 @@ void Enemy::timerActions()
 	// state control (eg. walking, sidewalking, attacking, etc..)
 	if (model->state == Death)
 	{
-		if (!model->stillDying(glutGet(GLUT_ELAPSED_TIME), 922))
+		if (!model->stillDying(glutGet(GLUT_ELAPSED_TIME), 900))
 		{
 			model->dead();
-			enemyT->position->z = -0.3;
+			enemyT->position->z = 0;
 		}
 		return;
 	}

@@ -53,7 +53,7 @@ void Wave::timerActions()
 		}
 		else if (Boss * boss = dynamic_cast<Boss*>(e->obj))
 		{
-			if (boss->model->state == Death)
+			if (!boss->isAlive)
 			{
 				enemiesSpawned.remove(e);
 				enemiesDead.push_back(e);

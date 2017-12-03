@@ -21,4 +21,5 @@ public:
 	void timerActions();
 	void animate();
 
+	GLboolean isAlive;
 };
