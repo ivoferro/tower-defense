@@ -857,23 +857,26 @@ void Game::TextLogic()
 	displayBitMapText(scoreValue, GLUT_BITMAP_9_BY_15, 100, 10);
 
 	// GAME MODE
-	displayBitMapText(gameMode, GLUT_BITMAP_9_BY_15, 10, 580);
-	if (level.phase == Level::Phase::COMBAT)
-	{
-		displayBitMapText(combateMode, GLUT_BITMAP_9_BY_15, 80, 580);
-	}
-	else if (level.phase == Level::Phase::WAVE_CLEAR ||
-		level.phase == Level::Phase::INITIAL)
-	{
-		displayBitMapText(pauseMode, GLUT_BITMAP_9_BY_15, 80, 580);
-	}
-	else if (level.phase == Level::Phase::VICTORY)
-	{
-		displayStrokeText(victory, GLUT_STROKE_MONO_ROMAN, 10, 0);
-	} // Game over
-	else if (!((Player*)gameObjects["player"])->isAlive || ((Tower*)gameObjects["tower"])->gameover)
+	if (!((Player*)gameObjects["player"])->isAlive || ((Tower*)gameObjects["tower"])->gameover)
 	{
 		displayStrokeText(gameover, GLUT_STROKE_ROMAN, 10, 0);
+	}
+	else
+	{
+		displayBitMapText(gameMode, GLUT_BITMAP_9_BY_15, 10, 580);
+		if (level.phase == Level::Phase::COMBAT)
+		{
+			displayBitMapText(combateMode, GLUT_BITMAP_9_BY_15, 80, 580);
+		}
+		else if (level.phase == Level::Phase::WAVE_CLEAR ||
+			level.phase == Level::Phase::INITIAL)
+		{
+			displayBitMapText(pauseMode, GLUT_BITMAP_9_BY_15, 80, 580);
+		}
+		else if (level.phase == Level::Phase::VICTORY)
+		{
+			displayStrokeText(victory, GLUT_STROKE_MONO_ROMAN, 10, 0);
+		}
 	}
 }
 
