@@ -98,17 +98,27 @@ void Menu::Key(unsigned char key, int x, int y)
 {
 	switch (key)
 	{
+	case 'S':
 	case 's':
 		startGame();
 		break;
+	case 'E':
 	case 'e':
 		exit(0);
 		break;
+	case 'N':
+	case 'n':
+		PlaySound(TEXT("resources/sound/sound.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+		break;
+	case 'M':
+	case 'm':
+		PlaySound(NULL, NULL, 0);
+		break;
 	}
-	if (key == 'h') {
+	if (key == 'h' || key == 'H') {
 		help();
 	}
-	if (key == 'c') {
+	if (key == 'c' || key == 'C') {
 		credits();
 	}
 
@@ -344,10 +354,10 @@ void Menu::drawGameObjects() {
 
 	//----------------------HELP BOX-----------------------------//
 	((TextBox*)gameObjects["helpBox"])->draw();
-	char* helpText[] = { "HELP", "w: Move front", "a: Move left", "d: Move right", 
-		"Shoot: left click", "Restart game: R", "Mute Sound: M", "Zoom In: 1", "Zoom Out: 2", 
-		"Orthographic camera: O", "Perspetive camera: P"};
-	((TextBox*)gameObjects["helpBox"])->drawWithText(helpText, 11);
+	char* helpText[] = { "HELP", "Move front: w", "Move left: a", "Move right: d",
+						"Shoot: left click", "Restart game: r", 
+						"Mute sound: m", "Unmute sound: n","Zoom In: 1", "Zoom Out: 2" };
+	((TextBox*)gameObjects["helpBox"])->drawWithText(helpText, 10);
 	//-----------------------------------------------------------//
 	((GameText*)gameObjects["title"])->draw();
 

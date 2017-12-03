@@ -26,6 +26,13 @@
 #include "../../headers/gameobjects/MapObject.h"
 #include "../../headers/util/Drawer.h"
 
+//sound
+#include <iostream>
+#include<Windows.h>
+#include<MMSystem.h>
+using namespace std;
+
+
 Game::Game() : level(this)
 {
 	Camera * c = new Camera();
@@ -261,6 +268,14 @@ void Game::Key(unsigned char key, int x, int y)
 	case 'p':
 	case 'P':
 		Application::instance()->getState()->getInputs()->kill_player = true;
+		break;
+	case 'n':
+	case 'N':
+		PlaySound(TEXT("resources/sound/sound.wav"), NULL, SND_FILENAME | SND_LOOP | SND_ASYNC);
+		break;
+	case 'M':
+	case 'm':
+		PlaySound(NULL, NULL, 0);
 		break;
 	case '1':
 		Application::instance()->getState()->getInputs()->zoom_in = true;
