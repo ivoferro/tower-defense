@@ -15,6 +15,7 @@
 #include "../../headers/gameobjects/Tower.h"
 #include "../../headers/gameobjects/Plane.h"
 #include "../../headers/gameobjects/Bullet.h"
+#include "../../headers/gameobjects/SkyBox.h"
 #include "../../headers/components/Transform.h"
 #include "../../headers/components/Collider.h"
 #include "../../headers/components/CharacterPhysics.h"
@@ -50,15 +51,18 @@ Game::Game() : level(this)
 	OuterWalls * outerWalls = new OuterWalls();
 	gameObjects["outerWalls"] = outerWalls;
 
+	SkyBox * skyBox = new SkyBox();
+	gameObjects["skyBox"] = skyBox;
+
 	Tower * t = new Tower();
 	Transform * tt = (Transform*)t->getComponentById("transform");
 	tt->position->z = 3;
 	gameObjects["tower"] = t;
 
-	Plane * plane = new Plane("rock_floor");
+	Plane * plane = new Plane("stone");
 	Transform * planeT = (Transform*)plane->getComponentById("transform");
-	planeT->scale->x = 100;
-	planeT->scale->y = 100;
+	planeT->scale->x = 110;
+	planeT->scale->y = 110;
 	gameObjects["plane01"] = plane;
 }
 
@@ -466,6 +470,17 @@ void Game::setTextures()
 	Application::instance()->getTextures()->registerTexture("snow", "resources/snow.jpg");
 	Application::instance()->getTextures()->registerTexture("snow_ice", "resources/snow_ice.jpg");
 	Application::instance()->getTextures()->registerTexture("floor", "resources/floor.jpg");
+	Application::instance()->getTextures()->registerTexture("sandstone", "resources/sandstone.jpg");
+	Application::instance()->getTextures()->registerTexture("stone", "resources/stone.jpg");
+
+	Application::instance()->getTextures()->registerTexture("back", "resources/skybox/back.jpg");
+	Application::instance()->getTextures()->registerTexture("front", "resources/skybox/front.jpg");
+	Application::instance()->getTextures()->registerTexture("left", "resources/skybox/left.jpg");
+	Application::instance()->getTextures()->registerTexture("right", "resources/skybox/right.jpg");
+	Application::instance()->getTextures()->registerTexture("up", "resources/skybox/up.jpg");
+	Application::instance()->getTextures()->registerTexture("down", "resources/skybox/down.jpg");
+
+	Application::instance()->getTextures()->areTexturesLoaded = true;
 }
 
 void Game::deleteBullets()

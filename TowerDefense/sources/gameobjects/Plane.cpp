@@ -15,6 +15,11 @@ Plane::~Plane()
 
 void Plane::draw()
 {
+	if (!Application::instance()->getTextures()->areTexturesLoaded)
+	{
+		return;
+	}
+
 	Transform * t = (Transform*)getComponentById("transform");
 	
 	glPushMatrix();
