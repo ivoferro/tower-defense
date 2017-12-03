@@ -354,10 +354,11 @@ void Menu::drawGameObjects() {
 
 	//----------------------HELP BOX-----------------------------//
 	((TextBox*)gameObjects["helpBox"])->draw();
-	char* helpText[] = { "HELP", "Move front: w", "Move left: a", "Move right: d",
-						"Shoot: left click", "Restart game: r", 
-						"Mute sound: m", "Unmute sound: n","Zoom In: 1", "Zoom Out: 2" };
-	((TextBox*)gameObjects["helpBox"])->drawWithText(helpText, 10);
+	char* helpText[] = {"HELP", "Move front: w", "Move left: a", 
+						"Move back: s", "Move right: d", "Shoot: left click",
+						"Zoom In: 1", "Zoom Out: 2", "Mute sound: m", "Unmute sound: n",
+						"Kill Player: p", "Kill all enemies: k"};
+	((TextBox*)gameObjects["helpBox"])->drawWithText(helpText, 12);
 	//-----------------------------------------------------------//
 	((GameText*)gameObjects["title"])->draw();
 
